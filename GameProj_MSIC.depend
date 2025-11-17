@@ -485,15 +485,16 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\lesson15_msic\src\_timer.cpp
 	"_timer.h"
 
-1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\main.cpp
+1763411839 source:c:\main\myschool\csci191t\maingame\gameproj\main.cpp
 	<windows.h>
 	<stdlib.h>
 	<iostream>
 	<windows.h>
 	<gl/gl.h>
 	<_scene.h>
+	<_scenemanager.h>
 
-1763267689 c:\main\myschool\csci191t\maingame\gameproj\include\_scene.h
+1763414150 c:\main\myschool\csci191t\maingame\gameproj\include\_scene.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -736,4 +737,84 @@
 
 1763408175 source:c:\main\myschool\csci191t\maingame\gameproj\src\_scene.cpp
 	"_scene.h"
+
+1763413128 c:\main\myschool\csci191t\maingame\gameproj\include\_scenemanager.h
+	<_scene.h>
+	<_level1.h>
+	<_level2.h>
+	<_level3.h>
+	<_menu.h>
+
+1763411139 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+	"_level1.h"
+
+1763411446 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+	<_common.h>
+	<_light.h>
+	<_model.h>
+	<_inputs.h>
+	<_textureloader.h>
+	<_parallax.h>
+	<_skybox.h>
+	<_sprite.h>
+	<_timer.h>
+	<_3dmodelloader.h>
+	<_camera.h>
+	<_bullets.h>
+	<_collisioncheck.h>
+	<_sounds.h>
+	<_scene.h>
+
+1763414015 source:c:\main\myschool\csci191t\maingame\gameproj\src\_menu.cpp
+	"_menu.h"
+	<GL/gl.h>
+	<iostream>
+
+1763413895 c:\main\myschool\csci191t\maingame\gameproj\include\_menu.h
+	"_scene.h"
+	<string>
+	<Windows.h>
+
+1763412914 source:c:\main\myschool\csci191t\maingame\gameproj\src\_scenemanager.cpp
+	"_scenemanager.h"
+
+1763411798 c:\main\myschool\csci191t\maingame\gameproj\include\_level2.h
+	<_common.h>
+	<_light.h>
+	<_model.h>
+	<_inputs.h>
+	<_textureloader.h>
+	<_parallax.h>
+	<_skybox.h>
+	<_sprite.h>
+	<_timer.h>
+	<_3dmodelloader.h>
+	<_camera.h>
+	<_bullets.h>
+	<_collisioncheck.h>
+	<_sounds.h>
+	<_scene.h>
+
+1763411823 c:\main\myschool\csci191t\maingame\gameproj\include\_level3.h
+	<_common.h>
+	<_light.h>
+	<_model.h>
+	<_inputs.h>
+	<_textureloader.h>
+	<_parallax.h>
+	<_skybox.h>
+	<_sprite.h>
+	<_timer.h>
+	<_3dmodelloader.h>
+	<_camera.h>
+	<_bullets.h>
+	<_collisioncheck.h>
+	<_sounds.h>
+	<_scene.h>
+
+1763411729 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level2.cpp
+	"_level2.h"
+
+1763411765 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level3.cpp
+	"_level3.h"
 

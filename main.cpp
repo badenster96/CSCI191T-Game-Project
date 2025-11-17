@@ -15,8 +15,10 @@
 #include <gl/gl.h>
 
 #include <_scene.h>
+#include <_scenemanager.h>
 
-_Scene *myScene = new _Scene(); //Create scene class instance
+// _Scene *myScene = new _Scene(); //Create scene class instance
+_scenemanager *mySceneManager = new _scenemanager();
 
 using namespace std;
 
@@ -223,8 +225,15 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 	SetForegroundWindow(hWnd);					            // Slightly Higher Priority
 	SetFocus(hWnd);							                // Sets Keyboard Focus To The Window
 
-	myScene->initGL();                                      // initialize GL scene
-	myScene->reSizeScene(width,height);
+
+	// ==============================
+	// ==== WINDOW CREATION HERE ====
+	// ==============================
+
+	mySceneManager -> initScene(4); // finds the current scene in the scenemanager and initializes it
+	// myScene->initGL();                                      // initialize GL scene
+	// myScene->reSizeScene(width,height);
+	mySceneManager->reSizeScene(width,height);
 
 	return TRUE;							                // Success
 }
@@ -278,20 +287,23 @@ LRESULT CALLBACK WndProc(
 		case WM_KEYDOWN:			// Is A Key Being Held Down?
 		{
 			keys[wParam] = TRUE;	// If So, Mark It As TRUE
-		    myScene->winMsg(hWnd,uMsg,wParam,lParam);
+			mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
+		    // myScene->winMsg(hWnd,uMsg,wParam,lParam);
 			return 0;			    // Jump Back
 		}
 
 		case WM_KEYUP:				// Has A Key Been Released?
 		{
 			keys[wParam] = FALSE;	// If So, Mark It As FALSE
-            myScene->winMsg(hWnd,uMsg,wParam,lParam);
+			mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
+            // myScene->winMsg(hWnd,uMsg,wParam,lParam);
 			return 0;			    // Jump Back
 		}
 
 		case WM_SIZE:				// Resize The OpenGL Window
 		{
-            myScene->reSizeScene(LOWORD(lParam),HIWORD(lParam));                           // LoWord=Width, HiWord=Height
+            // myScene->reSizeScene(LOWORD(lParam),HIWORD(lParam));                           // LoWord=Width, HiWord=Height
+            // mySceneManager->reSizeScene(LOWORD(lParam),HIWORD(lParam));
 			return 0;			    // Jump Back
 		}
 
@@ -303,7 +315,8 @@ LRESULT CALLBACK WndProc(
         case WM_MBUTTONUP:
         case WM_MOUSEMOVE:
         case WM_MOUSEWHEEL:
-            myScene->winMsg(hWnd,uMsg,wParam,lParam);
+            // myScene->winMsg(hWnd,uMsg,wParam,lParam);
+            mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
             break;
 	}
 
@@ -366,7 +379,8 @@ int WINAPI WinMain(
 			}
 			else				        // Not Time To Quit, Update Screen
 			{
-                myScene->drawScene();
+                // myScene->drawScene();
+                mySceneManager->drawScene();
 				SwapBuffers(hDC);	    // Swap Buffers (Double Buffering)
 			}
 

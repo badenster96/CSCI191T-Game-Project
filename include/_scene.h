@@ -20,37 +20,20 @@
 class _Scene
 {
     public:
-        _Scene();           //constructor
-        virtual ~_Scene();  //Destructor
+        enum State {
+            MAIN,
+            GAME,
+            CREDITS,
+            HELP,
+            QUIT
+        };
 
-        _light *myLight = new _light();   //light settings
-        _model *myModel = new _model();   //create a model
-        _inputs *myInput = new _inputs(); // input handle
-        _textureLoader *myTexture = new _textureLoader();// for loading images
-        _parallax *myPrlx = new _parallax();
-        _skyBox *mySkyBox = new _skyBox();
-        _sprite *mySprite = new _sprite();
-        _timer *myTime = new _timer();
-        _camera *myCam = new _camera();
-        _collisionCheck *myCol = new _collisionCheck();
-
-        _3DModelLoader *mdl3D = new _3DModelLoader();
-        _3DModelLoader *mdl3DW = new _3DModelLoader();
-
-        _sounds *snds = new _sounds();
-
-        _bullets b[10];
-
-        int clickCnt =0;
-
-        void reSizeScene(int width, int height);  // resize window
-        void initGL();                            // initialize GL graphics
-        void drawScene();                         // render scene
-        int winMsg(HWND,UINT,WPARAM,LPARAM);      // to get keyboard interrupts and pass it to inputs
-        void mouseMapping(int,int);
-        double msX,msY,msZ;
-
-        int width, height;  // keep record of the screen size
+        virtual void reSizeScene(int width, int height) = 0;  // resize window
+        virtual void initGL() = 0;                            // initialize GL graphics
+        virtual void drawScene() = 0;
+                                 // render scene
+        virtual int winMsg(HWND,UINT,WPARAM,LPARAM) = 0;      // to get keyboard interrupts and pass it to inputs
+        bool active;
     protected:
 
     private:
