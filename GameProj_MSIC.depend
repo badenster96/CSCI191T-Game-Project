@@ -729,3 +729,11 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_timer.cpp
 	"_timer.h"
 
+1763407594 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
+	"_player.h"
+
+1763407594 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
+
+1763408175 source:c:\main\myschool\csci191t\maingame\gameproj\src\_scene.cpp
+	"_scene.h"
+
