@@ -733,7 +733,8 @@
 1763407594 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
 	"_player.h"
 
-1763407594 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
+1763431287 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
+	<_3dmodelloader.h>
 
 1763408175 source:c:\main\myschool\csci191t\maingame\gameproj\src\_scene.cpp
 	"_scene.h"
@@ -745,13 +746,14 @@
 	<_level3.h>
 	<_menu.h>
 
-1763424981 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+1763425381 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
 	"_level1.h"
 
-1763411446 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+1763431126 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
+	<_player.h>
 	<_inputs.h>
 	<_textureloader.h>
 	<_parallax.h>

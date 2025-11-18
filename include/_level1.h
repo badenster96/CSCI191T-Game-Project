@@ -4,6 +4,7 @@
 #include<_common.h>
 #include<_light.h>
 #include<_model.h>
+#include <_player.h>
 #include<_inputs.h>
 #include<_textureloader.h>
 #include<_parallax.h>
@@ -35,7 +36,7 @@ class _level1 : public _Scene
         _camera *myCam = new _camera();
         _collisionCheck *myCol = new _collisionCheck();
 
-        _3DModelLoader *mdl3D = new _3DModelLoader();
+        _player *mdl3D = new _player();
         _3DModelLoader *mdl3DW = new _3DModelLoader();
 
         _sounds *snds = new _sounds();

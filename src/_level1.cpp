@@ -82,7 +82,6 @@ void _level1::drawScene()
 
     myCam->setUpCamera();
 
-    // --- IMPORTANT: restore 3D OpenGL state ---
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 

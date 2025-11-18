@@ -1,8 +1,10 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
+#include <_3dmodelloader.h>
 
-class _player
+
+class _player : public _3DModelLoader
 {
     public:
         _player();
