@@ -4,6 +4,7 @@ _level1::_level1()
 {
     //ctor
     myTime->startTime = clock();
+    scene = LEVEL1;
 }
 
 _level1::~_level1()
@@ -29,18 +30,27 @@ void _level1::reSizeScene(int width, int height)
 
 void _level1::initGL()
 {
+    isInit = true;
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
-    glClearColor(0.0f,0.0f,0.0f,0.0f); // black background color
+    glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
     glClearDepth(2.0f);         //depth test for layers
+
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
-
-    myLight->setLight(GL_LIGHT0);
-
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // Set matrices
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    float aspect = (float)width / (float)height;
+    gluPerspective(45.0f, aspect, 0.1f, 1000.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
 
     myTexture->loadTexture("images/tex.jpg");
@@ -63,7 +73,6 @@ void _level1::initGL()
 
     snds->initSounds();
     snds->playMusic("sounds/HighNoon.mp3");
-
 }
 
 void _level1::drawScene()
@@ -72,6 +81,16 @@ void _level1::drawScene()
     glLoadIdentity();             // calling identity matrix
 
     myCam->setUpCamera();
+
+    // --- IMPORTANT: restore 3D OpenGL state ---
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_SMOOTH);
 
      glPushMatrix();
        myTexture->bindTexture();
@@ -144,9 +163,6 @@ void _level1::mouseMapping(int x, int y)
     glReadPixels(x,(int)winY,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
     gluUnProject(winX,winY,winZ,ModelViewM,projectionM,viewPort,&msX,&msY,&msZ);
 }
-
-
-
 
 int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

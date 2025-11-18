@@ -34,6 +34,14 @@ typedef struct{
           float b;
           float a;
           } col4;
-
+enum Scene {
+            MAIN,
+            LEVEL1,
+            LEVEL2,
+            LEVEL3,
+            CREDITS,
+            HELP,
+            QUIT
+        };
 
 #endif // _COMMON_H

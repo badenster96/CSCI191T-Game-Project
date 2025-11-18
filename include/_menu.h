@@ -26,8 +26,6 @@ private:
     void handleMouse(int x, int y, bool click);
 
     int width, height;
-    State currentState;
-    State nextState;
 };
 
 #endif // _MENU_H

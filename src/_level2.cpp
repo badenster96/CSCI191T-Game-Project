@@ -4,6 +4,7 @@ _level2::_level2()
 {
     //ctor
     myTime->startTime = clock();
+    scene = LEVEL2;
 }
 
 _level2::~_level2()
@@ -29,6 +30,7 @@ void _level2::reSizeScene(int width, int height)
 
 void _level2::initGL()
 {
+    isInit = true;
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,0.0f); // black background color
     glClearDepth(2.0f);         //depth test for layers

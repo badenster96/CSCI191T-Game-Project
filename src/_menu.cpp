@@ -4,13 +4,14 @@
 
 
 _Menu::_Menu()
-    : currentState(MAIN), width(800), height(600) {}
+    : width(800), height(600) {}
 
 _Menu::~_Menu() {}
 
 void _Menu::initGL() {
+    isInit = true;
     std::cout << "Initializing menu" << endl;
-    currentState = MAIN;
+    scene = MAIN;
     active = true;
 
     HDC hDC = wglGetCurrentDC();
@@ -88,19 +89,18 @@ void _Menu::handleMouse(int x, int y, bool click) {
     float buttonHalfHeight = 0.1f;
 
     if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
-        currentState = GAME;
+        scene = LEVEL1;
         active = false;
         std::cout << "Start Game\n";
-        nextState = GAME;
     }
     else if (ndcY < 0.0f + buttonHalfHeight && ndcY > 0.0f - buttonHalfHeight) {
-        currentState = CREDITS;
+        scene = CREDITS;
         active = false;
         std::cout << "Show Help\n";
         // Optionally, switch to a credits scene if you have one
     }
     else if (ndcY < -0.4f + buttonHalfHeight && ndcY > -0.4f - buttonHalfHeight) {
-        currentState = QUIT;
+        scene = QUIT;
         std::cout << "Quit Game\n";
         PostQuitMessage(0);
     }
@@ -117,8 +117,8 @@ int _Menu::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         case WM_KEYDOWN: {
             if (wParam == VK_ESCAPE) {
-                if (currentState == CREDITS || currentState == GAME) {
-                    nextState = MAIN;
+                if (scene == CREDITS || scene == LEVEL1) {
+                    scene = MAIN;
                 }
             }
             break;

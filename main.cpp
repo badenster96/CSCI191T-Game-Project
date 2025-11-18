@@ -230,8 +230,9 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 	// ==== WINDOW CREATION HERE ====
 	// ==============================
 
-	mySceneManager -> initScene(4); // finds the current scene in the scenemanager and initializes it
-	// myScene->initGL();                                      // initialize GL scene
+    // mySceneManager-> initScene(LEVEL1);
+	mySceneManager -> initScene(); // finds the current scene in the scenemanager and initializes it
+	// myScene->initGL();                                     // initialize GL scene
 	// myScene->reSizeScene(width,height);
 	mySceneManager->reSizeScene(width,height);
 
@@ -315,6 +316,7 @@ LRESULT CALLBACK WndProc(
         case WM_MBUTTONUP:
         case WM_MOUSEMOVE:
         case WM_MOUSEWHEEL:
+        case VK_ESCAPE:
             // myScene->winMsg(hWnd,uMsg,wParam,lParam);
             mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
             break;

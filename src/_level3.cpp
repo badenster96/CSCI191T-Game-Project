@@ -4,6 +4,7 @@ _level3::_level3()
 {
     //ctor
     myTime->startTime = clock();
+    scene = LEVEL3;
 }
 
 _level3::~_level3()
@@ -29,6 +30,7 @@ void _level3::reSizeScene(int width, int height)
 
 void _level3::initGL()
 {
+    isInit = true;
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,0.0f); // black background color
     glClearDepth(2.0f);         //depth test for layers
@@ -63,7 +65,6 @@ void _level3::initGL()
 
     snds->initSounds();
     snds->playMusic("sounds/HighNoon.mp3");
-
 }
 
 void _level3::drawScene()
