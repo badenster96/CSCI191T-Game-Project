@@ -101,17 +101,19 @@ void _inputs::keyPressed(_skyBox* sky)
      switch(wParam)
      {
      case VK_LEFT:
-           sky->rotation.y -=1.0;
+           // sky->rotation.y -=1.0;
+           //sky->pos.x -= 0.2f;
         break;
      case VK_RIGHT:
-            sky->rotation.y +=1.0;
+            //sky->rotation.y +=1.0;
+            //sky->pos.x += 0.2f;
         break;
 
      case VK_UP:
-        sky->rotation.x +=1.0;
+        // sky->rotation.x +=1.0;
         break;
      case VK_DOWN:
-         sky->rotation.x -=1.0;
+         // sky->rotation.x -=1.0;
         break;
 
        case VK_ADD:

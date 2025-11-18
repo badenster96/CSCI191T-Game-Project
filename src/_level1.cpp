@@ -5,6 +5,7 @@ _level1::_level1()
     //ctor
     myTime->startTime = clock();
     scene = LEVEL1;
+    isInit = false;
 }
 
 _level1::~_level1()

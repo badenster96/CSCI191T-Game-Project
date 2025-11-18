@@ -9,8 +9,9 @@ _Menu::_Menu()
 _Menu::~_Menu() {}
 
 void _Menu::initGL() {
-    std::cout << "Initializing menu" << endl;
+    std::cout << "Initializing Menu" << std::endl;
     scene = MAIN;
+    isInit = true;
     active = true;
 
     HDC hDC = wglGetCurrentDC();
@@ -32,7 +33,6 @@ void _Menu::drawText(float x, float y, const std::string& text) {
 }
 
 void _Menu::drawScene() {
-    isInit = true;
     glViewport(0, 0, width, height);
     // --- Save all relevant GL state ---
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);
