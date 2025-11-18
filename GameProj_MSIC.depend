@@ -820,3 +820,9 @@
 1763419105 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level3.cpp
 	"_level3.h"
 
+1763431376 source:c:\main\myschool\csci191t\maingame\gameproj\src\_enemy.cpp
+	"_Enemy.h"
+
+1763431408 c:\main\myschool\csci191t\maingame\gameproj\include\_enemy.h
+	<_3dmodelloader.h>
+
