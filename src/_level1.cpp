@@ -30,7 +30,6 @@ void _level1::reSizeScene(int width, int height)
 
 void _level1::initGL()
 {
-    isInit = true;
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
     glClearDepth(2.0f);         //depth test for layers
@@ -73,6 +72,7 @@ void _level1::initGL()
 
     snds->initSounds();
     snds->playMusic("sounds/HighNoon.mp3");
+    isInit = true;
 }
 
 void _level1::drawScene()
@@ -103,7 +103,7 @@ void _level1::drawScene()
     mySkyBox->drawSkyBox();
     glPopMatrix();
 
-/*      glPushMatrix();
+     glPushMatrix();
        mySprite->drawSprite();
       // mySprite->actionTrigger = mySprite->WALKRIGHT;
 
@@ -113,7 +113,7 @@ void _level1::drawScene()
        myTime->reset();
     }
     glPopMatrix();
-*/
+
    glPushMatrix();
         glTranslatef(mdl3D->pos.x,mdl3D->pos.y,mdl3D->pos.z);
 

@@ -67,20 +67,25 @@ void _inputs::keyPressed(_parallax* prlx)
 
 void _inputs::keyPressed(_3DModelLoader* Ply, _3DModelLoader* W)
 {
+    float speed = 0.2f;
       switch(wParam)
      {
      case VK_LEFT:
            W->actionTrigger = Ply->actionTrigger = Ply->RUN;
+           Ply->pos.x -= speed;
         break;
      case VK_RIGHT:
            W->actionTrigger = Ply->actionTrigger = Ply->ATTACK;
+           Ply->pos.x += speed;
         break;
 
      case VK_UP:
            W->actionTrigger = Ply->actionTrigger = Ply->JUMP;
+           Ply->pos.z -= speed;
         break;
      case VK_DOWN:
           W->actionTrigger = Ply->actionTrigger = Ply->PAIN;
+          Ply->pos.z += speed;
         break;
 
      default:

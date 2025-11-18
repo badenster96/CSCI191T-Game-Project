@@ -13,8 +13,24 @@ _scenemanager::~_scenemanager()
 //main init function, called each time the window is created
 // initalize the scene only once, loading all of its assets whenever the window is created
 void _scenemanager::initScene() {
-    switchTo(currentSceneEnum);
-    currentScene->initGL();
+    // switchTo(currentSceneEnum);
+    std::cout << "Initializing scene" << std::endl;
+    if(currentSceneEnum == LEVEL1) currentScene = level1;
+    else if(currentSceneEnum == LEVEL2) currentScene = level2;
+    else if(currentSceneEnum == LEVEL3) currentScene = level3;
+    else if(currentSceneEnum == MAIN)   currentScene = menu;
+
+    // Initializes a scene if it isnt initialized
+    if(!currentScene->isInit) currentScene->initGL();
+    // currentScene->initGL();
+}
+void _scenemanager::drawScene() {
+    Scene requested = currentScene->getScene();
+    if(requested != currentSceneEnum) {
+            currentSceneEnum = requested;
+            initScene();
+    }
+    currentScene->drawScene();
 }
 
 // Resize scene
@@ -23,35 +39,7 @@ void _scenemanager::reSizeScene(int width, int height) {
 }
 // passes the draw function to the current scene
 // main draw function, is called in the main loop
-void _scenemanager::drawScene() {
-    currentSceneEnum = currentScene->getScene();
-    switchTo(currentSceneEnum);
-    currentScene->drawScene();
-}
-// moves the currentScene pointer
-void _scenemanager::switchTo(Scene scene) {
-    // currentScene->getScene();
-    currentSceneEnum = scene;
-    if(scene == LEVEL1) {
-        currentScene = level1;
-    }
-    if(scene == LEVEL2) {
-        currentScene = level2;
-    }
-    if(scene == LEVEL3) {
-        currentScene = level3;
-    }
-    if(scene == MAIN) {
-        currentScene = menu;
-    }
-    if(!currentScene->isInit) {
-        currentScene->initGL();
-        currentScene->isInit = true;
-    }
-}
-Scene _scenemanager::getCurrentScene() {
-    return currentSceneEnum;
-}
+
 void _scenemanager::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     currentScene->winMsg(hWnd,uMsg,wParam, lParam);
 }

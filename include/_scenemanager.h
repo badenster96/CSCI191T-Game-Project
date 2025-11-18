@@ -15,10 +15,8 @@ class _scenemanager
         virtual ~_scenemanager();
 
         void initScene();
-        void reSizeScene(int width, int height);
         void drawScene();
-        void switchTo(Scene scene);
-        Scene getCurrentScene();
+        void reSizeScene(int width, int height);
         void winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
         Scene currentSceneEnum;
