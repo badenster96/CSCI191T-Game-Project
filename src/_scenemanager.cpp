@@ -16,7 +16,7 @@ _scenemanager::_scenemanager()
     level2 = new _level2();
     level3 = new _level3();
     menu   = new _Menu();
-    currentSceneEnum = MAIN;
+    currentSceneEnum = LEVEL1;
     currentScene = menu;
 }
 
@@ -41,10 +41,10 @@ void _scenemanager::switchScene() {
 void _scenemanager::initScene() {
     // makes sure the currently selected scene is whats being initialized
     std::cout << "Initialized " << currentSceneEnum << std::endl;
+    switchScene();
     currentScene->initGL();
 }
 void _scenemanager::drawScene() {
-    std::cout << "Drawing Scene " << currentSceneEnum << std::endl;
     // Read in the enum from the current state
     if(currentSceneEnum != currentScene->getScene()){
             currentSceneEnum = currentScene->getScene(); // Checks for Enum state changes within the scene thats being drawn

@@ -84,7 +84,7 @@ void _level2::drawScene()
       glScalef(4.33,4.33,1);
  //   myPrlx->drawParallax(width,height);
   //  myPrlx->prlxScrollAuto("left", 0.0005);
-    mySkyBox->drawSkyBox();
+    // mySkyBox->drawSkyBox();
     glPopMatrix();
 
 /*      glPushMatrix();

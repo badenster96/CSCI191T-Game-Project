@@ -53,6 +53,12 @@ class _level1 : public _Scene
         double msX,msY,msZ;
 
         int width, height;  // keep record of the screen size
+
+        // Movement controls
+        bool isMovingForward, isMovingBack, isMovingLeft, isMovingRight, isMoving;
+        bool isJumping;
+        // Camera Controls
+        int lastMouseX, lastMouseY = 0;
     protected:
 
     private:

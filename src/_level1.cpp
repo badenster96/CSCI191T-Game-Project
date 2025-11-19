@@ -6,6 +6,8 @@ _level1::_level1()
     myTime->startTime = clock();
     scene = LEVEL1;
     isInit = false;
+    isMovingLeft = isMovingRight = isMovingForward = isMovingBack = false;
+    isMoving = false;
 }
 
 _level1::~_level1()
@@ -31,6 +33,7 @@ void _level1::reSizeScene(int width, int height)
 
 void _level1::initGL()
 {
+    ShowCursor(FALSE);
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
     glClearDepth(2.0f);         //depth test for layers
@@ -81,6 +84,38 @@ void _level1::drawScene()
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear bits in each itteration
     glLoadIdentity();             // calling identity matrix
 
+    // Player movement Controls
+    float speed = 0.02f;
+    if(isMovingForward||isMovingBack||isMovingLeft||isMovingRight)isMoving = true;
+    else isMoving = false;
+    if(isMovingForward){
+        mdl3D->pos.z -= speed;
+        std::cout << isMovingForward << std::endl;
+    }
+    if(isMovingBack) {
+        mdl3D->pos.z += speed;
+    }
+    if(isMovingLeft) {
+        mdl3D->pos.x -= speed;
+    }
+    if(isMovingRight) {
+        mdl3D->pos.x += speed;
+    }
+    if(isMoving && mdl3D->actionTrigger != mdl3D->RUN) {
+        mdl3D->actionTrigger = mdl3D->RUN;
+    } else if(!isMoving && mdl3D->actionTrigger != mdl3D->STAND){
+        mdl3D->actionTrigger = mdl3D->STAND;
+    }
+    // Camera setup
+    myCam->des.x = mdl3D->pos.x;
+    myCam->des.y = mdl3D->pos.y + 3.0f;
+    myCam->des.z = mdl3D->pos.z;
+
+    float height = 6.0f;
+
+    myCam->rotateXY();
+    myCam->eye.y += 5.0f;
+
     myCam->setUpCamera();
 
     glEnable(GL_DEPTH_TEST);
@@ -101,7 +136,9 @@ void _level1::drawScene()
       glScalef(4.33,4.33,1);
  //   myPrlx->drawParallax(width,height);
   //  myPrlx->prlxScrollAuto("left", 0.0005);
+    glDepthMask(GL_FALSE);
     mySkyBox->drawSkyBox();
+    glDepthMask(GL_TRUE);
     glPopMatrix();
 
      glPushMatrix();
@@ -115,7 +152,9 @@ void _level1::drawScene()
     }
     glPopMatrix();
 
-   glPushMatrix();
+    glPushMatrix();
+        // Player movement
+
         glTranslatef(mdl3D->pos.x,mdl3D->pos.y,mdl3D->pos.z);
 
         glRotatef(90,1,0,0);
@@ -169,20 +208,58 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch(uMsg)
     {
         case WM_KEYDOWN:
+            switch(wParam) {
+                case 'W':
+                case 'w':
+                    isMovingForward = true;
+                    break;
+                case 'A':
+                case 'a':
+                    isMovingLeft = true;
+                    break;
+                case 'D':
+                case 'd':
+                    isMovingRight = true;
+                    break;
+                case 'S':
+                case 's':
+                    isMovingBack = true;
+                    break;
+            }
+            // Player movement
+
             myInput->wParam = wParam;
             myInput->keyPressed(myModel);
             myInput->keyPressed(myPrlx);
-            myInput->keyPressed(mySkyBox);
+            // myInput->keyPressed(mySkyBox);
             myInput->keyPressed(mySprite);
-            myInput->keyPressed(myCam);
+            // myInput->keyPressed(myCam);
             myInput->keyPressed(mdl3D,mdl3DW);
         break;
 
         case WM_KEYUP:
+            switch(wParam) {
+                case 'W':
+                case 'w':
+                    isMovingForward = false;
+                    break;
+                case 'A':
+                case 'a':
+                    isMovingLeft = false;
+                    break;
+                case 'D':
+                case 'd':
+                    isMovingRight = false;
+                    break;
+                case 'S':
+                case 's':
+                    isMovingBack = false;
+                    break;
+            }
             myInput->wParam = wParam;
             myInput->keyUp(mySprite);
-            mdl3D->actionTrigger=mdl3D->STAND;
-            mdl3DW->actionTrigger=mdl3DW->STAND;
+            // mdl3D->actionTrigger=mdl3D->STAND;
+            // mdl3DW->actionTrigger=mdl3DW->STAND;
         break;
 
         case WM_LBUTTONDOWN:
@@ -224,9 +301,21 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             myInput->mouseEventUp();
             break;
 
-        case WM_MOUSEMOVE:
-              myInput->wParam = wParam;
-              myInput->mouseMove(myModel,LOWORD(lParam),HIWORD(lParam));
+        case WM_MOUSEMOVE: {
+            int dx = LOWORD(lParam) - lastMouseX;
+            int dy = HIWORD(lParam) - lastMouseY;
+
+            lastMouseX = LOWORD(lParam);
+            lastMouseY = HIWORD(lParam);
+
+            myCam->rotAngle.x += dx * 0.2f;
+            myCam->rotAngle.y -= dy * 0.2f;
+
+            if(myCam->rotAngle.y > 85) myCam->rotAngle.y = 85;
+            if(myCam->rotAngle.y < 0 ) myCam->rotAngle.y = 0;
+            myInput->wParam = wParam;
+            myInput->mouseMove(myModel,LOWORD(lParam),HIWORD(lParam));
+        }
             break;
         case WM_MOUSEWHEEL:
               myInput->wParam = wParam;
