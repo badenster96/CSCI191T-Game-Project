@@ -11,7 +11,6 @@ _Menu::~_Menu() {}
 void _Menu::initGL() {
     std::cout << "Initializing Menu" << std::endl;
     scene = MAIN;
-    isInit = true;
     active = true;
 
     HDC hDC = wglGetCurrentDC();
@@ -24,6 +23,7 @@ void _Menu::initGL() {
 
     SelectObject(hDC, font);
     wglUseFontBitmapsA(hDC, 0, 256, 1000);
+    isInit = true;
 }
 
 void _Menu::drawText(float x, float y, const std::string& text) {

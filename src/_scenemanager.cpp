@@ -16,7 +16,7 @@ _scenemanager::_scenemanager()
     level2 = new _level2();
     level3 = new _level3();
     menu   = new _Menu();
-    currentSceneEnum = LEVEL1;
+    currentSceneEnum = MAIN;
     currentScene = menu;
 }
 
@@ -39,23 +39,13 @@ void _scenemanager::switchScene() {
 // Kept as simple as possible, to avoid confusion
 // All these do is pass the initialize and draw functions to the current scene
 void _scenemanager::initScene() {
-    // makes sure the currently selected scene is whats being initialized
-    std::cout << "Initialized " << currentSceneEnum << std::endl;
-    switchScene();
     currentScene->initGL();
 }
 void _scenemanager::drawScene() {
-    // Read in the enum from the current state
-    if(currentSceneEnum != currentScene->getScene()){
-            currentSceneEnum = currentScene->getScene(); // Checks for Enum state changes within the scene thats being drawn
-            switchScene(); // Switches the enum with the enum from the scene, to check if the scenes going to be switched
-    }
-    if(currentScene){
-
-        // make sure the scene is initialized
-        if(!currentScene->isInit) initScene(); // Initializes scene if the new scene mismatches the old scene
-        currentScene->drawScene();
-    }
+    if(currentSceneEnum != currentScene->getScene()) currentSceneEnum = currentScene->getScene();
+    switchScene();
+    if(currentScene->isInit) initScene();
+    currentScene->drawScene();
 }
 
 // Resize scene

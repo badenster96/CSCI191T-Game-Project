@@ -8,6 +8,7 @@ _level1::_level1()
     isInit = false;
     isMovingLeft = isMovingRight = isMovingForward = isMovingBack = false;
     isMoving = false;
+    enemies.resize(100);
 }
 
 _level1::~_level1()
@@ -57,6 +58,7 @@ void _level1::initGL()
 
 
     myTexture->loadTexture("images/tex.jpg");
+    // myFloor -> loadTexture("images/");
     myPrlx->parallaxInit("images/prlx.jpg");
 
     mySkyBox->skyBoxInit();
@@ -81,42 +83,96 @@ void _level1::initGL()
 
 void _level1::drawScene()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear bits in each itteration
-    glLoadIdentity();             // calling identity matrix
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
-    // Player movement Controls
-    float speed = 0.02f;
-    if(isMovingForward||isMovingBack||isMovingLeft||isMovingRight)isMoving = true;
-    else isMoving = false;
-    if(isMovingForward){
-        mdl3D->pos.z -= speed;
-        std::cout << isMovingForward << std::endl;
+
+    // Player and Camera angles Calculations
+    // TODO: move into Player and Camera
+    float speed = 0.05f;
+    vec3 lookDir;
+    lookDir.x = myCam->des.x - myCam->eye.x;
+    lookDir.y = 0;
+    lookDir.z = myCam->des.z - myCam->eye.z;
+
+    float len = sqrtf(lookDir.x * lookDir.x + lookDir.z * lookDir.z);
+    if(len > 0.001f) {
+        lookDir.x /= len;
+        lookDir.z /= len;
     }
-    if(isMovingBack) {
-        mdl3D->pos.z += speed;
+
+    vec3 moveVec = {0, 0, 0};
+    if(isMovingForward)  { moveVec.x += lookDir.x; moveVec.z += lookDir.z; }
+    if(isMovingBack)     { moveVec.x -= lookDir.x; moveVec.z -= lookDir.z; }
+    if(isMovingLeft)     { moveVec.x += lookDir.z; moveVec.z -= lookDir.x; }
+    if(isMovingRight)    { moveVec.x -= lookDir.z; moveVec.z += lookDir.x; }
+
+    float moveLen = sqrtf(moveVec.x * moveVec.x + moveVec.z * moveVec.z);
+    if(moveLen > 0.001f) {
+        moveVec.x /= moveLen;
+        moveVec.z /= moveLen;
+
+        mdl3D->pos.x += moveVec.x * speed;
+        mdl3D->pos.z += moveVec.z * speed;
+        isMoving = true;
+    } else {
+        isMoving = false;
     }
-    if(isMovingLeft) {
-        mdl3D->pos.x -= speed;
+
+    float targetAngle = currentPlayerAngle;;
+    if(isMoving) {
+        targetAngle = -atan2f(moveVec.x, -moveVec.z) * 180.0f / PI;
     }
-    if(isMovingRight) {
-        mdl3D->pos.x += speed;
-    }
-    if(isMoving && mdl3D->actionTrigger != mdl3D->RUN) {
-        mdl3D->actionTrigger = mdl3D->RUN;
-    } else if(!isMoving && mdl3D->actionTrigger != mdl3D->STAND){
-        mdl3D->actionTrigger = mdl3D->STAND;
-    }
-    // Camera setup
+    // Smooth the turns out
+    float rotationSpeed = 1.0f;
+    float angleDiff = targetAngle - currentPlayerAngle;
+
+    while(angleDiff > 180.0f) angleDiff -= 360.0f;
+    while(angleDiff < -180.0f) angleDiff += 360.0f;
+
+    if(fabs(angleDiff) < rotationSpeed)
+        currentPlayerAngle = targetAngle;
+    else
+        currentPlayerAngle += (angleDiff > 0 ? rotationSpeed : -rotationSpeed);
+
+    if(fabs(angleDiff) < rotationSpeed)
+        currentPlayerAngle = targetAngle;
+    else
+        currentPlayerAngle += (angleDiff > 0 ? rotationSpeed : -rotationSpeed);
     myCam->des.x = mdl3D->pos.x;
     myCam->des.y = mdl3D->pos.y + 3.0f;
     myCam->des.z = mdl3D->pos.z;
 
-    float height = 6.0f;
-
     myCam->rotateXY();
     myCam->eye.y += 5.0f;
-
     myCam->setUpCamera();
+
+    // Set all sprites to look at player
+    // TODO: move into sprite
+    vec3 toPlayer;
+    toPlayer.x = mdl3D->pos.x - mySprite->pos.x;
+    toPlayer.y = 0; // ignore vertical rotation for 2D sprites
+    toPlayer.z = mdl3D->pos.z - mySprite->pos.z;
+    float angle = atan2f(toPlayer.x, toPlayer.z) * 180.0f / PI;
+
+    // Collision Check to Sprites, to pick up items
+    std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
+
+
+    // Create random number of enemies each spawn wave
+    for(int i = 0; i < rand()%5; i++){
+        if(i < enemies.size()){
+            _enemy *newEnemy = new _enemy;
+            enemies.at(i) = newEnemy;
+        }
+    }
+    // check for each enemies spawn
+    for(int j = 0; j < enemies.size(); j++){
+        if(!enemies.at(j)->isSpawned){
+            enemies.at(j)->spawn(mdl3D->pos);
+        }
+    }
+    //Begin Drawing
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -127,38 +183,57 @@ void _level1::drawScene()
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
 
-     glPushMatrix();
-       myTexture->bindTexture();
+    glPushMatrix();
+        myTexture->bindTexture();
        // myModel->drawModel();
-     glPopMatrix();
-
-      glPushMatrix();
-      glScalef(4.33,4.33,1);
- //   myPrlx->drawParallax(width,height);
-  //  myPrlx->prlxScrollAuto("left", 0.0005);
-    glDepthMask(GL_FALSE);
-    mySkyBox->drawSkyBox();
-    glDepthMask(GL_TRUE);
     glPopMatrix();
 
-     glPushMatrix();
-       mySprite->drawSprite();
+    // Background Rendering
+    glPushMatrix();
+        glScalef(4.33,4.33,1);
+        myPrlx->drawParallax(width,height);
+        myPrlx->prlxScrollAuto("left", 0.0005);
+        glDepthMask(GL_FALSE);
+        mySkyBox->drawSkyBox();
+        glDepthMask(GL_TRUE);
+    glPopMatrix();
+
+    glPushMatrix();
+        //glTranslatef(mySprite->pos.x, mySprite->pos.y, mySprite->pos.z);
+        glRotatef(angle, 0, 1, 0);
+        glScalef(1.0f,1.0f,1.0f);
+        mySprite->drawSprite();
       // mySprite->actionTrigger = mySprite->WALKRIGHT;
 
-    if(myTime->getTicks()>70)
-    {
-       mySprite->spriteActions();
-       myTime->reset();
-    }
+        if(myTime->getTicks()>70)
+        {
+            mySprite->spriteActions();
+            myTime->reset();
+        }
     glPopMatrix();
 
     glPushMatrix();
         // Player movement
-
+        // Move player
         glTranslatef(mdl3D->pos.x,mdl3D->pos.y,mdl3D->pos.z);
+        // Rotate player
+        glRotatef(currentPlayerAngle-90, 0, 1, 0);
+        // Rotate model to face movement direction
 
+        // Model rotation fixes
         glRotatef(90,1,0,0);
         glRotatef(180,0,1,0);
+        if(isMoving){
+            if(mdl3D->actionTrigger != mdl3D->RUN) {
+                mdl3D->actionTrigger = mdl3D->RUN;
+                mdl3D->pframe = 0;
+            }
+        } else {
+            if(mdl3D->actionTrigger != mdl3D->STAND){
+                mdl3D->actionTrigger = mdl3D->STAND;
+                mdl3D->pframe = 0;
+            }
+        }
 
         glScalef(0.1,0.1,0.1);
         mdl3D->Actions();
@@ -175,10 +250,6 @@ void _level1::drawScene()
            {
                b[i].drawBullet();
                b[i].bulletActions();
-
-        // do collision check between model and the bullets
-        //       myCol->isSphereCol(myModel->p,b[i].)
-
            }
        }
     glPopMatrix();
@@ -225,6 +296,9 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 case 's':
                     isMovingBack = true;
                     break;
+                case VK_SPACE:
+                    isJumping = true;
+                    break;
             }
             // Player movement
 
@@ -255,6 +329,8 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 case 's':
                     isMovingBack = false;
                     break;
+                case VK_SPACE:
+                    isJumping = false;
             }
             myInput->wParam = wParam;
             myInput->keyUp(mySprite);
@@ -302,19 +378,43 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
 
         case WM_MOUSEMOVE: {
-            int dx = LOWORD(lParam) - lastMouseX;
-            int dy = HIWORD(lParam) - lastMouseY;
+            int x = LOWORD(lParam);
+            int y = HIWORD(lParam);
 
-            lastMouseX = LOWORD(lParam);
-            lastMouseY = HIWORD(lParam);
+            // Calculate movement delta relative to the screen center
+            int centerX = width / 2;
+            int centerY = height / 2;
+
+            int dx = x - centerX;
+            int dy = y - centerY;
 
             myCam->rotAngle.x += dx * 0.2f;
             myCam->rotAngle.y -= dy * 0.2f;
 
             if(myCam->rotAngle.y > 85) myCam->rotAngle.y = 85;
             if(myCam->rotAngle.y < 0 ) myCam->rotAngle.y = 0;
+
+            // Reset the mouse to the center of the window
+            POINT centerPoint = { centerX, centerY };
+            ClientToScreen(hWnd, &centerPoint);
+            SetCursorPos(centerPoint.x, centerPoint.y);
+
+            lastMouseX = centerX;
+            lastMouseY = centerY;
+
             myInput->wParam = wParam;
-            myInput->mouseMove(myModel,LOWORD(lParam),HIWORD(lParam));
+            myInput->mouseMove(myModel, x, y);
+
+            // Lock cursor to window client area
+            RECT rcClient;
+            GetClientRect(hWnd, &rcClient);
+            POINT ul = { rcClient.left, rcClient.top };
+            POINT lr = { rcClient.right, rcClient.bottom };
+            ClientToScreen(hWnd, &ul);
+            ClientToScreen(hWnd, &lr);
+            RECT clipRect = { ul.x, ul.y, lr.x, lr.y };
+            ClipCursor(&clipRect);
+            ShowCursor(FALSE);
         }
             break;
         case WM_MOUSEWHEEL:

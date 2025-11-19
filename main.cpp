@@ -304,7 +304,7 @@ LRESULT CALLBACK WndProc(
 		case WM_SIZE:				// Resize The OpenGL Window
 		{
             // myScene->reSizeScene(LOWORD(lParam),HIWORD(lParam));                           // LoWord=Width, HiWord=Height
-            // if(mySceneManager) mySceneManager->reSizeScene(LOWORD(lParam),HIWORD(lParam));
+            if(mySceneManager) mySceneManager->reSizeScene(LOWORD(lParam),HIWORD(lParam));
 			return 0;			    // Jump Back
 		}
 

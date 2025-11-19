@@ -10,6 +10,8 @@
 #include<math.h>
 #include<stdlib.h>
 #include<time.h>
+#include<unordered_map>
+#include <vector>
 
 #include<fstream>
 
@@ -43,5 +45,11 @@ enum Scene {
             HELP,
             QUIT
         };
+enum Type {
+        GADGET,
+        GIZMO,
+        WEAPON,
+        TRAINING
+    };
 
 #endif // _COMMON_H
