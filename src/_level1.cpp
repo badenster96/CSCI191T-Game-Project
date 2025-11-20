@@ -9,6 +9,11 @@ _level1::_level1()
     isMovingLeft = isMovingRight = isMovingForward = isMovingBack = false;
     isMoving = false;
     enemies.resize(100);
+    for(int i = 0; i < enemies.size(); i++) {
+        enemies[i] = new _enemy();
+    }
+    minDistance = 100.0f;
+    nearestEnemy = nullptr;
 }
 
 _level1::~_level1()
@@ -71,13 +76,17 @@ void _level1::initGL()
     mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
 
     mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->initModel("models/Tekk/tris.md2");
+    mdl3D->initModel("models/GiJoe/tris.md2");
     mdl3DW->initModel("models/Tekk/weapon.md2");
+    for(int i = 0; i < enemies.size(); i++){
+        enemies.at(i)->init("models/badboyblake/tris.MD2");
+    }
+
 
     myCam->camInit();
 
     snds->initSounds();
-    snds->playMusic("sounds/HighNoon.mp3");
+    snds->playMusic("sounds/mainTheme.wav");
     isInit = true;
 }
 
@@ -89,7 +98,9 @@ void _level1::drawScene()
 
     // Player and Camera angles Calculations
     // TODO: move into Player and Camera
-    float speed = 0.05f;
+    float speed = 0.15f;
+    minDistance = 1000.0f;
+    nearestEnemy = nullptr;
     vec3 lookDir;
     lookDir.x = myCam->des.x - myCam->eye.x;
     lookDir.y = 0;
@@ -156,22 +167,61 @@ void _level1::drawScene()
     float angle = atan2f(toPlayer.x, toPlayer.z) * 180.0f / PI;
 
     // Collision Check to Sprites, to pick up items
-    std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
+    // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
 
-
-    // Create random number of enemies each spawn wave
-    for(int i = 0; i < rand()%5; i++){
-        if(i < enemies.size()){
-            _enemy *newEnemy = new _enemy;
-            enemies.at(i) = newEnemy;
+    //Set up enemy waves
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    enemiesPerWave = rand()%40;
+    if(currentTime - lastWaveTime >= waveInterval){
+        int spawned = 0;
+        for(auto& e : enemies) {
+            if(!e->isSpawned && spawned < enemiesPerWave){
+                e->spawn(mdl3D->pos);
+                spawned++;
+            }
+        }
+        lastWaveTime = currentTime;
+    }
+    // find nearest enemy, and set nearestEnemy to that enemy ptr
+    for(auto& e : enemies) {
+        if(e->isSpawned && e->isAlive){
+            e->moveTowardPoint(mdl3D->pos);
+            float xDist = mdl3D->pos.x - e->pos.x;
+            float yDist = mdl3D->pos.y - e->pos.y;
+            float zDist = mdl3D->pos.z - e->pos.z;
+            float dist = sqrtf(xDist*xDist + yDist*yDist + zDist*zDist);
+            if(dist < minDistance) {
+                    minDistance = dist;
+                    nearestEnemy = e;
+                    std::cout << e << std::endl;
+            }
         }
     }
-    // check for each enemies spawn
-    for(int j = 0; j < enemies.size(); j++){
-        if(!enemies.at(j)->isSpawned){
-            enemies.at(j)->spawn(mdl3D->pos);
-        }
+
+    // Auto attack handler
+    glDisable(GL_LIGHTING);
+    // shoots the bullet on a timer at the nearest enemy
+    if(nearestEnemy && !b[0].live && currentTime - lastAttackTime >= 1.0f){
+        if(nearestEnemy->isAlive) b[0].shootBullet(mdl3D->pos, nearestEnemy->pos);
+        lastAttackTime = currentTime;
     }
+
+    glPushMatrix();
+        if(b[0].live)
+           {
+               b[0].bulletActions();
+               b[0].drawBullet();
+           }
+    if(b[0].live&&nearestEnemy&&myCol->isSphereCol(b[0].pos,nearestEnemy->pos,1.0f,1.0f,0.1f)){
+        nearestEnemy->isAlive = false;
+    }
+    // Check if an enemy is near the player
+    if(nearestEnemy&&myCol->isSphereCol(mdl3D->pos,nearestEnemy->pos, 1.0f, 1.0f, 2.0f)){
+        std::cout << "Player hit!" << std::endl;
+    }
+    glPopMatrix();
+    glEnable(GL_LIGHTING);
+
     //Begin Drawing
 
     glEnable(GL_DEPTH_TEST);
@@ -184,18 +234,46 @@ void _level1::drawScene()
     glShadeModel(GL_SMOOTH);
 
     glPushMatrix();
-        myTexture->bindTexture();
-       // myModel->drawModel();
-    glPopMatrix();
 
-    // Background Rendering
+    // Calculate horizontal offset based on camera rotation
+    float lookOffset = fmod(myCam->rotAngle.x, 360.0f);  // 0-360
+    if(lookOffset < 0) lookOffset += 360.0f;             // make positive
+    lookOffset /= 360.0f;                                // 0-1 range
+    lookOffset = lookOffset * 2.0f - 1.0f;              // -1 to 1
+
+    float parallaxFactor = 0.5f; // adjust intensity of movement
+    myPrlx->xMin = -lookOffset * parallaxFactor;
+    myPrlx->xMax = myPrlx->xMin + 1.0f;
+
+    // Draw parallax
+    myPrlx->drawParallax(width, height);
+
+    // Draw skybox on top (optional)
+    glDepthMask(GL_FALSE); // don't write depth for skybox
+    // mySkyBox->drawSkyBox();
+    glDepthMask(GL_TRUE);
     glPushMatrix();
-        glScalef(4.33,4.33,1);
-        myPrlx->drawParallax(width,height);
-        myPrlx->prlxScrollAuto("left", 0.0005);
-        glDepthMask(GL_FALSE);
-        mySkyBox->drawSkyBox();
-        glDepthMask(GL_TRUE);
+    glEnable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
+    myTexture->bindTexture(); // your floor texture
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    float floorSize = 500.0f;  // how big the floor is
+    float repeat = 100.0f;     // how many times the texture repeats
+    float floorHeight = -2.8f;
+
+    glBegin(GL_QUADS);
+        glNormal3f(0.0f, 1.0f, 0.0f); // point up
+
+        glTexCoord2f(0.0f, 0.0f); glVertex3f(-floorSize, floorHeight, -floorSize);
+        glTexCoord2f(repeat, 0.0f); glVertex3f(floorSize, floorHeight, -floorSize);
+        glTexCoord2f(repeat, repeat); glVertex3f(floorSize, floorHeight, floorSize);
+        glTexCoord2f(0.0f, repeat); glVertex3f(-floorSize, floorHeight, floorSize);
+    glEnd();
+    glEnable(GL_LIGHTING);
+glPopMatrix();
+
     glPopMatrix();
 
     glPushMatrix();
@@ -210,6 +288,9 @@ void _level1::drawScene()
             mySprite->spriteActions();
             myTime->reset();
         }
+    glPopMatrix();
+    glPushMatrix();
+        for(auto& e : enemies) if(e->isAlive)e->draw();
     glPopMatrix();
 
     glPushMatrix();
@@ -242,17 +323,7 @@ void _level1::drawScene()
         mdl3D->Draw();
     glPopMatrix();
 
-    glPushMatrix();
 
-       for(int i =0; i<10;i++)
-       {
-           if(b[i].live)
-           {
-               b[i].drawBullet();
-               b[i].bulletActions();
-           }
-       }
-    glPopMatrix();
 }
 
 
@@ -343,20 +414,6 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
              mouseMapping(LOWORD(lParam), HIWORD(lParam));
-             clickCnt =clickCnt%10;
-
-                 b[clickCnt].src.x = mdl3D->pos.x;
-                 b[clickCnt].src.y = mdl3D->pos.y;
-                 b[clickCnt].src.z = mdl3D->pos.z;
-
-                 b[clickCnt].des.x = msX;
-                 b[clickCnt].des.y = -msY;
-                 b[clickCnt].des.z = msZ;
-
-                 b[clickCnt].t =0;
-                 b[clickCnt].actionTrigger = b[clickCnt].SHOOT;
-                 b[clickCnt].live = true;
-                   clickCnt++;
         break;
 
         case WM_RBUTTONDOWN:

@@ -65,6 +65,16 @@ class _level1 : public _Scene
         // Camera Controls
         int lastMouseX, lastMouseY = 0;
         int lastPlayerAction;
+
+        // Wave spawning
+        int currentWave = 0;
+        int enemiesPerWave;
+        float waveInterval = 10.0f;
+        float lastWaveTime = 0.0f;
+        // Attack Logic
+        float lastAttackTime = 0.0f;
+        float minDistance = 0.0f;
+        _enemy* nearestEnemy;
     protected:
 
     private:

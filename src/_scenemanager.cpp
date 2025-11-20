@@ -16,8 +16,8 @@ _scenemanager::_scenemanager()
     level2 = new _level2();
     level3 = new _level3();
     menu   = new _Menu();
-    currentSceneEnum = MAIN;
-    currentScene = menu;
+    currentSceneEnum = LEVEL1;
+    currentScene = level1;
 }
 
 _scenemanager::~_scenemanager()

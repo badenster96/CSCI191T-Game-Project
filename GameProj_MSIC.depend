@@ -552,7 +552,7 @@
 	<_camera.h>
 	<_3dmodelloader.h>
 
-1763267689 c:\main\myschool\csci191t\maingame\gameproj\include\_parallax.h
+1763593693 c:\main\myschool\csci191t\maingame\gameproj\include\_parallax.h
 	<_common.h>
 	<_textureLoader.h>
 	<_timer.h>
@@ -584,7 +584,7 @@
 
 1763267689 c:\main\myschool\csci191t\maingame\gameproj\include\anorms.h
 
-1763267689 c:\main\myschool\csci191t\maingame\gameproj\include\_bullets.h
+1763595061 c:\main\myschool\csci191t\maingame\gameproj\include\_bullets.h
 	<_common.h>
 	<_textureloader.h>
 	<_timer.h>
@@ -693,10 +693,10 @@
 	"ik_IRefCounted.h"
 	"ik_ISoundSource.h"
 
-1763547376 source:c:\main\myschool\csci191t\maingame\gameproj\src\_3dmodelloader.cpp
+1763600901 source:c:\main\myschool\csci191t\maingame\gameproj\src\_3dmodelloader.cpp
 	"_3dmodelloader.h"
 
-1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_bullets.cpp
+1763602723 source:c:\main\myschool\csci191t\maingame\gameproj\src\_bullets.cpp
 	"_bullets.h"
 
 1763519033 source:c:\main\myschool\csci191t\maingame\gameproj\src\_camera.cpp
@@ -714,7 +714,7 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_model.cpp
 	"_model.h"
 
-1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_parallax.cpp
+1763593680 source:c:\main\myschool\csci191t\maingame\gameproj\src\_parallax.cpp
 	"_parallax.h"
 
 1763520392 source:c:\main\myschool\csci191t\maingame\gameproj\src\_skybox.cpp
@@ -732,7 +732,7 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_timer.cpp
 	"_timer.h"
 
-1763552190 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
+1763591711 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
 	"_player.h"
 
 1763552200 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
@@ -749,10 +749,10 @@
 	<_level3.h>
 	<_menu.h>
 
-1763552636 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+1763602889 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
 	"_level1.h"
 
-1763551901 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+1763594848 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -824,17 +824,17 @@
 1763519501 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level3.cpp
 	"_level3.h"
 
-1763552600 source:c:\main\myschool\csci191t\maingame\gameproj\src\_enemy.cpp
+1763602946 source:c:\main\myschool\csci191t\maingame\gameproj\src\_enemy.cpp
 	"_enemy.h"
 
-1763553215 c:\main\myschool\csci191t\maingame\gameproj\include\_enemy.h
+1763588986 c:\main\myschool\csci191t\maingame\gameproj\include\_enemy.h
 	<_common.h>
 	<_3dmodelloader.h>
 
-1763549197 source:c:\main\myschool\csci191t\maingame\gameproj\src\_item.cpp
+1763589842 source:c:\main\myschool\csci191t\maingame\gameproj\src\_item.cpp
 	"_item.h"
 
-1763550326 c:\main\myschool\csci191t\maingame\gameproj\include\_item.h
+1763590473 c:\main\myschool\csci191t\maingame\gameproj\include\_item.h
 	<_common.h>
 	<_sprite.h>
 

@@ -3,6 +3,7 @@
 _player::_player()
 {
     //ctor
+    stats["AttackSpeed"] = 20.0f;
 }
 
 _player::~_player()

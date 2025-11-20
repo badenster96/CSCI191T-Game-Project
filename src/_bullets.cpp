@@ -38,6 +38,16 @@ void _bullets::drawBullet()
      glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
 }
 
+// In _bullets.cpp, define it:
+void _bullets::shootBullet(const vec3& start, const vec3& end)
+{
+    src = start;        // starting position
+    des = end;          // destination
+    pos = start;        // bullet starts at src
+    t = 0.0f;           // reset interpolation
+    live = true;        // activate the bullet
+    actionTrigger = SHOOT; // set state to shooting
+}
 void _bullets::bulletActions()
 {
 
@@ -65,11 +75,7 @@ void _bullets::bulletActions()
                       pos.y = src.y + t*(des.y -src.y);
                       pos.z = src.z + t*(des.z -src.z);
 
-                      src.x =pos.x;
-                      src.y =pos.y;
-                      src.z =pos.z;
-
-                      if(t<1) t+=0.03;
+                      if(t<1) t+=0.009;
                       else actionTrigger = READY;
                   }
         break;

@@ -239,7 +239,7 @@ void _3DModelLoader::Actions()
 {
     switch(actionTrigger)
    {
-       case STAND: StartFrame=0; EndFrame =39;break;
+       case STAND: StartFrame=0; EndFrame =45;break;
        case RUN: StartFrame=40; EndFrame =45;break;
        case ATTACK: StartFrame=46; EndFrame =53;break;
        case PAIN: StartFrame=47; EndFrame =65;break;
