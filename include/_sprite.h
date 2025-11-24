@@ -29,6 +29,7 @@ class _sprite
         enum{STAND,WALKLEFT,WALKRIGHT,WALKFRONT,WALKBACK};
 
         int actionTrigger;
+        void face(vec3 toCamera);
 
     protected:
 

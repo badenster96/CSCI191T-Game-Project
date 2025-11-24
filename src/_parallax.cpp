@@ -29,7 +29,8 @@ void _parallax::drawParallax(float w, float h)
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
             glLoadIdentity();
-
+            glDisable(GL_DEPTH_TEST);
+            glDisable(GL_LIGHTING);
             glColor3f(1.0f, 1.0f, 1.0f);
             btex->bindTexture();
 
@@ -39,13 +40,15 @@ void _parallax::drawParallax(float w, float h)
                 glTexCoord2f(xMax, yMin); glVertex2f(w, h);
                 glTexCoord2f(xMin, yMin); glVertex2f(0, h);
             glEnd();
-
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_LIGHTING);
         glPopMatrix();
         glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
 
     glPopAttrib(); // Restore states
+    glMatrixMode(GL_MODELVIEW);
 }
 
 

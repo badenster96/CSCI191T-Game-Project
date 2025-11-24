@@ -12,6 +12,7 @@ class _camera
         vec3 eye;  // eye position
         vec3 des;  // where you are looking at
         vec3 up;   // camera head orientation
+        vec3 lookDir; // the direction the camera is facing
 
         float step;    // camera speed
         vec2 rotAngle; // rotation of the camera [left/right/up/down]

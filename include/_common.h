@@ -20,15 +20,51 @@
 using namespace std;
 
 typedef struct{
-          float x;
-          float y;
-          } vec2;
+    float x,y;
+    } vec2;
 
-typedef struct{
-          float x;
-          float y;
-          float z;
-          } vec3;
+struct vec3{
+    float x,y,z,len;
+    vec3(){
+        x=y=z=0;
+
+    }
+    vec3(const vec3& newVec){
+        x = newVec.x;
+        y = newVec.y;
+        z = newVec.z;
+    }
+    vec3 (float xNew, float yNew, float zNew){
+        x = xNew;
+        y = yNew;
+        z = zNew;
+    }
+    void setVec(vec3 newVec){
+        x = newVec.x;
+        y = newVec.y;
+        z = newVec.z;
+    }
+    float normalize(){
+        float lenSquare = x*x + y*y + z*z;
+        if(lenSquare > 0.001f) {
+            float invertLength = 1.0f / sqrtf(lenSquare);
+            x *= invertLength;
+            y *= invertLength;
+            z *= invertLength;
+            return lenSquare;
+        } else return 0;
+    }
+    vec3 operator+(const vec3& other) const {return vec3(x+other.x, y+other.y,z+other.z);}
+    vec3 operator-(const vec3& other) const {return vec3(x-other.x, y-other.y,z-other.z);}
+    vec3& operator+=(const vec3& o) {x += o.x; y += o.y; z += o.z; return *this;}
+    vec3& operator-=(const vec3& o) {x -= o.x; y -= o.y; z -= o.z; return *this;}
+    vec3 operator*(const vec3& other) const {
+        return vec3(x*other.x, y*other.y,z*other.z);
+    }
+    vec3 operator*(const float& mult) const {
+        return vec3(x*mult, y*mult,z*mult);
+    }
+};
 
 typedef struct{
           float r;

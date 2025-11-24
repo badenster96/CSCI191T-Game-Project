@@ -38,26 +38,40 @@ void _sprite::spriteInit(char* fileName, int xFrames, int yFrames)
 
 void _sprite::drawSprite()
 {
+    glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT);
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_CULL_FACE);
+
+    glEnable(GL_TEXTURE_2D);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glColor4f(1, 1, 1, 1);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
     glPushMatrix();
-     glTranslatef(pos.x,pos.y,pos.z);
-     myTex->bindTexture();
 
+        glTranslatef(pos.x,pos.y,pos.z);
+        glRotatef(rot.y,0,1,0);
+        myTex->bindTexture();
+        glBegin(GL_QUADS);
+            glTexCoord2f(xMin,yMax);
+            glVertex2f(vertX[0].x,vertX[0].y);
 
-     glBegin(GL_QUADS);
-       glTexCoord2f(xMin,yMax);
-       glVertex2f(vertX[0].x,vertX[0].y);
+            glTexCoord2f(xMax,yMax);
+            glVertex2f(vertX[1].x,vertX[1].y);
 
-       glTexCoord2f(xMax,yMax);
-       glVertex2f(vertX[1].x,vertX[1].y);
+            glTexCoord2f(xMax,yMin);
+            glVertex2f(vertX[2].x,vertX[2].y);
 
-       glTexCoord2f(xMax,yMin);
-       glVertex2f(vertX[2].x,vertX[2].y);
+            glTexCoord2f(xMin,yMin);
+            glVertex2f(vertX[3].x,vertX[3].y);
 
-       glTexCoord2f(xMin,yMin);
-       glVertex2f(vertX[3].x,vertX[3].y);
+        glEnd();
 
-     glEnd();
-
+    glPopMatrix();
     glPopMatrix();
 }
 
@@ -106,3 +120,10 @@ void _sprite::spriteActions()
     }
 }
 
+void _sprite::face(vec3 toCamera) {
+    vec3 toPlayer;
+    toPlayer.x = toCamera.x - pos.x;
+    toPlayer.y = 0; // ignore vertical rotation for 2D sprites
+    toPlayer.z = toCamera.z - pos.z;
+    rot.y = atan2f(toPlayer.x, toPlayer.z) * 180.0f / PI;
+}

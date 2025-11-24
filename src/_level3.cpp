@@ -11,7 +11,6 @@ _level3::~_level3()
 {
     //dtor
 }
-
 void _level3::reSizeScene(int width, int height)
 {
     float aspectRatio = (float)width/(float)height;// keep track of the ratio
@@ -27,7 +26,6 @@ void _level3::reSizeScene(int width, int height)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();             // calling identity matrix
 }
-
 void _level3::initGL()
 {
     isInit = true;

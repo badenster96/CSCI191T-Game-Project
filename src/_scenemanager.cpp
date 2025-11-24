@@ -12,12 +12,13 @@
 _scenemanager::_scenemanager()
 {
     //ctor
+    // Initialize defined levels here
     level1 = new _level1();
     level2 = new _level2();
     level3 = new _level3();
     menu   = new _Menu();
-    currentSceneEnum = LEVEL1;
-    currentScene = level1;
+    currentSceneEnum = MAIN;
+    currentScene = menu;
 }
 
 _scenemanager::~_scenemanager()
@@ -28,12 +29,13 @@ _scenemanager::~_scenemanager()
     delete menu;
 }
 
-void _scenemanager::switchScene() {
-    if(currentScene) currentScene->isInit = false;
+// Helper function that reads the sceneManager enum and changes the level to that value
+void _scenemanager::switchScene(Scene nextScene) {
     if(currentSceneEnum == LEVEL1) currentScene = level1;
     else if(currentSceneEnum == LEVEL2) currentScene = level2;
     else if(currentSceneEnum == LEVEL3) currentScene = level3;
     else if(currentSceneEnum == MAIN)   currentScene = menu;
+    currentScene->isInit = false;
 }
 // The main functions main interacts with
 // Kept as simple as possible, to avoid confusion
@@ -42,17 +44,26 @@ void _scenemanager::initScene() {
     currentScene->initGL();
 }
 void _scenemanager::drawScene() {
-    if(currentSceneEnum != currentScene->getScene()) currentSceneEnum = currentScene->getScene();
-    switchScene();
-    if(currentScene->isInit) initScene();
-    currentScene->drawScene();
+    Scene requested = currentScene->getScene();
+    if(requested != currentSceneEnum) {
+            currentSceneEnum = requested;
+            switchScene(currentSceneEnum);
+    }
+    if(currentScene && !currentScene->isInit) {
+        currentScene->initGL();
+        currentScene->reSizeScene(width, height);
+    }
+    if(currentScene) currentScene->drawScene();
 }
 
 // Resize scene
-void _scenemanager::reSizeScene(int width, int height) {
+void _scenemanager::reSizeScene(int nWidth, int nHeight) {
+    width = nWidth;
+    height = nHeight;
     currentScene->reSizeScene(width,height);
 }
 
 void _scenemanager::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    if(currentScene)currentScene->setWindow(hWnd);
     currentScene->winMsg(hWnd,uMsg,wParam, lParam);
 }

@@ -8,11 +8,6 @@
 class _enemy : public _3DModelLoader
 {
     public:
-        enum EnemyAction {
-            STAND,
-            WALK,
-            ATTACK
-        };
         _enemy();
         virtual ~_enemy();
         void init(const char* filename);
@@ -22,15 +17,15 @@ class _enemy : public _3DModelLoader
 
         void moveTowardPoint(vec3 point);
 
-        bool isAlive, isSpawned;
+        bool isAlive, isSpawned = false;
         float angle;
 
         //Animation
-        EnemyAction action = STAND;
         float pframe = 0.0f;
 
-        int damage, health;
-        float speed;
+        float health, damage, speed = 0;
+        float iFrames, lastTimeHit;
+
 
     protected:
 

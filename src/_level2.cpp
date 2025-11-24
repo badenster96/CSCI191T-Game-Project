@@ -1,53 +1,59 @@
 #include "_level2.h"
+#include <random>
+#include <cmath>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 _level2::_level2()
 {
-    //ctor
-    myTime->startTime = clock();
     scene = LEVEL2;
+    isInit = false;
+    enemies.resize(100);
+
+    for(int i = 0; i < enemies.size(); i++){
+        enemies.at(i) = new _enemy;
+    }
+    currentEnemy = 0;
 }
 
-_level2::~_level2()
-{
-    //dtor
-}
+_level2::~_level2() {}
 
 void _level2::reSizeScene(int width, int height)
 {
-    float aspectRatio = (float)width/(float)height;// keep track of the ratio
-    glViewport(0,0,width,height); // adjust my viewport
-
-    glMatrixMode(GL_PROJECTION);  // To setup ptrojection
-    glLoadIdentity();             // calling identity matrix
-    gluPerspective(45, aspectRatio,0.1,1000.0); // setting perspective projection
-
-    this->width = GetSystemMetrics(SM_CXSCREEN);
-    this->height= GetSystemMetrics(SM_CYSCREEN);
-
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (float)width / (float)height, 0.1f, 1000.0f);
     glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();             // calling identity matrix
+    glLoadIdentity();
+    this->width = width;
+    this->height = height;
 }
 
 void _level2::initGL()
 {
-    isInit = true;
-    glShadeModel(GL_SMOOTH); // to handle GPU shaders
-    glClearColor(0.0f,0.0f,0.0f,0.0f); // black background color
-    glClearDepth(2.0f);         //depth test for layers
-    glEnable(GL_DEPTH_TEST);    //activate depth test
-    glDepthFunc(GL_LEQUAL);     // depth function type
-
+    ShowCursor(FALSE);
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0,0,0,1);
+    glClearDepth(2.0f);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
-
-    myLight->setLight(GL_LIGHT0);
-
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (float)width / (float)height, 0.1f, 1000.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
+    // Load textures and skybox
     myTexture->loadTexture("images/tex.jpg");
-    myPrlx->parallaxInit("images/prlx.jpg");
-
     mySkyBox->skyBoxInit();
     mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
     mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
@@ -57,171 +63,210 @@ void _level2::initGL()
     mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
     mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
 
-    mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->initModel("models/Tekk/tris.md2");
-    mdl3DW->initModel("models/Tekk/weapon.md2");
-
     myCam->camInit();
-
     snds->initSounds();
-    snds->playMusic("sounds/HighNoon.mp3");
-
+    for(int i = 0; i < enemies.size(); i++)enemies.at(i)->init("models/badboyblake/tris.MD2");
+    std::cout << "Enemies: " << enemies.size() << std::endl;
+    snds->playMusic("sounds/mainTheme.wav");
+    isInit = true;
+}
+void _level2::focusCameraOnRandomEnemy() {
+    enemies.at(currentEnemy)->spawn(myCam->des);
+    myCam->des = enemies.at(currentEnemy)->pos;
+    currentEnemy++;
+    if(currentEnemy >= enemies.size()) currentEnemy = 0;
 }
 
 void _level2::drawScene()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear bits in each itteration
-    glLoadIdentity();             // calling identity matrix
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
 
+    // Setting up the camera, checking bool
+    float moveSpeed = 0.15f;
+    // camera relative forward and right vectors
+    vec3 forwardVec(myCam->des - myCam->eye);
+    forwardVec.normalize();
+
+    vec3 rightVec;
+    vec3 moveVec(0,0,0);
+    // IJKL
+    if(iKey){
+        moveVec.z += forwardVec.z;
+        moveVec.x += forwardVec.x;
+    }
+    if(kKey){
+        moveVec.z -= forwardVec.z;
+        moveVec.x -= forwardVec.x;
+    }
+    if(jKey){
+        moveVec.z -= forwardVec.x;
+        moveVec.x += forwardVec.z;
+    }
+    if(lKey){
+        moveVec.z += forwardVec.x;
+        moveVec.x -= forwardVec.z;
+    }
+    if(isJumping){
+        myCam->des.y += 0.1f;
+        myCam->eye.y += 0.1f;
+    }
+    if(isFalling){
+        myCam->des.y -= 0.1f;
+        myCam->eye.y -= 0.1f;
+        if(myCam->des.y < 0) myCam->des.y = 0.0f;
+    }
+
+    if(moveVec.normalize() > 0.001f){
+        myCam->des.x += moveVec.x * moveSpeed;
+        myCam->des.z += moveVec.z * moveSpeed;
+    }
+
+    //WASD
+
+    if(wKey || upKey){
+        myCam->rotAngle.y -= myCam->step;
+    }
+    if(sKey || downKey){
+        myCam->rotAngle.y += myCam->step;
+    }
+    if(aKey || leftKey){
+        myCam->rotAngle.x += myCam->step;
+    }
+    if(dKey || rightKey){
+        myCam->rotAngle.x -= myCam->step;
+    }
+    // Arrows
+    if(upKey){
+
+    }
+    if(downKey){
+
+    }
+    if(leftKey){
+
+    }
+    if(rightKey){
+
+    }
+    myCam->rotateXY();
     myCam->setUpCamera();
 
-     glPushMatrix();
-       myTexture->bindTexture();
-       // myModel->drawModel();
-     glPopMatrix();
-
-      glPushMatrix();
-      glScalef(4.33,4.33,1);
- //   myPrlx->drawParallax(width,height);
-  //  myPrlx->prlxScrollAuto("left", 0.0005);
-    // mySkyBox->drawSkyBox();
-    glPopMatrix();
-
-/*      glPushMatrix();
-       mySprite->drawSprite();
-      // mySprite->actionTrigger = mySprite->WALKRIGHT;
-
-    if(myTime->getTicks()>70)
-    {
-       mySprite->spriteActions();
-       myTime->reset();
+    for(int i = 0; i < enemies.size(); i++){
+        if(enemies.at(i)->isSpawned) enemies.at(i)->draw();
     }
-    glPopMatrix();
-*/
-   glPushMatrix();
-        glTranslatef(mdl3D->pos.x,mdl3D->pos.y,mdl3D->pos.z);
-
-        glRotatef(90,1,0,0);
-        glRotatef(180,0,1,0);
-
-        glScalef(0.1,0.1,0.1);
-        mdl3D->Actions();
-        mdl3DW->Actions();
-        mdl3DW->Draw();
-        mdl3D->Draw();
-    glPopMatrix();
 
     glPushMatrix();
-
-       for(int i =0; i<10;i++)
-       {
-           if(b[i].live)
-           {
-               b[i].drawBullet();
-               b[i].bulletActions();
-
-        // do collision check between model and the bullets
-        //       myCol->isSphereCol(myModel->p,b[i].)
-
-           }
-       }
+        glDepthMask(GL_FALSE); // don't write depth for skybox
+        mySkyBox->drawSkyBox();
+        glDepthMask(GL_TRUE);
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
     glPopMatrix();
 }
 
-
-void _level2::mouseMapping(int x, int y)
+void _level2::mouseMapping(int x,int y)
 {
-    GLint viewPort[4];
-    GLdouble ModelViewM[16];
-    GLdouble projectionM[16];
-    GLfloat winX,winY,winZ;
+    GLint viewport[4];
+    GLdouble modelview[16];
+    GLdouble projection[16];
+    GLfloat winZ;
+    glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+    glGetDoublev(GL_PROJECTION_MATRIX, projection);
+    glGetIntegerv(GL_VIEWPORT, viewport);
 
-    glGetDoublev(GL_MODELVIEW_MATRIX, ModelViewM);
-    glGetDoublev(GL_PROJECTION_MATRIX,projectionM);
-    glGetIntegerv(GL_VIEWPORT,viewPort);
-
-    winX =(GLfloat)x;
-    winY = (GLfloat)y;
-
-    glReadPixels(x,(int)winY,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
-    gluUnProject(winX,winY,winZ,ModelViewM,projectionM,viewPort,&msX,&msY,&msZ);
+    glReadPixels(x, viewport[3]-y,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
+    gluUnProject((GLfloat)x,(GLfloat)(viewport[3]-y),winZ,modelview,projection,viewport,&msX,&msY,&msZ);
 }
-
-
-
 
 int _level2::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    switch(uMsg)
-    {
+    switch(uMsg){
         case WM_KEYDOWN:
-            myInput->wParam = wParam;
-            myInput->keyPressed(myModel);
-            myInput->keyPressed(myPrlx);
-            myInput->keyPressed(mySkyBox);
-            myInput->keyPressed(mySprite);
-            myInput->keyPressed(myCam);
-            myInput->keyPressed(mdl3D,mdl3DW);
-        break;
+            if(wParam == VK_ESCAPE){
+                scene = MAIN;
+                isInit = false;
+                return 0;
+            }
+            switch(wParam){
+                case 'W': case 'w': wKey=true; break;
+                case 'S': case 's': sKey=true; break;
+                case 'A': case 'a': aKey=true; break;
+                case 'D': case 'd': dKey=true; break;
+                case 'J': case 'j': jKey=true; break;
+                case 'K': case 'k': kKey=true; break;
+                case 'L': case 'l': lKey=true; break;
+                case 'I': case 'i': iKey=true; break;
+                case VK_LEFT:       leftKey=true; break;
+                case VK_RIGHT:      rightKey=true; break;
+                case VK_UP:         upKey=true; break;
+                case VK_DOWN:       downKey=true; break;
+                case VK_SPACE:      isJumping=true; break;
+                case VK_CONTROL:    isFalling=true; break;
+                case 'M': case 'm': scene = MAIN; break;
+            } break;
 
         case WM_KEYUP:
-            myInput->wParam = wParam;
-            myInput->keyUp(mySprite);
-            mdl3D->actionTrigger=mdl3D->STAND;
-            mdl3DW->actionTrigger=mdl3DW->STAND;
-        break;
+            switch(wParam){
+                case 'W': case 'w': wKey=false; break;
+                case 'S': case 's': sKey=false; break;
+                case 'A': case 'a': aKey=false; break;
+                case 'D': case 'd': dKey=false; break;
+                case 'J': case 'j': jKey=false; break;
+                case 'K': case 'k': kKey=false; break;
+                case 'L': case 'l': lKey=false; break;
+                case 'I': case 'i': iKey=false; break;
+                case VK_LEFT:       leftKey=false; break;
+                case VK_RIGHT:      rightKey=false; break;
+                case VK_UP:         upKey=false; break;
+                case VK_DOWN:       downKey=false; break;
+                case VK_SPACE:      isJumping=false; break;
+                case VK_CONTROL:    isFalling=false; break;
+            } break;
 
         case WM_LBUTTONDOWN:
-            myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
+        {
+            mouseMapping(LOWORD(lParam),HIWORD(lParam));
+            bool isClick = true;
+            focusCameraOnRandomEnemy();
+            vec3 clicked{(float)msX,(float)msY,(float)msZ};
 
-             mouseMapping(LOWORD(lParam), HIWORD(lParam));
-             clickCnt =clickCnt%10;
-
-                 b[clickCnt].src.x = mdl3D->pos.x;
-                 b[clickCnt].src.y = mdl3D->pos.y;
-                 b[clickCnt].src.z = mdl3D->pos.z;
-
-                 b[clickCnt].des.x = msX;
-                 b[clickCnt].des.y = -msY;
-                 b[clickCnt].des.z = msZ;
-
-                 b[clickCnt].t =0;
-                 b[clickCnt].actionTrigger = b[clickCnt].SHOOT;
-                 b[clickCnt].live = true;
-                   clickCnt++;
-        break;
-
-        case WM_RBUTTONDOWN:
-            myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
-        break;
-
-         case WM_MBUTTONDOWN:
-             myInput->wParam = wParam;
-             myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
             break;
-
-        case WM_LBUTTONUP:
-        case WM_RBUTTONUP:
-        case WM_MBUTTONUP:
-            myInput->wParam = wParam;
-            myInput->mouseEventUp();
-            break;
-
+        }
         case WM_MOUSEMOVE:
-              myInput->wParam = wParam;
-              myInput->mouseMove(myModel,LOWORD(lParam),HIWORD(lParam));
-            break;
-        case WM_MOUSEWHEEL:
-              myInput->wParam = wParam;
-              myInput->mouseWheel(myModel,(double)GET_WHEEL_DELTA_WPARAM(wParam));
-            break;
+        {
+            int x = LOWORD(lParam);
+            int y = HIWORD(lParam);
 
-        default:
-            break;
+            // Calculate movement delta relative to the screen center
+            int centerX = width / 2;
+            int centerY = height / 2;
 
+            int dx = x - centerX;
+            int dy = y - centerY;
+
+            myCam->rotAngle.x += dx * 0.2f;
+            myCam->rotAngle.y -= dy * 0.2f;
+
+            if(myCam->rotAngle.y > 89) myCam->rotAngle.y = 89;
+            if(myCam->rotAngle.y < -89 ) myCam->rotAngle.y = -89;
+
+            // Reset the mouse to the center of the window
+            POINT centerPoint = { centerX, centerY };
+            ClientToScreen(hWnd, &centerPoint);
+            SetCursorPos(centerPoint.x, centerPoint.y);
+
+            lastMouseX = centerX;
+            lastMouseY = centerY;
+
+            myInput->wParam = wParam;
+            myInput->mouseMove(myModel, x, y);
+
+            // Lock cursor to window client area
+            lockCursor();
+        }
+            break;
     }
     return 0;
 }

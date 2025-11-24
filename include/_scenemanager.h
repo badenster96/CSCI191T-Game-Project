@@ -13,14 +13,15 @@ class _scenemanager
     public:
         _scenemanager();
         virtual ~_scenemanager();
-        void switchScene();
+        void switchScene(Scene nextScene);
         void reSizeScene(int width, int height);
         void initScene();
         void drawScene();
         void winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-        Scene currentSceneEnum;
+        Scene currentSceneEnum, nextSceneEnum;
     protected:
+        int width, height;
 
     private:
     _level1* level1;

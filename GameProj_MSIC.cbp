@@ -59,10 +59,12 @@
 		<Unit filename="include/Anorms.h" />
 		<Unit filename="include/_3dmodelloader.h" />
 		<Unit filename="include/_Enemy.h" />
+		<Unit filename="include/_EnemyHandler.h" />
 		<Unit filename="include/_bullets.h" />
 		<Unit filename="include/_camera.h" />
 		<Unit filename="include/_collisioncheck.h" />
 		<Unit filename="include/_common.h" />
+		<Unit filename="include/_hud.h" />
 		<Unit filename="include/_inputs.h" />
 		<Unit filename="include/_inventory.h" />
 		<Unit filename="include/_item.h" />
@@ -84,9 +86,11 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/_3dmodelloader.cpp" />
 		<Unit filename="src/_Enemy.cpp" />
+		<Unit filename="src/_EnemyHandler.cpp" />
 		<Unit filename="src/_bullets.cpp" />
 		<Unit filename="src/_camera.cpp" />
 		<Unit filename="src/_collisioncheck.cpp" />
+		<Unit filename="src/_hud.cpp" />
 		<Unit filename="src/_inputs.cpp" />
 		<Unit filename="src/_inventory.cpp" />
 		<Unit filename="src/_item.cpp" />
@@ -98,6 +102,7 @@
 		<Unit filename="src/_model.cpp" />
 		<Unit filename="src/_parallax.cpp" />
 		<Unit filename="src/_player.cpp" />
+		<Unit filename="src/_scene.cpp" />
 		<Unit filename="src/_scenemanager.cpp" />
 		<Unit filename="src/_skybox.cpp" />
 		<Unit filename="src/_sounds.cpp" />

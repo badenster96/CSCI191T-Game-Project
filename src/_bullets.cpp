@@ -75,7 +75,7 @@ void _bullets::bulletActions()
                       pos.y = src.y + t*(des.y -src.y);
                       pos.z = src.z + t*(des.z -src.z);
 
-                      if(t<1) t+=0.009;
+                      if(t<1) t+=0.05;
                       else actionTrigger = READY;
                   }
         break;

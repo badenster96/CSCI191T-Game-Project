@@ -6,6 +6,9 @@ _3DModelLoader::_3DModelLoader()
     pos.x =0;
     pos.y =0;
     pos.z =-10.0;
+    n = 0;
+    interp = 0.0f;
+    last_time = (double)glutGet(GLUT_ELAPSED_TIME) / 1000.0;
 }
 
 _3DModelLoader::~_3DModelLoader()
@@ -220,26 +223,20 @@ void _3DModelLoader::initModel(const char* filename)
 
 void _3DModelLoader::Draw()
 {
-  static int n = 0; /* The current frame */
-  static float interp = 0.0;
-  static double curent_time = 0;
-  static double last_time = 0;
+    double current_time = (double)glutGet (GLUT_ELAPSED_TIME) / 1000.0;
+    /* Animate model from frames 0 to num_frames-1 */
+    interp += 10 * (current_time - last_time);
+    last_time = current_time;
 
-  last_time = curent_time;
-  curent_time = (double)glutGet (GLUT_ELAPSED_TIME) / 1000.0;
-
-  /* Animate model from frames 0 to num_frames-1 */
-  interp += 10 * (curent_time - last_time);
-  Animate (StartFrame, EndFrame, &n, &interp);
-
-  RenderFrameItpWithGLCmds (n, interp, &md2file);
+    Animate (StartFrame, EndFrame, &n, &interp);
+    RenderFrameItpWithGLCmds (n, interp, &md2file);
 }
 
 void _3DModelLoader::Actions()
 {
     switch(actionTrigger)
    {
-       case STAND: StartFrame=0; EndFrame =45;break;
+       case STAND: StartFrame=0; EndFrame =39;break;
        case RUN: StartFrame=40; EndFrame =45;break;
        case ATTACK: StartFrame=46; EndFrame =53;break;
        case PAIN: StartFrame=47; EndFrame =65;break;

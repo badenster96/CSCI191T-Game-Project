@@ -3,6 +3,8 @@
 _enemy::_enemy()
 {
     //ctor
+    iFrames = 0.3f;
+    lastTimeHit = 0.0f;
 
 
 }
@@ -17,15 +19,24 @@ void _enemy::init(const char* filename){
 
 // Spawns the enemy at a random location around the player
 void _enemy::spawn(vec3 center){
-    speed = 0.05f + rand()%50 * 0.0001f;
-    float radius = rand()%500/10.0f + 30;
-    angle  = rand()%360 / 180.0f * PI;
+    health = 10.0f + rand()%5;
+    damage = 1.0f + rand()%3;
+    float noSpawnCone = rand()%360 / 180.0f * PI;
+    speed = 0.001f + rand()%50 * 0.001f;
+    std::cout << speed << std::endl;
+    float radius = rand()%500/10.0f + 50;
+    do{
+        angle = rand()%360 / 180.0f * PI;
+    } while(abs(angle - noSpawnCone)*180.0f / PI < 0.0f);
+    std::cout << "Spawned!" <<std::endl;
+
     // Calculate the random point
-    //vec3 spawnPoint;
     pos.x = center.x + radius * cos(angle);
     pos.y = 0.0f;
     pos.z = center.z + radius * sin(angle);
-    std::cout << radius << " " << angle << " " << pos.x << pos.z << std::endl;
+    if(pos.x > 100)pos.x = 100;
+    if(pos.z > 100)pos.z = 100;
+    // std::cout << radius << " " << angle << " " << pos.x << pos.z << std::endl;
     isSpawned = isAlive = true;
 }
 void _enemy::draw() {
@@ -35,7 +46,6 @@ void _enemy::draw() {
         glRotatef(90,1,0,0);
         glRotatef(180,0,1,0);
         glScalef(0.1,0.1,0.1);
-        actionTrigger = action;
         Actions();
         Draw();
     glPopMatrix();
@@ -53,13 +63,9 @@ void _enemy::moveTowardPoint(vec3 point) {
     if(length > 0.01f){
         path.x /= length;
         path.z /= length;
-
+        actionTrigger = RUN;
         pos.x += path.x * speed;
         pos.z += path.z * speed;
 
-        // action = RUN;
     }
-    // Now that the vector has been normalized, move the enemy
-    // glTranslatef(pos.x + path.x, pos.y, pos.z + path.z);
-    // glRotatef(angle,0,1,0);
 }

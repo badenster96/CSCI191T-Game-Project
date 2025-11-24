@@ -13,6 +13,8 @@ void _Menu::initGL() {
     scene = MAIN;
     active = true;
 
+    showCursor();
+
     HDC hDC = wglGetCurrentDC();
     HFONT font = CreateFontA(
         -24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
@@ -36,7 +38,8 @@ void _Menu::drawScene() {
     glViewport(0, 0, width, height);
     // --- Save all relevant GL state ---
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);
-
+    ClipCursor(NULL);
+    ShowCursor(TRUE);
     // --- Save matrices ---
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
@@ -117,9 +120,10 @@ int _Menu::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
         case WM_KEYDOWN: {
             if (wParam == VK_ESCAPE) {
-                if (scene == CREDITS || scene == LEVEL1) {
-                    scene = MAIN;
+                if (scene == MAIN){
+                    PostQuitMessage(0);
                 }
+                else scene = MAIN;
             }
             break;
         }

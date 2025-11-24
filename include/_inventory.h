@@ -11,11 +11,14 @@ class _inventory
         virtual ~_inventory();
         void initInv();
         _item getItem(std::string itemName){return items[itemName];}
+        void convertItemStatsToStats();
+        void addItemStatsToPlayer(unordered_map<std::string,float>& player);
 
 
 
     protected:
         std::unordered_map<std::string, _item> items;
+        std::unordered_map<std::string, float> stats;
     private:
 };
 

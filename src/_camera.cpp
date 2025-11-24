@@ -15,7 +15,7 @@ void _camera::camInit()
     des.x =0; des.y =0; des.z =-10;
     up.x  =0; up.y  =1; up.z  =0;
 
-    step =0.5;
+    step =0.05;
 
     distance = sqrt(pow(eye.x-des.x,2)+pow(eye.y-des.y,2)+pow(eye.z-des.z,2));
 
@@ -39,9 +39,11 @@ void _camera::camReset()
 
 void _camera::rotateXY()
 {
-    eye.x = des.x + distance*cos(rotAngle.y*PI/180.0)*sin(rotAngle.x*PI/180.0);
-    eye.y = des.y + distance*sin(rotAngle.y*PI/180.0);
-    eye.z = des.z + distance*cos(rotAngle.y*PI/180.0)*cos(rotAngle.x*PI/180.0);
+    float radX = rotAngle.x * PI / 180.0f;
+    float radY = rotAngle.y * PI / 180.0f;
+    eye.x = des.x + distance*cos(radY)*sin(radX);
+    eye.y = des.y + distance*sin(radY);
+    eye.z = des.z + distance*cos(radY)*cos(radX);
 }
 
 void _camera::rotateUP()

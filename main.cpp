@@ -230,11 +230,8 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 	// ==== WINDOW CREATION HERE ====
 	// ==============================
 
-    // mySceneManager-> initScene(LEVEL1);
 	mySceneManager -> initScene(); // finds the current scene in the scenemanager and initializes it
-	// myScene->initGL();                                     // initialize GL scene
-	// myScene->reSizeScene(width,height);
-	mySceneManager->reSizeScene(width,height);
+	mySceneManager -> reSizeScene(width,height);
 
 	return TRUE;							                // Success
 }
@@ -289,7 +286,6 @@ LRESULT CALLBACK WndProc(
 		{
 			keys[wParam] = TRUE;	// If So, Mark It As TRUE
 			mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
-		    // myScene->winMsg(hWnd,uMsg,wParam,lParam);
 			return 0;			    // Jump Back
 		}
 
@@ -297,13 +293,11 @@ LRESULT CALLBACK WndProc(
 		{
 			keys[wParam] = FALSE;	// If So, Mark It As FALSE
 			mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
-            // myScene->winMsg(hWnd,uMsg,wParam,lParam);
 			return 0;			    // Jump Back
 		}
 
 		case WM_SIZE:				// Resize The OpenGL Window
 		{
-            // myScene->reSizeScene(LOWORD(lParam),HIWORD(lParam));                           // LoWord=Width, HiWord=Height
             if(mySceneManager) mySceneManager->reSizeScene(LOWORD(lParam),HIWORD(lParam));
 			return 0;			    // Jump Back
 		}
@@ -317,7 +311,6 @@ LRESULT CALLBACK WndProc(
         case WM_MOUSEMOVE:
         case WM_MOUSEWHEEL:
         case VK_ESCAPE:
-            // myScene->winMsg(hWnd,uMsg,wParam,lParam);
             mySceneManager->winMsg(hWnd,uMsg,wParam,lParam);
             break;
 	}
@@ -375,13 +368,12 @@ int WINAPI WinMain(
 	  else						        // If There Are No Messages
 		{
 			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-			if (!active || keys[VK_ESCAPE])	// Active?  Was There A Quit Received?
+			if (!active)	// Active?  Was There A Quit Received?
 			{
 				done=TRUE;		        // ESC or DrawGLScene Signalled A Quit
 			}
 			else				        // Not Time To Quit, Update Screen
 			{
-                // myScene->drawScene();
                 mySceneManager->drawScene();
 				SwapBuffers(hDC);	    // Swap Buffers (Double Buffering)
 			}
