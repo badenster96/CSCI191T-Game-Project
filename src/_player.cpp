@@ -5,7 +5,7 @@ _player::_player()
     //ctor
     stats["Health"] = 100.0f;
     stats["Speed"] = 0.5f;
-    stats["AttackSpeed"] = 20.0f;
+    stats["AttackSpeed"] = 10.0f;
     stats["Damage"] = 2.0f;
     stats["CriticalChance"] = 0.1f;
     stats["Armor"] = 0.0f;
@@ -21,13 +21,13 @@ _player::~_player()
 }
 // Helper Functions
 void _player::applyPlayerStats() {
-    maxHealth = stats["Health"];
-    movementSpeed = stats["Speed"];
-    attackSpeed = stats["AttackSpeed"];
-    damage = stats["Damage"];
-    critChance = stats["CriticalChance"];
-    armor = stats["Armor"];
-    armorPiercing = stats["ArmorPiercing"];
+    maxHealth = stats["Health"] + itemStats["Health"];
+    movementSpeed = stats["Speed"] + itemStats["Speed"];
+    attackSpeed = stats["AttackSpeed"] + itemStats["AttackSpeed"];
+    damage = stats["Damage"] + itemStats["Damage"];
+    critChance = stats["CriticalChance"] + itemStats["CriticalChance"];
+    armor = stats["Armor"] + itemStats["Armor"];
+    armorPiercing = stats["ArmorPiercing"] + itemStats["ArmorPiercing"];
 }
 void _player::hit(float hitDamage) {
     currHealth -= hitDamage;
@@ -77,7 +77,7 @@ void _player::update(){
 void _player::resetPlayer() {
     stats["Health"] = 100.0f;
     stats["Speed"] = 0.5f;
-    stats["AttackSpeed"] = 20.0f;
+    stats["AttackSpeed"] = 10.0f;
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.1f;
     stats["Armor"] = 0.0f;

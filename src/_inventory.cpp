@@ -3,13 +3,6 @@
 _inventory::_inventory()
 {
     //ctor
-    stats["Health"]         = 0.0f;
-    stats["Speed"]          = 0.0f;
-    stats["AttackSpeed"]    = 0.0f;
-    stats["Damage"]         = 0.0f;
-    stats["CriticalChance"] = 0.0f;
-    stats["Armor"]          = 0.0f;
-    stats["ArmorPiercing"]  = 0.0f;
 }
 
 _inventory::~_inventory()
@@ -18,17 +11,19 @@ _inventory::~_inventory()
 }
 
 void _inventory::initInv() {
-    // Create a list of all of the items in the game
-    _item addItem;
-    // Spinach
-    addItem.type = GIZMO;
-    addItem.stats["Health"] = 25.0f;
-    addItem.stats["Speed"]  = 0.1f;
-    items["Spinach"] = addItem;
+    itemsMaster = fl.loadItems("items");
 }
-void _inventory::convertItemStatsToStats() {
-
+void _inventory::addItem(std::string itemName) {
+    int newQ = inventory[itemName].quantity;
+    if(inventory.find(itemName) != inventory.end()) inventory[itemName] = itemsMaster[itemName];
+    inventory[itemName].quantity = newQ + 1;
+    std::cout << "Added " << itemName << std::endl;
 }
-void _inventory::addItemStatsToPlayer(unordered_map<std::string, float> &player){
-
+void _inventory::setPlayerStats(
+    unordered_map<std::string, float>& player){
+    for(const auto& item : inventory){
+        for(const auto& stat : item.second.stats){
+            player[stat.first] = stat.second * item.second.quantity;
+        }
+    }
 }

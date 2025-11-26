@@ -3,6 +3,8 @@
 
 #include <_item.h>
 #include <_common.h>
+#include<_FileLoader.h>
+#include <_player.h>
 
 class _inventory
 {
@@ -10,15 +12,17 @@ class _inventory
         _inventory();
         virtual ~_inventory();
         void initInv();
-        _item getItem(std::string itemName){return items[itemName];}
+        _item getItem(std::string itemName){return itemsMaster[itemName];}
         void convertItemStatsToStats();
-        void addItemStatsToPlayer(unordered_map<std::string,float>& player);
-
+        void addItem(std::string itemName);
+        void setPlayerStats(unordered_map<std::string,float>& player);
+        _FileLoader fl;
 
 
     protected:
-        std::unordered_map<std::string, _item> items;
-        std::unordered_map<std::string, float> stats;
+        std::unordered_map<std::string, _item> itemsMaster;
+        std::unordered_map<std::string, _item> inventory;
+        std::unordered_map<std::string, float> playerStats;
     private:
 };
 

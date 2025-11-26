@@ -59,8 +59,8 @@ void _level1::initGL()
     glLoadIdentity();
 
 
-    enemyHandler->setup(100);
-    capsules.resize(100);
+    enemyHandler->setup(200);
+    capsules.resize(20);
     for( int i = 0; i < capsules.size(); i++){
         _capsule* capsule = new _capsule;
         capsules.at(i) = capsule;
@@ -89,6 +89,7 @@ void _level1::initGL()
     snds->initSounds();
     snds->playMusic("sounds/mainTheme.wav");
     myHUD->init();
+    myInv->initInv();
 
     // Level stats setup
     waveInterval = 3.0f;
@@ -166,6 +167,7 @@ void _level1::drawSceneCalc(){
             c->state = SPAWNED;
         }
     }
+    myInv->setPlayerStats(mdl3D->itemStats);
     mdl3D->applyPlayerStats();
 }
 
@@ -283,6 +285,9 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 isInit = false;
                 return 0;
             }
+            if(wParam == 'H'){
+                myInv->addItem("SMG");
+            }
             myInput->wParam = wParam;
             myInput->keyPressed(myModel);
             myInput->keyPressed(myPrlx);
@@ -290,6 +295,7 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             myInput->keyPressed(mySprite);
             // myInput->keyPressed(myCam);
             myInput->keyPressed(mdl3D,mdl3DW);
+            break;
             if(wParam == 'm' || wParam == 'M')
         break;
 

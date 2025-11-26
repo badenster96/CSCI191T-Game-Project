@@ -36,6 +36,7 @@ class _player : public _3DModelLoader
         float camHeightOffset;
         // Player Stats
         std::unordered_map<std::string,float> stats;
+        std::unordered_map<std::string,float> itemStats;
         float currHealth, maxHealth, attackSpeed, damage, critChance, armor, armorPiercing, movementSpeed = 0;
         // Animation
         float iFrames = 0.3f;

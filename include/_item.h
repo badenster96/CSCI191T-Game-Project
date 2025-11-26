@@ -3,6 +3,7 @@
 
 #include <_common.h>
 #include <_sprite.h>
+#include <string>
 
 class _item : public _sprite
 {
@@ -10,8 +11,11 @@ class _item : public _sprite
         _item();
         virtual ~_item();
 
-        Type type;
+        std::string itemTypeStr;
+        ItemType type;
+        std::string name;
         unordered_map<string,float> stats;
+        int quantity = 0;
     protected:
 
 

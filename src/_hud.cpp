@@ -76,7 +76,7 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
     };
     std::vector<std::string> statsToText = {
         std::to_string((int)(player->movementSpeed * 200)) + "%",
-        std::to_string((int)(player->attackSpeed * 0.5f)) + "%",
+        std::to_string((int)(player->attackSpeed * 10.0f)) + "%",
         std::to_string((int)(player->damage)),
         std::to_string((int)(player->critChance * 100.0f)) + "%",
         std::to_string((int)player->armor),

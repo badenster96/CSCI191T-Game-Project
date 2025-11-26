@@ -81,7 +81,7 @@ enum Scene {
     HELP,
     QUIT
 };
-enum Type {
+enum ItemType {
     GADGET,
     GIZMO,
     WEAPON,

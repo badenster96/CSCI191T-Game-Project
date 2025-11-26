@@ -47,7 +47,7 @@ class _level1 : public _Scene
         _EnemyHandler *enemyHandler = new _EnemyHandler();
         _sprite *mySprite           = new _sprite();
         _hud *myHUD                 = new _hud();
-        //_capsule *capsule           = new _capsule();
+        _inventory *myInv           = new _inventory();
         _bullets b[10];
         std::vector<_capsule*> capsules;
         std::vector<_enemy*> enemies;

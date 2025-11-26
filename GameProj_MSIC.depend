@@ -498,7 +498,7 @@
 	<windows.h>
 	"_common.h"
 
-1764139820 c:\main\myschool\csci191t\maingame\gameproj\include\_common.h
+1764159001 c:\main\myschool\csci191t\maingame\gameproj\include\_common.h
 	<iostream>
 	<windows.h>
 	<string>
@@ -721,10 +721,10 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_timer.cpp
 	"_timer.h"
 
-1764140162 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
+1764163402 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
 	"_player.h"
 
-1764140176 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
+1764161603 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
 	<_3dmodelloader.h>
 	<_camera.h>
 	<_common.h>
@@ -739,10 +739,10 @@
 	<_level3.h>
 	<_menu.h>
 
-1764140843 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+1764162684 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
 	"_level1.h"
 
-1764140856 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+1764160154 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -832,16 +832,19 @@
 1763589842 source:c:\main\myschool\csci191t\maingame\gameproj\src\_item.cpp
 	"_item.h"
 
-1763929878 c:\main\myschool\csci191t\maingame\gameproj\include\_item.h
+1764160587 c:\main\myschool\csci191t\maingame\gameproj\include\_item.h
 	<_common.h>
 	<_sprite.h>
+	<string>
 
-1764024338 source:c:\main\myschool\csci191t\maingame\gameproj\src\_inventory.cpp
+1764163080 source:c:\main\myschool\csci191t\maingame\gameproj\src\_inventory.cpp
 	"_inventory.h"
 
-1763934396 c:\main\myschool\csci191t\maingame\gameproj\include\_inventory.h
+1764161868 c:\main\myschool\csci191t\maingame\gameproj\include\_inventory.h
 	<_item.h>
 	<_common.h>
+	<_FileLoader.h>
+	<_player.h>
 
 1764113861 c:\main\myschool\csci191t\maingame\gameproj\include\_enemyhandler.h
 	<_enemy.h>
@@ -850,7 +853,7 @@
 	"_EnemyHandler.h"
 	<iostream>
 
-1764079382 source:c:\main\myschool\csci191t\maingame\gameproj\src\_hud.cpp
+1764163387 source:c:\main\myschool\csci191t\maingame\gameproj\src\_hud.cpp
 	"_hud.h"
 
 1764073010 c:\main\myschool\csci191t\maingame\gameproj\include\_hud.h
@@ -869,4 +872,14 @@
 	"_capsuleHandler.h"
 
 1764079438 c:\main\myschool\csci191t\maingame\gameproj\include\_capsulehandler.h
+
+1764159747 c:\main\myschool\csci191t\maingame\gameproj\include\_fileloader.h
+	<string>
+	<iostream>
+	<_item.h>
+	<sstream>
+	<unordered_map>
+
+1764162219 source:c:\main\myschool\csci191t\maingame\gameproj\src\_fileloader.cpp
+	"_FileLoader.h"
 
