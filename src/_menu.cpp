@@ -38,8 +38,7 @@ void _Menu::drawScene() {
     glViewport(0, 0, width, height);
     // --- Save all relevant GL state ---
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);
-    ClipCursor(NULL);
-    ShowCursor(TRUE);
+    showCursor();
     // --- Save matrices ---
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();

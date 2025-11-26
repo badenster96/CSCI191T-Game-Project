@@ -2,6 +2,7 @@
 #define _MODEL_H
 
 #include<_common.h>
+#include <_textureloader.h>
 
 class _model
 {
@@ -20,6 +21,7 @@ class _model
         double scale;
 
         vec3 p;
+        _textureLoader myTex;
 
         void drawModel();
 

@@ -67,25 +67,30 @@ struct vec3{
 };
 
 typedef struct{
-          float r;
-          float g;
-          float b;
-          float a;
-          } col4;
+    float r;
+    float g;
+    float b;
+    float a;
+} col4;
 enum Scene {
-            MAIN,
-            LEVEL1,
-            LEVEL2,
-            LEVEL3,
-            CREDITS,
-            HELP,
-            QUIT
-        };
+    MAIN,
+    LEVEL1,
+    LEVEL2,
+    LEVEL3,
+    CREDITS,
+    HELP,
+    QUIT
+};
 enum Type {
-        GADGET,
-        GIZMO,
-        WEAPON,
-        TRAINING
-    };
+    GADGET,
+    GIZMO,
+    WEAPON,
+    TRAINING
+};
+enum CAPSULE_STATE {
+    SPAWNED,
+    FALLING,
+    ONGROUND
+};
 
 #endif // _COMMON_H

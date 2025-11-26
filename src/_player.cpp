@@ -9,7 +9,7 @@ _player::_player()
     stats["Damage"] = 2.0f;
     stats["CriticalChance"] = 0.1f;
     stats["Armor"] = 0.0f;
-    stats["ArmorPiercing"] = 0.0f;
+    stats["ArmorPiercing"] = 10.0f;
     camHeightOffset = 3.0f;
     currHealth = 100.0f;
 
@@ -81,7 +81,7 @@ void _player::resetPlayer() {
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.1f;
     stats["Armor"] = 0.0f;
-    stats["ArmorPiercing"] = 0.0f;
+    stats["ArmorPiercing"] = 10.0f;
     applyPlayerStats();
     currHealth = maxHealth;
 }
@@ -137,6 +137,11 @@ void _player::handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd) {
                     break;
                 case VK_SPACE:
                     isJumping = true;
+                    break;
+                case 'P':
+                case 'p':
+                    stats["Speed"] += 0.025f;
+                    stats["Damage"] += 2.0f;
                     break;
             }
             break;

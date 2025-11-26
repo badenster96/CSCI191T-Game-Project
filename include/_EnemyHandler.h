@@ -11,10 +11,11 @@ class _EnemyHandler
         virtual ~_EnemyHandler();
         void setup(int numEnemies);
         void initModels(const char* model);
-        void draw();
+        void draw(vec3& player);
         _enemy* nearest(vec3& point);
-        void calc(int rangeEnemiesPerWave, int minEnemiesPerWave, int waveHandler, vec3& point);
+        void calc(int rangeEnemiesPerWave, int minEnemiesPerWave, vec3& point);
 
+        bool canSpawn();
         float lastWaveTime = 0;
         std::vector<_enemy*> enemies;
 

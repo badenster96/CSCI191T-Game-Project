@@ -21,6 +21,7 @@
 #include <_EnemyHandler.h>
 #include <_inventory.h>
 #include <_hud.h>
+#include <_capsule.h>
 
 
 class _level1 : public _Scene
@@ -46,7 +47,9 @@ class _level1 : public _Scene
         _EnemyHandler *enemyHandler = new _EnemyHandler();
         _sprite *mySprite           = new _sprite();
         _hud *myHUD                 = new _hud();
+        //_capsule *capsule           = new _capsule();
         _bullets b[10];
+        std::vector<_capsule*> capsules;
         std::vector<_enemy*> enemies;
         std::vector<_sprite*> items;
         _enemy* nearestEnemy;
@@ -61,6 +64,8 @@ class _level1 : public _Scene
         int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
         void mouseMapping(int,int);
         double msX,msY,msZ;
+        //Handler Functions
+        void enemyDamagePlayer(float currentTime, _player* player);
 
         // Player Stats
         float currentPlayerAngle = 0.0f;
@@ -73,6 +78,7 @@ class _level1 : public _Scene
         int enemiesPerWave;
         float waveInterval;
         float lastWaveTime;
+        int maxEnemies;
         // Attack Logic
         float lastAttackTime = 0.0f;
         float lastHitTime = 0.0f;
