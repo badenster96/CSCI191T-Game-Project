@@ -54,8 +54,6 @@ class _level1 : public _Scene
         std::vector<_sprite*> items;
         _enemy* nearestEnemy;
 
-        int clickCnt =0;
-
         // Init functions - functions that run once at init
         // void reSizeScene(int width, int height) override;  // resize window
         void initTextures();
@@ -65,6 +63,7 @@ class _level1 : public _Scene
         void enemyDamagePlayer(_player* player);
         void attackHandler();
         void capsuleSpawner(int range, int add);
+        void itemFromCapsule();
 
         void drawSceneCalc();
         void drawFloor();

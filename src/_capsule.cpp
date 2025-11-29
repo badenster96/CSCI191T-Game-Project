@@ -44,6 +44,7 @@ void _capsule::update(float deltaTime) {
     }
 }
 void _capsule::draw() {
+    if(isSpawned = false) return;
     glPushMatrix();
     glTranslatef(posX, posY, posZ);
 
@@ -81,4 +82,8 @@ void _capsule::draw() {
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+}
+
+void _capsule::despawn() {
+    isSpawned = false;
 }

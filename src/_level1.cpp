@@ -14,8 +14,8 @@ _level1::~_level1()
 }
 
 void _level1::initTextures() {
+    std::cout << "Loading textures..." << std::endl;
     myTexture->loadTexture("images/tex.jpg");
-    // myFloor -> loadTexture("images/");
     myPrlx->parallaxInit("images/prlx.jpg");
 
     mySkyBox->skyBoxInit();
@@ -31,10 +31,11 @@ void _level1::initTextures() {
     mdl3D->init("models/GiJoe/tris.md2");
     mdl3DW->initModel("models/Tekk/weapon.md2");
     enemyHandler->initModels("models/badboyblake/tris.MD2");
+    std::cout << "Textures loaded." << std::endl;
 }
 void _level1::initGL() {
-    scene = LEVEL1;
     std::cout << "Initializing Level1..." << std::endl;
+    scene = LEVEL1;
     lockCursor();
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
@@ -89,6 +90,7 @@ void _level1::initGL() {
     lastWaveTime = 0.0f;
     mdl3D->applyPlayerStats();
     isInit = true;
+    std::cout << "_level1 initialized" << std::endl;
 }
 void _level1::lose() {
     if(mdl3D && mdl3D->currHealth <= 0.0f){
@@ -98,7 +100,6 @@ void _level1::lose() {
     }
 }
 void _level1::enemyDamagePlayer(_player* player){
-    if(!player) return;
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     if(currentTime - lastHitTime >= player->iFrames){
         for(const auto& e : enemyHandler->enemies){
@@ -120,6 +121,7 @@ void _level1::attackHandler() {
                 if(nearestEnemy->isAlive) b[i].shootBullet(mdl3D->pos, nearestEnemy->pos);
                 lastAttackTime = currentTime;
             }
+            // fires the bullets
             if(b[i].live){
                 for(const auto& e : enemyHandler->enemies){
                     if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
@@ -160,7 +162,17 @@ void _level1::capsuleSpawner(int range, int add) {
             vec3 capsulePos(c->posX,c->posY,c->posZ);
             enemyHandler->calc(rangeEnemiesPerCapsule, minEnemiesPerCapsule, capsulePos);
             std::cout << "Wave Spawned at Capsule" <<std::endl;
+        }
+    }
+}
+void _level1::itemFromCapsule() {
+    // Check if the player is colliding with a capsule, and give the player an item if they are
+    for(const auto& c : capsules){
+        vec3 capsulePos(c->posX, c->posY, c->posZ);
+        if(myCol->isSphereCol(mdl3D->pos, capsulePos, 2.0f, 2.0f, 1.0f)){
+            myInv->addItem("SMG");
             c->state = SPAWNED;
+            c->despawn();
         }
     }
 }
@@ -173,6 +185,7 @@ void _level1::drawSceneCalc(){
     // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
     attackHandler();
     capsuleSpawner(20,50);
+    itemFromCapsule();
     myInv->setPlayerStats(mdl3D->itemStats);
     mdl3D->applyPlayerStats();
 }
@@ -202,6 +215,7 @@ void _level1::drawFloor(){
 
 void _level1::drawScene()
 {
+    // OpenGL draw
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -213,6 +227,7 @@ void _level1::drawScene()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
+    // Draw calculations
     drawSceneCalc();
 
     // |====================================================|
@@ -238,8 +253,8 @@ void _level1::drawScene()
         glDepthMask(GL_FALSE); // don't write depth for skybox
         // mySkyBox->drawSkyBox();
         glDepthMask(GL_TRUE);
-        drawFloor();
     glPopMatrix();
+    drawFloor();
     glPushMatrix();
         for(int i = 0; i < 10; i++){
             if(b[i].live){
@@ -258,7 +273,6 @@ void _level1::drawScene()
     glDisable(GL_FOG);
     myHUD->draw(width, height);
     glEnable(GL_FOG);
-
 }
 
 void _level1::mouseMapping(int x, int y)
