@@ -48,8 +48,7 @@ void _capsule::draw() {
     glTranslatef(posX, posY, posZ);
 
     myTex->bindTexture();
-    glEnable(GL_TEXTURE_2D);
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor3f(0.4f, 0.1f, 0.1f);
     if(myTex){
         myTex->bindTexture();
         glEnable(GL_TEXTURE_2D);

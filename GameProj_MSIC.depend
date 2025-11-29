@@ -712,7 +712,7 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_sounds.cpp
 	"_sounds.h"
 
-1763900055 source:c:\main\myschool\csci191t\maingame\gameproj\src\_sprite.cpp
+1764415699 source:c:\main\myschool\csci191t\maingame\gameproj\src\_sprite.cpp
 	"_sprite.h"
 
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_textureloader.cpp
@@ -721,7 +721,7 @@
 1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_timer.cpp
 	"_timer.h"
 
-1764163402 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
+1764414844 source:c:\main\myschool\csci191t\maingame\gameproj\src\_player.cpp
 	"_player.h"
 
 1764161603 c:\main\myschool\csci191t\maingame\gameproj\include\_player.h
@@ -739,10 +739,10 @@
 	<_level3.h>
 	<_menu.h>
 
-1764162684 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+1764418865 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
 	"_level1.h"
 
-1764160154 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+1764418853 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -778,7 +778,7 @@
 1763978046 source:c:\main\myschool\csci191t\maingame\gameproj\src\_scenemanager.cpp
 	"_scenemanager.h"
 
-1763930261 c:\main\myschool\csci191t\maingame\gameproj\include\_level2.h
+1764416180 c:\main\myschool\csci191t\maingame\gameproj\include\_level2.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -865,7 +865,7 @@
 	"_common.h"
 	"_textureloader.h"
 
-1764115012 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsule.cpp
+1764415778 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsule.cpp
 	"_capsule.h"
 
 1764079438 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsulehandler.cpp

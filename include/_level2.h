@@ -68,7 +68,6 @@ class _level2 : public _Scene
         int currentEnemy;
         // Camera Controls
         int lastMouseX, lastMouseY = 0;
-        int lastPlayerAction;
         bool isDraggingOrbit;
         // Camera orbit variables
         float orbitCurrentYaw = 0.0f;    // current horizontal angle (degrees)

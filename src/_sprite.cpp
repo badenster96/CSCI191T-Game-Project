@@ -41,7 +41,6 @@ void _sprite::drawSprite()
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_CURRENT_BIT);
 
     glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
     glEnable(GL_TEXTURE_2D);

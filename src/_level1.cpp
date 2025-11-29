@@ -12,19 +12,27 @@ _level1::~_level1()
 {
     //dtor
 }
-void _level1::enemyDamagePlayer(float currentTime, _player* player){
-    if(currentTime - lastHitTime >= player->iFrames){
-        for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 2.0f)){
-                lastHitTime = currentTime;
-                std::cout << "At:" << lastHitTime << " | Player hit for " << nearestEnemy->damage << " damage!" << std::endl;
-                player->hit(e->damage);
-            }
-        }
-    }
+
+void _level1::initTextures() {
+    myTexture->loadTexture("images/tex.jpg");
+    // myFloor -> loadTexture("images/");
+    myPrlx->parallaxInit("images/prlx.jpg");
+
+    mySkyBox->skyBoxInit();
+    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
+    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
+    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
+    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
+    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
+    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
+    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
+
+    mySprite->spriteInit("images/eg.png",6,4);
+    mdl3D->init("models/GiJoe/tris.md2");
+    mdl3DW->initModel("models/Tekk/weapon.md2");
+    enemyHandler->initModels("models/badboyblake/tris.MD2");
 }
-void _level1::initGL()
-{
+void _level1::initGL() {
     scene = LEVEL1;
     std::cout << "Initializing Level1..." << std::endl;
     lockCursor();
@@ -68,26 +76,11 @@ void _level1::initGL()
     myHUD->setPlayer(mdl3D);
     myHUD->setEnemies(&enemyHandler->enemies);
 
-    myTexture->loadTexture("images/tex.jpg");
-    // myFloor -> loadTexture("images/");
-    myPrlx->parallaxInit("images/prlx.jpg");
+    initTextures();
 
-    mySkyBox->skyBoxInit();
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
-
-    mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->init("models/GiJoe/tris.md2");
-    mdl3DW->initModel("models/Tekk/weapon.md2");
-    enemyHandler->initModels("models/badboyblake/tris.MD2");
 
     snds->initSounds();
-    snds->playMusic("sounds/mainTheme.wav");
+    // snds->playMusic("sounds/mainTheme.wav");
     myHUD->init();
     myInv->initInv();
 
@@ -97,29 +90,28 @@ void _level1::initGL()
     mdl3D->applyPlayerStats();
     isInit = true;
 }
-
-void _level1::drawSceneCalc(){
+void _level1::lose() {
     if(mdl3D && mdl3D->currHealth <= 0.0f){
         scene = MAIN;
         isInit = false;
         return;
     }
-    // Enemy stats
-    int rangeEnemiesPerCapsule = 4;
-    float minEnemiesPerCapsule = 5;
-
-    mdl3D->update();
-    mySprite->face(mdl3D->getPos());
-
-
-    // Collision Check to Sprites, to pick up items
-    // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
-
-    //Set up enemy waves
+}
+void _level1::enemyDamagePlayer(_player* player){
+    if(!player) return;
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-
-
-    // Attack logic, if there is a nearestEnemy
+    if(currentTime - lastHitTime >= player->iFrames){
+        for(const auto& e : enemyHandler->enemies){
+            if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 2.0f)){
+                lastHitTime = currentTime;
+                std::cout << "At:" << lastHitTime << " | Player hit for " << nearestEnemy->damage << " damage!" << std::endl;
+                player->hit(e->damage);
+            }
+        }
+    }
+}
+void _level1::attackHandler() {
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     nearestEnemy = enemyHandler->nearest(mdl3D->pos);
     if(nearestEnemy){
         mdl3D->setTarget(nearestEnemy->pos);
@@ -142,11 +134,15 @@ void _level1::drawSceneCalc(){
         }
         // Enemy hit handler
         // function in enemyHandler that takes in
-        enemyDamagePlayer(currentTime,mdl3D);
+        enemyDamagePlayer(mdl3D);
     }
-
+}
+void _level1::capsuleSpawner(int range, int add) {
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    int rangeEnemiesPerCapsule = 4;
+    float minEnemiesPerCapsule = 5;
     // Spawn capsules
-    int capsulesPerWave = rand()%5 + 5;
+    int capsulesPerWave = rand()%range + add;
     if(currentTime - lastWaveTime >= waveInterval){
         int spawned = 0;
         for(auto& c : capsules) {
@@ -167,8 +163,41 @@ void _level1::drawSceneCalc(){
             c->state = SPAWNED;
         }
     }
+}
+
+void _level1::drawSceneCalc(){
+    lose();
+    mdl3D->update();
+    mySprite->face(mdl3D->getPos());
+    // Collision Check to Sprites, to pick up items
+    // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
+    attackHandler();
+    capsuleSpawner(20,50);
     myInv->setPlayerStats(mdl3D->itemStats);
     mdl3D->applyPlayerStats();
+}
+void _level1::drawFloor(){
+    glPushMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        myTexture->bindTexture(); // your floor texture
+
+        glColor3f(1.0f, 1.0f, 1.0f);
+
+        float floorSize = 500.0f;  // how big the floor is
+        float repeat = 100.0f;     // how many times the texture repeats
+        float floorHeight = -2.8f;
+
+        glBegin(GL_QUADS);
+            glNormal3f(0.0f, 1.0f, 0.0f); // point up
+
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(-floorSize, floorHeight, -floorSize);
+            glTexCoord2f(repeat, 0.0f); glVertex3f(floorSize, floorHeight, -floorSize);
+            glTexCoord2f(repeat, repeat); glVertex3f(floorSize, floorHeight, floorSize);
+            glTexCoord2f(0.0f, repeat); glVertex3f(-floorSize, floorHeight, floorSize);
+        glEnd();
+        glEnable(GL_LIGHTING);
+    glPopMatrix();
 }
 
 void _level1::drawScene()
@@ -209,28 +238,7 @@ void _level1::drawScene()
         glDepthMask(GL_FALSE); // don't write depth for skybox
         // mySkyBox->drawSkyBox();
         glDepthMask(GL_TRUE);
-        // Floor
-        glPushMatrix();
-            glEnable(GL_TEXTURE_2D);
-            glDisable(GL_LIGHTING);
-            myTexture->bindTexture(); // your floor texture
-
-            glColor3f(1.0f, 1.0f, 1.0f);
-
-            float floorSize = 500.0f;  // how big the floor is
-            float repeat = 100.0f;     // how many times the texture repeats
-            float floorHeight = -2.8f;
-
-            glBegin(GL_QUADS);
-                glNormal3f(0.0f, 1.0f, 0.0f); // point up
-
-                glTexCoord2f(0.0f, 0.0f); glVertex3f(-floorSize, floorHeight, -floorSize);
-                glTexCoord2f(repeat, 0.0f); glVertex3f(floorSize, floorHeight, -floorSize);
-                glTexCoord2f(repeat, repeat); glVertex3f(floorSize, floorHeight, floorSize);
-                glTexCoord2f(0.0f, repeat); glVertex3f(-floorSize, floorHeight, floorSize);
-            glEnd();
-            glEnable(GL_LIGHTING);
-        glPopMatrix();
+        drawFloor();
     glPopMatrix();
     glPushMatrix();
         for(int i = 0; i < 10; i++){
@@ -285,8 +293,10 @@ int _level1::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 isInit = false;
                 return 0;
             }
-            if(wParam == 'H'){
-                myInv->addItem("SMG");
+            if(wParam == '='){
+                scene = LEVEL2;
+                isInit = false;
+                return 0;
             }
             myInput->wParam = wParam;
             myInput->keyPressed(myModel);

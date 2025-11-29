@@ -56,22 +56,22 @@ class _level1 : public _Scene
 
         int clickCnt =0;
 
-        // Main functions
+        // Init functions - functions that run once at init
         // void reSizeScene(int width, int height) override;  // resize window
+        void initTextures();
         void initGL() override;                            // initialize GL graphics
-        void drawScene() override;                         // render scene
-        void drawSceneCalc();
-        int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
-        void mouseMapping(int,int);
-        double msX,msY,msZ;
-        //Handler Functions
-        void enemyDamagePlayer(float currentTime, _player* player);
+        // Draw Functions - Functions that run every frame
+        void lose();
+        void enemyDamagePlayer(_player* player);
+        void attackHandler();
+        void capsuleSpawner(int range, int add);
 
-        // Player Stats
-        float currentPlayerAngle = 0.0f;
-        // Camera Controls
-        int lastMouseX, lastMouseY = 0;
-        int lastPlayerAction;
+        void drawSceneCalc();
+        void drawFloor();
+        void drawScene() override;                         // render scene
+        // Input functions - Functions that handle input mapping
+        void mouseMapping(int,int);
+        int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
 
         // Wave spawning
         int currentWave = 0;
@@ -83,6 +83,7 @@ class _level1 : public _Scene
         float lastAttackTime = 0.0f;
         float lastHitTime = 0.0f;
         float minDistance = 0.0f;
+        double msX,msY,msZ;
     protected:
 
     private:

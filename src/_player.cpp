@@ -3,16 +3,7 @@
 _player::_player()
 {
     //ctor
-    stats["Health"] = 100.0f;
-    stats["Speed"] = 0.5f;
-    stats["AttackSpeed"] = 10.0f;
-    stats["Damage"] = 2.0f;
-    stats["CriticalChance"] = 0.1f;
-    stats["Armor"] = 0.0f;
-    stats["ArmorPiercing"] = 10.0f;
     camHeightOffset = 3.0f;
-    currHealth = 100.0f;
-
 }
 
 _player::~_player()
