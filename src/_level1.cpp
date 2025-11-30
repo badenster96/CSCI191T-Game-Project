@@ -104,7 +104,7 @@ void _level1::enemyDamagePlayer(_player* player){
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     if(currentTime - lastHitTime >= player->iFrames){
         for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 2.0f)){
+            if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 1.0f)){
                 lastHitTime = currentTime;
                 std::cout << "At:" << lastHitTime << " | Player hit for " << nearestEnemy->damage << " damage!" << std::endl;
                 player->hit(e->damage);
@@ -178,8 +178,6 @@ void _level1::itemFromCapsule() {
     for(const auto& c : capsules){
         vec3 capsulePos(c->posX, c->posY, c->posZ);
         if(myCol->isSphereCol(mdl3D->pos, capsulePos, 2.0f, 2.0f, 1.0f) && c->state == ONGROUND){
-            //myInv->addItem("SMG");
-            //c->state = COLLECTED;
             pickupMenu(c);
         }
     }

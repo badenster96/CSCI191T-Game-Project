@@ -48,36 +48,34 @@ void _bullets::shootBullet(const vec3& start, const vec3& end)
     live = true;        // activate the bullet
     actionTrigger = SHOOT; // set state to shooting
 }
-void _bullets::bulletActions()
-{
-
+void _bullets::bulletActions(){
     switch(actionTrigger)
     {
     case READY:
-           pos.x=0;
-           pos.y=0;
-           pos.z=0;
+        pos.x=0;
+        pos.y=0;
+        pos.z=0;
 
-           des.x =0;
-           des.y= 0;
-           des.z = 0;
+        des.x =0;
+        des.y= 0;
+        des.z = 0;
 
-           live =false;
-           t=0;
+        live =false;
+        t=0;
         break;
 
     case SHOOT:   // applying parametric equation
-                  // p = p1+t(p2-p1)
+    // p = p1+t(p2-p1)
 
-                  if(live)
-                  {
-                      pos.x = src.x + t*(des.x -src.x);
-                      pos.y = src.y + t*(des.y -src.y);
-                      pos.z = src.z + t*(des.z -src.z);
+        if(live)
+        {
+            pos.x = src.x + t*(des.x -src.x);
+            pos.y = src.y + t*(des.y -src.y);
+            pos.z = src.z + t*(des.z -src.z);
 
-                      if(t<1) t+=0.05;
-                      else actionTrigger = READY;
-                  }
+            if(t<1) t+=0.05;
+            else actionTrigger = READY;
+        }
         break;
 
     case HIT:
