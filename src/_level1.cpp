@@ -6,6 +6,7 @@ _level1::_level1()
     myTime->startTime = clock();
     isInit = false;
     nearestEnemy = nullptr;
+    isPickupMenuOpen = false;
 }
 
 _level1::~_level1()
@@ -148,7 +149,7 @@ void _level1::capsuleSpawner(int range, int add) {
     if(currentTime - lastWaveTime >= waveInterval){
         int spawned = 0;
         for(auto& c : capsules) {
-            if(!c->isSpawned && spawned < capsulesPerWave){
+            if(c->state == DESPAWNED && spawned < capsulesPerWave){
                 if(enemyHandler->canSpawn())c->spawn(mdl3D->pos);
                 spawned++;
             }
@@ -165,14 +166,21 @@ void _level1::capsuleSpawner(int range, int add) {
         }
     }
 }
+void _level1::pickupMenu(_capsule* c){
+    _item pickupItem = myInv->randomItem();
+    isPickupMenuOpen = true;
+    myInv->addItem(pickupItem);
+    isPickupMenuOpen = false;
+    c->state = COLLECTED;
+}
 void _level1::itemFromCapsule() {
     // Check if the player is colliding with a capsule, and give the player an item if they are
     for(const auto& c : capsules){
         vec3 capsulePos(c->posX, c->posY, c->posZ);
-        if(myCol->isSphereCol(mdl3D->pos, capsulePos, 2.0f, 2.0f, 1.0f)){
-            myInv->addItem("SMG");
-            c->state = SPAWNED;
-            c->despawn();
+        if(myCol->isSphereCol(mdl3D->pos, capsulePos, 2.0f, 2.0f, 1.0f) && c->state == ONGROUND){
+            //myInv->addItem("SMG");
+            //c->state = COLLECTED;
+            pickupMenu(c);
         }
     }
 }
@@ -186,6 +194,7 @@ void _level1::drawSceneCalc(){
     attackHandler();
     capsuleSpawner(20,50);
     itemFromCapsule();
+    enemyHandler->update(mdl3D->pos);
     myInv->setPlayerStats(mdl3D->itemStats);
     mdl3D->applyPlayerStats();
 }

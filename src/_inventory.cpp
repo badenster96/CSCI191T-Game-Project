@@ -13,7 +13,8 @@ _inventory::~_inventory()
 void _inventory::initInv() {
     itemsMaster = fl.loadItems("items");
 }
-void _inventory::addItem(std::string itemName) {
+void _inventory::addItem(_item item) {
+    std::string itemName = item.name;
     int newQ = inventory[itemName].quantity;
     if(inventory.find(itemName) != inventory.end()) inventory[itemName] = itemsMaster[itemName];
     inventory[itemName].quantity = newQ + 1;
@@ -25,5 +26,13 @@ void _inventory::setPlayerStats(
         for(const auto& stat : item.second.stats){
             player[stat.first] = stat.second * item.second.quantity;
         }
+    }
+}
+_item _inventory::randomItem() {
+    int randomItem = rand()%itemsMaster.size();
+    int itemNumber = 0;
+    for(const auto& i : itemsMaster){
+        if(itemNumber == randomItem) return i.second;
+        else itemNumber++;
     }
 }

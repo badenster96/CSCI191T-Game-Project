@@ -14,8 +14,9 @@ class _inventory
         void initInv();
         _item getItem(std::string itemName){return itemsMaster[itemName];}
         void convertItemStatsToStats();
-        void addItem(std::string itemName);
+        void addItem(_item item);
         void setPlayerStats(unordered_map<std::string,float>& player);
+        _item randomItem();
         _FileLoader fl;
 
 

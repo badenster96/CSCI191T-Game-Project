@@ -498,7 +498,7 @@
 	<windows.h>
 	"_common.h"
 
-1764159001 c:\main\myschool\csci191t\maingame\gameproj\include\_common.h
+1764462526 c:\main\myschool\csci191t\maingame\gameproj\include\_common.h
 	<iostream>
 	<windows.h>
 	<string>
@@ -691,7 +691,7 @@
 1763895294 source:c:\main\myschool\csci191t\maingame\gameproj\src\_camera.cpp
 	"_camera.h"
 
-1763267689 source:c:\main\myschool\csci191t\maingame\gameproj\src\_collisioncheck.cpp
+1764499806 source:c:\main\myschool\csci191t\maingame\gameproj\src\_collisioncheck.cpp
 	"_collisioncheck.h"
 
 1763979245 source:c:\main\myschool\csci191t\maingame\gameproj\src\_inputs.cpp
@@ -739,10 +739,10 @@
 	<_level3.h>
 	<_menu.h>
 
-1764458238 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
+1764501760 source:c:\main\myschool\csci191t\maingame\gameproj\src\_level1.cpp
 	"_level1.h"
 
-1764458179 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
+1764498557 c:\main\myschool\csci191t\maingame\gameproj\include\_level1.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -837,19 +837,20 @@
 	<_sprite.h>
 	<string>
 
-1764163080 source:c:\main\myschool\csci191t\maingame\gameproj\src\_inventory.cpp
+1764499160 source:c:\main\myschool\csci191t\maingame\gameproj\src\_inventory.cpp
 	"_inventory.h"
 
-1764161868 c:\main\myschool\csci191t\maingame\gameproj\include\_inventory.h
+1764499094 c:\main\myschool\csci191t\maingame\gameproj\include\_inventory.h
 	<_item.h>
 	<_common.h>
 	<_FileLoader.h>
 	<_player.h>
 
-1764113861 c:\main\myschool\csci191t\maingame\gameproj\include\_enemyhandler.h
+1764501409 c:\main\myschool\csci191t\maingame\gameproj\include\_enemyhandler.h
 	<_enemy.h>
+	<_collisioncheck.h>
 
-1764113817 source:c:\main\myschool\csci191t\maingame\gameproj\src\_enemyhandler.cpp
+1764501711 source:c:\main\myschool\csci191t\maingame\gameproj\src\_enemyhandler.cpp
 	"_EnemyHandler.h"
 	<iostream>
 
@@ -860,12 +861,12 @@
 	<_player.h>
 	<_enemy.h>
 
-1764457942 c:\main\myschool\csci191t\maingame\gameproj\include\_capsule.h
+1764462538 c:\main\myschool\csci191t\maingame\gameproj\include\_capsule.h
 	"_model.h"
 	"_common.h"
 	"_textureloader.h"
 
-1764457918 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsule.cpp
+1764462916 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsule.cpp
 	"_capsule.h"
 
 1764079438 source:c:\main\myschool\csci191t\maingame\gameproj\src\_capsulehandler.cpp

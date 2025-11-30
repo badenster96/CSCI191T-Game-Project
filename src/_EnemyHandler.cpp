@@ -22,17 +22,16 @@ void _EnemyHandler::initModels(const char* model){
     std::cout << "EnemyHandler InitModels" << std::endl;
     for(int i = 0; i < enemies.size(); i++) enemies.at(i)->init(model);
 }
+void _EnemyHandler::update(vec3& player){
+    for(auto& e : enemies) {
+        e->moveTowardPoint(player);
+    }
+    resolveCollisions();
+}
 void _EnemyHandler::draw(vec3& player) {
-    glPushMatrix();
-        for(auto& e : enemies) {
-            float dx = e->pos.x - player.x;
-            float dz = e->pos.z - player.z;
-            float distSq = dx*dx + dz*dz;
-
-            if(distSq > 300.0f * 300.0f) continue;
-            if(e->isAlive)e->draw();
-        }
-    glPopMatrix();
+    for(auto& e : enemies) {
+        if(e->isAlive)e->draw();
+    }
 }
 
 _enemy* _EnemyHandler::nearest(vec3& point) {
@@ -40,7 +39,6 @@ _enemy* _EnemyHandler::nearest(vec3& point) {
     _enemy* nearestEnemy = nullptr;
     for(auto& e : enemies) {
         if(e->isSpawned && e->isAlive){
-            e->moveTowardPoint(point);
             vec3 distBetween;
             distBetween.x = point.x - e->pos.x;
             distBetween.y = point.y - e->pos.y;
@@ -54,6 +52,41 @@ _enemy* _EnemyHandler::nearest(vec3& point) {
         }
     }
     return nearestEnemy;
+}
+ void _EnemyHandler::resolveCollisions() {
+     float minimumDistance = 4.0f;
+    for(int i = 0; i < enemies.size(); i++){
+        _enemy* e1 = enemies[i];
+        if(!e1 || !e1->isSpawned || !e1->isAlive) continue;
+        for(int j = i+1; j < enemies.size(); j++){
+            _enemy* e2 = enemies[j];
+            if(!e2 || !e2->isSpawned || !e2->isAlive) continue;
+
+            float dx = e1->pos.x - e2->pos.x;
+            float dy = e1->pos.y - e2->pos.y;
+            float dz = e1->pos.z - e2->pos.z;
+            float distSq = dx*dx + dy*dy + dz*dz;
+
+            if(distSq < minimumDistance * minimumDistance){
+                float distance = sqrt(distSq);
+                if(distance < 0.0001f) distance = 0.0001f;
+
+                float push = (minimumDistance - distance) * 0.5f;
+
+                float nx = dx / distance;
+                float ny = dy / distance;
+                float nz = dz / distance;
+
+                e1->pos.x += nx * push;
+                e1->pos.y += ny * push;
+                e1->pos.z += nz * push;
+
+                e2->pos.x -= nx * push;
+                e2->pos.y -= ny * push;
+                e2->pos.z -= nz * push;
+            }
+        }
+    }
 }
 
 void _EnemyHandler::calc(int rangeEnemiesPerWave, int minEnemiesPerWave, vec3& point) {

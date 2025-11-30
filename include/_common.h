@@ -88,9 +88,11 @@ enum ItemType {
     TRAINING
 };
 enum CAPSULE_STATE {
+    DESPAWNED,
     SPAWNED,
     FALLING,
-    ONGROUND
+    ONGROUND,
+    COLLECTED
 };
 
 #endif // _COMMON_H

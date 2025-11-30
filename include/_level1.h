@@ -63,7 +63,9 @@ class _level1 : public _Scene
         void enemyDamagePlayer(_player* player);
         void attackHandler();
         void capsuleSpawner(int range, int add);
+        void pickupMenu();
         void itemFromCapsule();
+        void pickupMenu(_capsule* c);
 
         void drawSceneCalc();
         void drawFloor();
@@ -83,6 +85,8 @@ class _level1 : public _Scene
         float lastHitTime = 0.0f;
         float minDistance = 0.0f;
         double msX,msY,msZ;
+        // Menu
+        bool isPickupMenuOpen;
     protected:
 
     private:

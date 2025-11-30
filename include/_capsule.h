@@ -17,12 +17,10 @@ class _capsule : public _model
         void update(float deltaTime);
         void spawn(vec3 center);
         void draw();
-        void despawn();
 
         CAPSULE_STATE getState() { return state; }
 
         _textureLoader* myTex = nullptr;
-        bool isSpawned;
         CAPSULE_STATE state;
 
     protected:

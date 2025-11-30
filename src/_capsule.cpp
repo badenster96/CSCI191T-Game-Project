@@ -3,8 +3,7 @@
 _capsule::_capsule()
 {
     //ctor
-    state = SPAWNED;
-    isSpawned = false;
+    state = DESPAWNED;
     myTex = new _textureLoader();
 }
 
@@ -15,9 +14,10 @@ _capsule::~_capsule()
 void _capsule::init() {
 
 }
+// First, spawn the capsule in the level loop
 void _capsule::spawn(vec3 center) {
-    if(isSpawned) return;
-    isSpawned = true;
+    if(state != DESPAWNED) return;
+    state = SPAWNED;
     radius = 1.0f;
     height = 5.0f;
     float radius = rand()%500/1.0f + 50;
@@ -29,9 +29,9 @@ void _capsule::spawn(vec3 center) {
     posZ = center.z + radius * sin(angle);
     state = FALLING;
 }
+// The falling animation for the capsule, and the handler for collection
 void _capsule::update(float deltaTime) {
     if(state == FALLING) {
-        state = FALLING;
         float gravity = -9.8f;
         dy += gravity * deltaTime * 0.00001;
         posY += dy * deltaTime;
@@ -39,12 +39,15 @@ void _capsule::update(float deltaTime) {
             posY = height / 2 - 3.5f;
             dy = 0.0f;
             state = ONGROUND;
-            isSpawned = false;
+            //isSpawned = false;
         }
+    }
+    if(state == COLLECTED){
+        state = DESPAWNED;
     }
 }
 void _capsule::draw() {
-    if(isSpawned = false) return;
+    if(state == DESPAWNED | state == COLLECTED) return;
     glPushMatrix();
     glTranslatef(posX, posY, posZ);
 
@@ -82,8 +85,4 @@ void _capsule::draw() {
 
     glDisable(GL_TEXTURE_2D);
     glPopMatrix();
-}
-
-void _capsule::despawn() {
-    isSpawned = false;
 }
