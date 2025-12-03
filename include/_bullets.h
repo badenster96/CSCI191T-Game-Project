@@ -3,6 +3,7 @@
 
 #include<_common.h>
 #include<_textureloader.h>
+#include <_3DModelLoader.h>
 #include<_timer.h>
 
 class _bullets
@@ -11,6 +12,7 @@ class _bullets
         _bullets();
         virtual ~_bullets();
 
+        _3DModelLoader         *spearModel = new _3DModelLoader();
         _textureLoader *tex = new _textureLoader();
         _timer         *mytime   = new _timer();
 

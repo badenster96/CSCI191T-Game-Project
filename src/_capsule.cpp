@@ -20,7 +20,7 @@ void _capsule::spawn(vec3 center) {
     state = SPAWNED;
     radius = 1.0f;
     height = 5.0f;
-    float radius = rand()%500/1.0f + 50;
+    float radius = rand()%50/1.0f + 50;
     float angle = rand()%360 / 180.0f * PI;
 
     // Calculate the random point

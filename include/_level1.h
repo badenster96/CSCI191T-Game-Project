@@ -87,6 +87,7 @@ class _level1 : public _Scene
         double msX,msY,msZ;
         // Menu
         bool isPickupMenuOpen;
+        std::vector<_item> pickupChoices;
     protected:
 
     private:

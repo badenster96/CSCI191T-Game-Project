@@ -21,21 +21,24 @@ _bullets::~_bullets()
 void _bullets::iniBullet(char* filename)
 {
    // if we use texture on bullets
+   spearModel->initModel(filename);
 }
 
 void _bullets::drawBullet()
 {
-    glDisable(GL_TEXTURE_2D);// only if you are using glut sphere
+    //glDisable(GL_TEXTURE_2D);// only if you are using glut sphere
     glPushMatrix();
 
      if(live)
      {
          glTranslatef(pos.x,pos.y,pos.z);
-         glutSolidSphere(0.5,20,20);
+         glScalef(0.1f,0.1f,0.1f);
+         // glutSolidSphere(0.5,20,20);
      }
+     spearModel->Draw();
 
      glPopMatrix();
-     glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
+     //glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
 }
 
 // In _bullets.cpp, define it:

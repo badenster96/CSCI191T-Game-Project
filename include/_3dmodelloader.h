@@ -130,13 +130,14 @@ class _3DModelLoader
           int actionTrigger =0;                                //Action Trigger
           int StartFrame =0;
           int EndFrame;
-          int n;
-          float interp;
-          double curent_time;
-          double last_time;
 
           vec3 pos;
           float dirAngleZ=180;
+
+           int n = 0; /* The current frame */
+           float interp = 0.0;
+           double curent_time = 0;
+           double last_time = 0;
     protected:
 
     private:

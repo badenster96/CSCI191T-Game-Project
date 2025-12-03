@@ -29,8 +29,11 @@ void _level1::initTextures() {
     mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
 
     mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->init("models/GiJoe/tris.md2");
+    mdl3D->init("models/Tekk/tris.md2");
     mdl3DW->initModel("models/Tekk/weapon.md2");
+    for(int i = 0; i < 10; i++){
+        b[i].iniBullet("models/Tekk/weapon.md2");
+    }
     enemyHandler->initModels("models/badboyblake/tris.MD2");
     std::cout << "Textures loaded." << std::endl;
 }
@@ -95,7 +98,11 @@ void _level1::initGL() {
 }
 void _level1::lose() {
     if(mdl3D && mdl3D->currHealth <= 0.0f){
+        mdl3D->resetPlayer();
+        myInv->resetItems();
         scene = MAIN;
+        enemies.clear();
+        capsules.clear();
         isInit = false;
         return;
     }
@@ -159,7 +166,7 @@ void _level1::capsuleSpawner(int range, int add) {
     // Spawn random number of enemies at capsule
     for(const auto& c : capsules){
         c->update(currentTime);
-        if(c->getState() == 2) {
+        if(c->getState() == 3) {
             vec3 capsulePos(c->posX,c->posY,c->posZ);
             enemyHandler->calc(rangeEnemiesPerCapsule, minEnemiesPerCapsule, capsulePos);
             std::cout << "Wave Spawned at Capsule" <<std::endl;
@@ -168,8 +175,13 @@ void _level1::capsuleSpawner(int range, int add) {
 }
 void _level1::pickupMenu(_capsule* c){
     _item pickupItem = myInv->randomItem();
+    int iteminput;
     isPickupMenuOpen = true;
-    myInv->addItem(pickupItem);
+    pickupChoices.clear();
+    for(int i = 0; i < 3; i++){
+        pickupChoices.push_back(myInv->randomItem());
+    }
+    // myInv->addItem(pickupItem);
     isPickupMenuOpen = false;
     c->state = COLLECTED;
 }
@@ -272,6 +284,29 @@ void _level1::drawScene()
     glPopMatrix();
     mySprite->drawSprite();
     mdl3D->draw();
+
+    glPushMatrix();
+
+        // Move to player
+        glTranslatef(mdl3D->pos.x, mdl3D->pos.y, mdl3D->pos.z);
+
+        // Apply player orientation
+        glRotatef(mdl3D->currentAngle-90, 0, 1, 0);  // yaw
+        glScalef(0.1f, 0.1f, 0.1f);   // <<< adjust until correct size
+
+
+        // Hand offset (adjust these)
+        glTranslatef(0.0f, 0.0f, 0.0f);
+
+        // Orient spear
+        glRotatef(90, 1, 0, 0);
+        glRotatef(180, 0, 1, 0);
+
+        mdl3DW->actionTrigger = mdl3D->actionTrigger;
+        mdl3DW->Actions();
+        mdl3DW->Draw();
+
+    glPopMatrix();
     // Enemy Render
     enemyHandler->draw(mdl3D->pos);
     for(const auto& c : capsules) {

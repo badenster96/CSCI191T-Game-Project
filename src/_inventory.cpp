@@ -28,6 +28,9 @@ void _inventory::setPlayerStats(
         }
     }
 }
+void _inventory::resetItems(){
+    inventory.clear();
+}
 _item _inventory::randomItem() {
     int randomItem = rand()%itemsMaster.size();
     int itemNumber = 0;

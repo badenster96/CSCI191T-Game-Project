@@ -20,6 +20,7 @@ class _player : public _3DModelLoader
         void handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd);
         // Helper Functions
         void applyPlayerStats();
+        void applyItemStats();
         vec3 calcMoveVector();
         void rotatePlayer(const vec3& normVec);
         void resetPlayer();

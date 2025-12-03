@@ -12,6 +12,15 @@ _player::~_player()
 }
 // Helper Functions
 void _player::applyPlayerStats() {
+    maxHealth = stats["Health"];
+    movementSpeed = stats["Speed"];
+    attackSpeed = stats["AttackSpeed"];
+    damage = stats["Damage"];
+    critChance = stats["CriticalChance"];
+    armor = stats["Armor"];
+    armorPiercing = stats["ArmorPiercing"];
+}
+void _player::applyItemStats(){
     maxHealth = stats["Health"] + itemStats["Health"];
     movementSpeed = stats["Speed"] + itemStats["Speed"];
     attackSpeed = stats["AttackSpeed"] + itemStats["AttackSpeed"];
@@ -73,6 +82,7 @@ void _player::resetPlayer() {
     stats["CriticalChance"] = 0.1f;
     stats["Armor"] = 0.0f;
     stats["ArmorPiercing"] = 10.0f;
+    itemStats.clear();
     applyPlayerStats();
     currHealth = maxHealth;
 }
@@ -84,13 +94,12 @@ void _player::init(const char* model) {
     cam.camInit();
 }
 void _player::draw() {
-    applyPlayerStats();
+    applyItemStats();
     glPushMatrix();
         glTranslatef(pos.x,pos.y,pos.z);
         glRotatef(currentAngle-90, 0, 1, 0);
         glRotatef(90,1,0,0);
         glRotatef(180,0,1,0);
-
 
         if(isMoving && actionTrigger != RUN){
             actionTrigger = RUN;

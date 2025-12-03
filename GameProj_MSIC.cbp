@@ -60,8 +60,10 @@
 		<Unit filename="include/_3dmodelloader.h" />
 		<Unit filename="include/_Enemy.h" />
 		<Unit filename="include/_EnemyHandler.h" />
+		<Unit filename="include/_FileLoader.h" />
 		<Unit filename="include/_bullets.h" />
 		<Unit filename="include/_camera.h" />
+		<Unit filename="include/_capsule.h" />
 		<Unit filename="include/_collisioncheck.h" />
 		<Unit filename="include/_common.h" />
 		<Unit filename="include/_hud.h" />
@@ -87,8 +89,10 @@
 		<Unit filename="src/_3dmodelloader.cpp" />
 		<Unit filename="src/_Enemy.cpp" />
 		<Unit filename="src/_EnemyHandler.cpp" />
+		<Unit filename="src/_FileLoader.cpp" />
 		<Unit filename="src/_bullets.cpp" />
 		<Unit filename="src/_camera.cpp" />
+		<Unit filename="src/_capsule.cpp" />
 		<Unit filename="src/_collisioncheck.cpp" />
 		<Unit filename="src/_hud.cpp" />
 		<Unit filename="src/_inputs.cpp" />

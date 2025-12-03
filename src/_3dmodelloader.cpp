@@ -6,9 +6,6 @@ _3DModelLoader::_3DModelLoader()
     pos.x =0;
     pos.y =0;
     pos.z =-10.0;
-    n = 0;
-    interp = 0.0f;
-    last_time = (double)glutGet(GLUT_ELAPSED_TIME) / 1000.0;
 }
 
 _3DModelLoader::~_3DModelLoader()
@@ -223,13 +220,16 @@ void _3DModelLoader::initModel(const char* filename)
 
 void _3DModelLoader::Draw()
 {
-    double current_time = (double)glutGet (GLUT_ELAPSED_TIME) / 1000.0;
-    /* Animate model from frames 0 to num_frames-1 */
-    interp += 10 * (current_time - last_time);
-    last_time = current_time;
 
-    Animate (StartFrame, EndFrame, &n, &interp);
-    RenderFrameItpWithGLCmds (n, interp, &md2file);
+
+  last_time = curent_time;
+  curent_time = (double)glutGet (GLUT_ELAPSED_TIME) / 1000.0;
+
+  /* Animate model from frames 0 to num_frames-1 */
+  interp += 10 * (curent_time - last_time);
+  Animate (StartFrame, EndFrame, &n, &interp);
+
+  RenderFrameItpWithGLCmds (n, interp, &md2file);
 }
 
 void _3DModelLoader::Actions()

@@ -21,7 +21,7 @@ void _enemy::init(const char* filename){
 void _enemy::spawn(vec3 center){
     // Enemy stats
     health = 10.0f + rand()%5;
-    damage = 1.0f + rand()%3;
+    damage = 1.0f + rand()%10;
     speed = 0.2f + rand()%100 * 0.001f;
     // Spawn logic
     float radius = rand()%50/10.0f + 10;
