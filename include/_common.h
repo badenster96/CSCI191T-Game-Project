@@ -77,6 +77,7 @@ enum Scene {
     LEVEL1,
     LEVEL2,
     LEVEL3,
+    LEVEL4,
     CREDITS,
     HELP,
     QUIT

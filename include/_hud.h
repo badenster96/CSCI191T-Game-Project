@@ -16,7 +16,12 @@ class _hud
         void renderText(int x, int y, const std::string& text);
         void drawHealthBar(int screenWidth, int screenHeight);
         void drawStats(int screenWidth, int screenHeight);
+        void addConsoleMessage(const std::string& message);
+        void drawConsole(int screenWidth, int screenHeight);
         void draw(int width, int height);
+
+
+        std::vector<std::string> gameConsole;
 
     protected:
 

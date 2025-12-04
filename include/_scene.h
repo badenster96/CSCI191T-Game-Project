@@ -2,6 +2,7 @@
 #define _SCENE_H
 
 #include <windows.h>
+#include <vector>
 #include "_common.h"
 
 
@@ -19,6 +20,7 @@ class _Scene {
         void setWindow(HWND hWnd) { this->hWnd = hWnd; }
         bool active;
         bool isInit = false;
+        bool debug = false;
 
         int width, height;
 

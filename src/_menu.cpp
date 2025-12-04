@@ -91,7 +91,7 @@ void _Menu::handleMouse(int x, int y, bool click) {
     float buttonHalfHeight = 0.1f;
 
     if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
-        scene = LEVEL1;
+        scene = LEVEL3;
         active = false;
         std::cout << "Start Game\n";
     }

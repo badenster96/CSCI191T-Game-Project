@@ -113,6 +113,18 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
         yStart += (barHeight + spacing);
     }
 }
+void _hud::addConsoleMessage(const std::string& message){
+    gameConsole.push_back(message);
+    if(gameConsole.size() > 20)
+        gameConsole.erase(gameConsole.begin());
+}
+void _hud::drawConsole(int screenWidth, int screenHeight) {
+    float y = 100;
+    for(int i = 0; i < gameConsole.size(); i++){
+        renderText(screenWidth - 300, y, gameConsole[i].c_str());
+        y += 25;
+    }
+}
 void _hud::draw(int screenWidth, int screenHeight)
 {
     GLint viewport[4];
@@ -135,6 +147,7 @@ void _hud::draw(int screenWidth, int screenHeight)
 
     drawHealthBar(screenWidth, screenHeight);
     drawStats(screenWidth, screenHeight);
+    drawConsole(screenWidth, screenHeight);
 
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
