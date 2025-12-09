@@ -20,7 +20,7 @@ void _Menu::initGL() {
         -24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
         ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
         ANTIALIASED_QUALITY, FF_DONTCARE | DEFAULT_PITCH,
-        "Arial"
+        "Consolas"
     );
 
     SelectObject(hDC, font);
@@ -35,6 +35,7 @@ void _Menu::drawText(float x, float y, const std::string& text) {
 }
 
 void _Menu::drawScene() {
+    if(!active) initGL();
     glViewport(0, 0, width, height);
     // --- Save all relevant GL state ---
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);

@@ -15,7 +15,7 @@ _level3::~_level3()
 }
 
 void _level3::initTextures() {
-    std::cout << "Loading textures..." << std::endl;
+    myHUD->addConsoleMessage("Loading Textures...");
     myTexture->loadTexture("images/tex.jpg");
     myPrlx->parallaxInit("images/prlx.jpg");
 
@@ -29,17 +29,17 @@ void _level3::initTextures() {
     mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
 
     mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->init("models/Tekk/tris.md2");
+    mdl3D->init("models/waste/Quake2/baseq2/players/waste/tris.MD2");
     mdl3DW->initModel("models/Tekk/weapon.md2");
     for(int i = 0; i < 10; i++){
         b[i].iniBullet("models/Tekk/weapon.md2");
     }
     enemyHandler->initModels("models/badboyblake/tris.MD2");
-    std::cout << "Textures loaded." << std::endl;
+    myHUD->addConsoleMessage("Textures loaded.");
 }
 void _level3::initGL() {
-    std::cout << "Initializing Level1..." << std::endl;
-    scene = LEVEL1;
+    myHUD->addConsoleMessage("Initializing Level3...");
+    scene = LEVEL3;
     lockCursor();
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
     glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
@@ -71,7 +71,8 @@ void _level3::initGL() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-
+    enemies.clear();
+    capsules.clear();
     enemyHandler->setup(200);
     capsules.resize(20);
     for( int i = 0; i < capsules.size(); i++){
@@ -94,7 +95,7 @@ void _level3::initGL() {
     lastWaveTime = 0.0f;
     mdl3D->applyPlayerStats();
     isInit = true;
-    std::cout << "_level1 initialized" << std::endl;
+    myHUD->addConsoleMessage("_level3 initialized");
 }
 void _level3::lose() {
     if(mdl3D && mdl3D->currHealth <= 0.0f){
@@ -113,8 +114,8 @@ void _level3::enemyDamagePlayer(_player* player){
         for(const auto& e : enemyHandler->enemies){
             if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 1.0f)){
                 lastHitTime = currentTime;
-                myHUD->addConsoleMessage("Player Hit!");
-                std::cout << "At:" << lastHitTime << " | Player hit for " << nearestEnemy->damage << " damage!" << std::endl;
+                std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string(nearestEnemy->damage) + " damage!";
+                myHUD->addConsoleMessage(message);
                 player->hit(e->damage);
             }
         }
@@ -150,8 +151,8 @@ void _level3::attackHandler() {
 }
 void _level3::capsuleSpawner(int range, int add) {
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-    int rangeEnemiesPerCapsule = 4;
-    float minEnemiesPerCapsule = 5;
+    int rangeEnemiesPerCapsule = 10;
+    float minEnemiesPerCapsule = 15;
     // Spawn capsules
     int capsulesPerWave = rand()%range + add;
     if(currentTime - lastWaveTime >= waveInterval){
@@ -167,10 +168,10 @@ void _level3::capsuleSpawner(int range, int add) {
     // Spawn random number of enemies at capsule
     for(const auto& c : capsules){
         c->update(currentTime);
-        if(c->getState() == 3) {
+        if(c->getState() == ONGROUND) {
             vec3 capsulePos(c->posX,c->posY,c->posZ);
             enemyHandler->calc(rangeEnemiesPerCapsule, minEnemiesPerCapsule, capsulePos);
-            myHUD->addConsoleMessage("Wave Spawned at Capsule");
+            // myHUD->addConsoleMessage("Wave Spawned at Capsule");
         }
     }
 }
@@ -182,7 +183,7 @@ void _level3::pickupMenu(_capsule* c){
     for(int i = 0; i < 3; i++){
         pickupChoices.push_back(myInv->randomItem());
     }
-    // myInv->addItem(pickupItem);
+    myInv->addItem(pickupItem);
     isPickupMenuOpen = false;
     c->state = COLLECTED;
 }
@@ -203,7 +204,7 @@ void _level3::drawSceneCalc(){
     // Collision Check to Sprites, to pick up items
     // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
     attackHandler();
-    capsuleSpawner(20,50);
+    capsuleSpawner(3,2);
     itemFromCapsule();
     enemyHandler->update(mdl3D->pos);
     myInv->setPlayerStats(mdl3D->itemStats);
@@ -355,6 +356,15 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 isInit = false;
                 return 0;
             }
+            if(wParam == VK_OEM_3){
+                if(myHUD->debug == false) {
+                    myHUD->debug = true;
+                    myHUD->addConsoleMessage("Debug ON");
+                } else if(myHUD->debug == true){
+                    myHUD->debug = false;
+                    myHUD->addConsoleMessage("Debug OFF");
+                }
+            }
             myInput->wParam = wParam;
             myInput->keyPressed(myModel);
             myInput->keyPressed(myPrlx);
@@ -397,7 +407,7 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
 
         case WM_MOUSEMOVE: {
-            if(scene == LEVEL1){
+            if(scene == LEVEL3){
                 lockCursor();
             }
         }

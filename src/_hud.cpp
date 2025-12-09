@@ -12,10 +12,10 @@ _hud::~_hud()
 void _hud::init() {
     HDC hDC = wglGetCurrentDC();
     HFONT font = CreateFontA(
-        -24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+        -16, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
         ANSI_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS,
         ANTIALIASED_QUALITY, FF_DONTCARE | DEFAULT_PITCH,
-        "Impact"
+        "Terminal"
     );
 
     SelectObject(hDC, font);
@@ -75,8 +75,8 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
         "Armor Piercing: "
     };
     std::vector<std::string> statsToText = {
-        std::to_string((int)(player->movementSpeed * 200)) + "%",
-        std::to_string((int)(player->attackSpeed * 10.0f)) + "%",
+        std::to_string((int)(player->movementSpeed / player->stats["Speed"] * 100)) + "%",
+        std::to_string((int)(player->attackSpeed / player->stats["AttackSpeed"] * 100)) + "%",
         std::to_string((int)(player->damage)),
         std::to_string((int)(player->critChance * 100.0f)) + "%",
         std::to_string((int)player->armor),
@@ -114,16 +114,20 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
     }
 }
 void _hud::addConsoleMessage(const std::string& message){
-    gameConsole.push_back(message);
+    if(debug) gameConsole.push_back(message);
     if(gameConsole.size() > 20)
         gameConsole.erase(gameConsole.begin());
+        std::cout << message << std::endl;
 }
 void _hud::drawConsole(int screenWidth, int screenHeight) {
     float y = 100;
-    for(int i = 0; i < gameConsole.size(); i++){
-        renderText(screenWidth - 300, y, gameConsole[i].c_str());
-        y += 25;
+    if(debug){
+        for(int i = 0; i < gameConsole.size(); i++){
+            renderText(300, y, gameConsole[i].c_str());
+            y += 25;
+        }
     }
+
 }
 void _hud::draw(int screenWidth, int screenHeight)
 {

@@ -79,7 +79,7 @@ void _player::resetPlayer() {
     stats["Speed"] = 0.5f;
     stats["AttackSpeed"] = 10.0f;
     stats["Damage"] = 2;
-    stats["CriticalChance"] = 0.1f;
+    stats["CriticalChance"] = 0.05f;
     stats["Armor"] = 0.0f;
     stats["ArmorPiercing"] = 10.0f;
     itemStats.clear();

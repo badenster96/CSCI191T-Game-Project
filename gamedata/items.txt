@@ -1,9 +1,9 @@
-Gizmo Spinach Health 25 Speed 0.2
-Gizmo Adderall Speed 0.1
-Gizmo Bump_Stock AttackSpeed 0.1
+Gizmo Spinach Health 25 Speed 0.05
+Gizmo Adderall Speed 0.05
+Gizmo Bump_Stock AttackSpeed 10.0
 Gizmo Hollow_Point Damage 2
 Gizmo Sniper_Scope CriticalChance 0.1
 Gizmo Bulletproof_Vest Armor 2
 Gizmo Piercing_Rounds ArmorPiercing 2
 Weapon Throwing_Dagger Damage 5 ArmorPiercing 3
-Weapon SMG Damage 2 AttackSpeed 0.5
+Weapon SMG Damage 2 AttackSpeed 2.5

@@ -20,7 +20,7 @@ class _hud
         void drawConsole(int screenWidth, int screenHeight);
         void draw(int width, int height);
 
-
+        bool debug = false;
         std::vector<std::string> gameConsole;
 
     protected:

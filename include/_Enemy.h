@@ -12,12 +12,14 @@ class _enemy : public _3DModelLoader
         virtual ~_enemy();
         void init(const char* filename);
         void draw();
+        int ReadMD2Model(const char* filename, struct md2_model_t* mdl)override;
 
         void spawn(vec3 center);
 
         void moveTowardPoint(vec3 point);
 
-        bool isAlive, isSpawned = false;
+        bool isAlive = false;
+        bool isSpawned = false;
         float angle;
 
         //Animation
