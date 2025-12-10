@@ -22,6 +22,7 @@
 #include <_inventory.h>
 #include <_hud.h>
 #include <_capsule.h>
+#include <_capsuleHandler.h>
 
 
 class _level3 : public _Scene
@@ -45,12 +46,12 @@ class _level3 : public _Scene
         _3DModelLoader *mdl3DW      = new _3DModelLoader();
         _sounds *snds               = new _sounds();
         _EnemyHandler *enemyHandler = new _EnemyHandler();
+        _capsuleHandler *capsuleHandler = new _capsuleHandler();
         _sprite *mySprite           = new _sprite();
         _hud *myHUD                 = new _hud();
         _inventory *myInv           = new _inventory();
         _bullets b[10];
         std::vector<_capsule*> capsules;
-        std::vector<_enemy*> enemies;
         std::vector<_sprite*> items;
         _enemy* nearestEnemy;
 
@@ -61,7 +62,9 @@ class _level3 : public _Scene
         // Draw Functions - Functions that run every frame
         void lose();
         void enemyDamagePlayer(_player* player);
-        void attackHandler();
+        void fireBullet();
+        void attackHandler(vec3 nearestE, vec3 player);
+        void waveSpawn();
         void capsuleSpawner(int range, int add);
         void pickupMenu();
         void itemFromCapsule();
@@ -75,11 +78,9 @@ class _level3 : public _Scene
         int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
 
         // Wave spawning
-        int currentWave = 0;
-        int enemiesPerWave;
-        float waveInterval;
-        float lastWaveTime;
-        int maxEnemies;
+        float waveSpawned = false;
+        int wave = 1;
+        int enemiesKilled = 0;
         // Attack Logic
         float lastAttackTime = 0.0f;
         float lastHitTime = 0.0f;

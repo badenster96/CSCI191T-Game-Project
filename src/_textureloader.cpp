@@ -16,6 +16,7 @@ GLuint _textureLoader::loadTexture(char* fileName)
     glBindTexture(GL_TEXTURE_2D,textID);
 
     image = SOIL_load_image(fileName,&width,&height,0,SOIL_LOAD_RGBA);
+    std::cout << fileName << std::endl;
     if(!image)cout<<"Error : *******file did not load *****"<<endl;
 
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,width,height,0,GL_RGBA,GL_UNSIGNED_BYTE,image);

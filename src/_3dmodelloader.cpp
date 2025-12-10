@@ -14,6 +14,11 @@ _3DModelLoader::~_3DModelLoader()
 
     FreeModel(&md2file);
 }
+void _3DModelLoader::loadTexture(const char* path){
+    if(!myTex) myTex = new _textureLoader();
+    myTex->loadTexture((char*)path);
+    md2file.tex_id = myTex->textID;
+}
 
 int _3DModelLoader::ReadMD2Model(const char* filename, struct md2_model_t* mdl)
 {
@@ -73,18 +78,7 @@ int _3DModelLoader::ReadMD2Model(const char* filename, struct md2_model_t* mdl)
 
       // cout<<mdl->frames[i].name<<endl; // only for Debug
     }
-    for(int i =0; i<mdl->header.num_skins; i++){
-
-        std::string path = "models/";
-        path += mdl->skins[i].name;
-        if(path.size() > 4 && path.substr(path.size()-4) == ".pcx"){
-            path = path.substr(0, path.size() - 4) + ".jpg";
-        }
-        cout << path << endl;
-        myTex->loadTexture((char*)path.c_str());
-        //myTex->loadTexture("models/Tekk/blade.jpg");
-        mdl->tex_id = myTex->textID;
-    }
+    //loadTexture(mdl);
      EndFrame = mdl->header.num_frames-1;
 
   fclose (fp);

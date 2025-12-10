@@ -8,6 +8,12 @@
 class _hud
 {
     public:
+        struct dmgNumber {
+            float x, y, z;
+            float value;
+            float time;
+            float duration;
+        };
         _hud();
         virtual ~_hud();
         void setPlayer(_player* p) {player = p;}
@@ -16,12 +22,15 @@ class _hud
         void renderText(int x, int y, const std::string& text);
         void drawHealthBar(int screenWidth, int screenHeight);
         void drawStats(int screenWidth, int screenHeight);
+        void addDamageNumber(float x, float y, float z, float amount);
+        void drawDamageNumbers(float dTime);
         void addConsoleMessage(const std::string& message);
         void drawConsole(int screenWidth, int screenHeight);
         void draw(int width, int height);
 
         bool debug = false;
         std::vector<std::string> gameConsole;
+        std::vector<dmgNumber> damageNumbers;
 
     protected:
 

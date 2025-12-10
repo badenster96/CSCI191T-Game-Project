@@ -28,14 +28,14 @@ void _EnemyHandler::update(vec3& player){
     }
     resolveCollisions();
 }
-void _EnemyHandler::draw(vec3& player) {
+void _EnemyHandler::draw() {
     for(auto& e : enemies) {
         if(e->isAlive)e->draw();
     }
 }
 
 _enemy* _EnemyHandler::nearest(vec3& point) {
-    float minDistance = 100000.0f;
+    float minDistance = INT_MAX;
     _enemy* nearestEnemy = nullptr;
     for(auto& e : enemies) {
         if(e->isSpawned && e->isAlive){
@@ -89,8 +89,7 @@ _enemy* _EnemyHandler::nearest(vec3& point) {
     }
 }
 
-void _EnemyHandler::calc(int rangeEnemiesPerWave, int minEnemiesPerWave, vec3& point) {
-    int enemiesPerWave = rand()%rangeEnemiesPerWave + minEnemiesPerWave;
+void _EnemyHandler::spawn(int enemiesPerWave, vec3& point) {
     int spawned = 0;
     for(auto& e : enemies) {
         if(!e->isSpawned && spawned < enemiesPerWave){
@@ -98,6 +97,7 @@ void _EnemyHandler::calc(int rangeEnemiesPerWave, int minEnemiesPerWave, vec3& p
             spawned++;
         }
     }
+    totalEnemiesSpawned += spawned;
 }
 
 bool _EnemyHandler::canSpawn() {
@@ -105,4 +105,11 @@ bool _EnemyHandler::canSpawn() {
         if(!e->isSpawned) return true;
     }
     return false;
+}
+int _EnemyHandler::numEnemies() {
+    int totalEnemies = 0;
+    for(int i = 0; i < enemies.size(); i++){
+        if(enemies.at(i)->isSpawned) totalEnemies++;
+    }
+    return totalEnemies;
 }

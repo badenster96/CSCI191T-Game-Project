@@ -14,13 +14,15 @@ class _EnemyHandler
         void setup(int numEnemies);
         void initModels(const char* model);
         void update(vec3& player);
-        void draw(vec3& player);
+        void draw();
         _enemy* nearest(vec3& point);
         void resolveCollisions();
-        void calc(int rangeEnemiesPerWave, int minEnemiesPerWave, vec3& point);
+        void spawn(int enemiesPerWave, vec3& point);
+        int numEnemies();
 
         bool canSpawn();
         float lastWaveTime = 0;
+        int totalEnemiesSpawned = 0;
         std::vector<_enemy*> enemies;
 
     protected:

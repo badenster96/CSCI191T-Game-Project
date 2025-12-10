@@ -14,7 +14,7 @@ class _capsule : public _model
         _capsule();
         virtual ~_capsule();
         void init();
-        void update(float deltaTime);
+        void update();
         void spawn(vec3 center);
         void draw();
 
@@ -22,7 +22,9 @@ class _capsule : public _model
 
         _textureLoader* myTex = nullptr;
         CAPSULE_STATE state;
-
+        float spawnTime = 0.0f;
+        bool hasSpawnedEnemies = false;
+        vec3 pos;
     protected:
         float dy, height, radius;
 

@@ -21,24 +21,43 @@ _bullets::~_bullets()
 void _bullets::iniBullet(char* filename)
 {
    // if we use texture on bullets
-   spearModel->initModel(filename);
+   //spearModel->initModel(filename);
+   //spearModel->loadTexture("models/Tekk/blade.jpg");
 }
 
 void _bullets::drawBullet()
 {
-    //glDisable(GL_TEXTURE_2D);// only if you are using glut sphere
+    glDisable(GL_TEXTURE_2D);// only if you are using glut sphere
     glPushMatrix();
 
      if(live)
      {
+         float s = 0.2f;
          glTranslatef(pos.x,pos.y,pos.z);
-         glScalef(0.1f,0.1f,0.1f);
-         // glutSolidSphere(0.5,20,20);
+         glScalef(s,s,s);
+         glutSolidSphere(0.5,20,20);
      }
-     spearModel->Draw();
+     //spearModel->Draw();
+     float rotY = atan2(dir.x, dir.z) * 180.0f / PI;
 
      glPopMatrix();
-     //glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
+     glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
+     glEnable(GL_BLEND);
+     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+     glPushMatrix();
+        glTranslatef(pos.x, pos.y, pos.z);
+        glRotatef(rotY, 0, 1, 0);
+
+        glColor4f(1.0f,0.9f,0.3f,0.3f);
+        glBegin(GL_QUADS);
+            glVertex3f(-0.03f, 0, -1.2f);
+            glVertex3f( 0.03f, 0, -1.2f);
+            glVertex3f( 0.03f, 0,  0.0f);
+            glVertex3f(-0.03f, 0,  0.0f);
+        glEnd();
+    glPopMatrix();
+    glDisable(GL_BLEND);
 }
 
 // In _bullets.cpp, define it:
@@ -47,6 +66,8 @@ void _bullets::shootBullet(const vec3& start, const vec3& end)
     src = start;        // starting position
     des = end;          // destination
     pos = start;        // bullet starts at src
+    dir = des - src;
+    dir.normalize();
     t = 0.0f;           // reset interpolation
     live = true;        // activate the bullet
     actionTrigger = SHOOT; // set state to shooting

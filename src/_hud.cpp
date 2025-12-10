@@ -74,6 +74,12 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
         "Armor: ",
         "Armor Piercing: "
     };
+    int largestStatNameLength = 0;
+    for(int i = 0; i < statsNames.size(); i++){
+        if(statsNames.at(i).size() > largestStatNameLength){
+            largestStatNameLength = statsNames.at(i).size();
+        }
+    }
     std::vector<std::string> statsToText = {
         std::to_string((int)(player->movementSpeed / player->stats["Speed"] * 100)) + "%",
         std::to_string((int)(player->attackSpeed / player->stats["AttackSpeed"] * 100)) + "%",
@@ -82,11 +88,17 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
         std::to_string((int)player->armor),
         std::to_string((int)(player->armorPiercing))
     };
-
+    int largestStatLength = 0;
+    for(int i = 0; i < statsToText.at(i).size(); i++){
+        if(statsToText.at(i).size() > largestStatLength){
+            largestStatLength = statsToText.at(i).size();
+        }
+    }
+    int statWidth = largestStatNameLength + largestStatLength;
     // Start below health bar, set box coords
     float xBoxStart = padding;
     float yBoxStart = padding*2 + barHeight;
-    float boxWidth  = xBoxStart + 260.0f;
+    float boxWidth  = xBoxStart + statWidth * 15.0f;
     float boxHeight = yBoxStart + 2*padding + (barHeight * statsToText.size()); // 6 lines of stats
 
     float xStart = xBoxStart + padding; // align with health bar
@@ -109,7 +121,7 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
     }
     yStart = yBoxStart + fontHeight;
     for(const auto& stat : statsToText){
-        renderText(xStart + 180.0f, yStart, stat.c_str());
+        renderText(xStart + (statWidth * 10.0f), yStart, stat.c_str());
         yStart += (barHeight + spacing);
     }
 }
@@ -119,15 +131,46 @@ void _hud::addConsoleMessage(const std::string& message){
         gameConsole.erase(gameConsole.begin());
         std::cout << message << std::endl;
 }
+void _hud::addDamageNumber(float x, float y, float z, float amount){
+    dmgNumber damNum;
+    damNum.x = x;
+    damNum.y = y;
+    damNum.z = z;
+    damNum.value = amount;
+    damNum.time = 0.0f;
+    damNum.duration = 1.0f;
+    damageNumbers.push_back(damNum);
+}
 void _hud::drawConsole(int screenWidth, int screenHeight) {
     float y = 100;
     if(debug){
         for(int i = 0; i < gameConsole.size(); i++){
-            renderText(300, y, gameConsole[i].c_str());
+            renderText(320, y, gameConsole[i].c_str());
             y += 25;
         }
     }
 
+}
+void _hud::drawDamageNumbers(float dTime){
+    for(int i = 0; i < damageNumbers.size(); i++){
+        dmgNumber &dmgNum = damageNumbers[i];
+        dmgNum.time += dTime;
+
+        float alpha = 1.0f - (dmgNum.time / dmgNum.duration);
+        if(alpha < 0.0f) alpha = 0.0f;
+
+        float screenX = dmgNum.x;
+        float screenY = dmgNum.y - dmgNum.time * 30.0f;
+
+        std::string text = std::to_string((int)dmgNum.value);
+
+        glColor4f(1.0f, 0.2f, 0.2f, alpha);
+        renderText(screenX, screenY, text);
+
+        if(dmgNum.time >- dmgNum.duration){
+            damageNumbers.erase(damageNumbers.begin() + i);
+        } else i++;
+    }
 }
 void _hud::draw(int screenWidth, int screenHeight)
 {

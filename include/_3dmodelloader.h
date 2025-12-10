@@ -116,6 +116,7 @@ class _3DModelLoader
           struct md2_glcmd_t *packet;
           struct md2_model_t md2file;
 
+          void loadTexture(const char* path);
           int virtual ReadMD2Model (const char *filename, struct md2_model_t *mdl);
           void RenderFrame (int n, const struct md2_model_t *mdl);
           void RenderFrameItpWithGLCmds (int n, float interp, const struct md2_model_t *mdl);

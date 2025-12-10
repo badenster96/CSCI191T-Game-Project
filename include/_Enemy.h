@@ -5,16 +5,19 @@
 #include <_3dmodelloader.h>
 
 
-class _enemy : public _3DModelLoader
+class _enemy
 {
     public:
         _enemy();
         virtual ~_enemy();
-        void init(const char* filename);
+        _3DModelLoader* mdl = new _3DModelLoader;
+        _textureLoader* tex = new _textureLoader;
+        void init(std::string filename);
+        void update();
         void draw();
-        int ReadMD2Model(const char* filename, struct md2_model_t* mdl)override;
 
         void spawn(vec3 center);
+        void pain();
 
         void moveTowardPoint(vec3 point);
 
@@ -24,9 +27,16 @@ class _enemy : public _3DModelLoader
 
         //Animation
         float pframe = 0.0f;
+        enum {STAND, WALKLEFT,WALKRIGHT,RUN,JUMP,ATTACK,PAIN};
+        bool isInPain = false;
+        bool isFlashing = false;
+        float painStartTime = 0.0f;
+        float flashStartTime = 0.0f;
+        float flashDuration = 0.015f;
 
         float health, damage, speed = 0;
         float iFrames, lastTimeHit;
+        vec3 pos;
 
 
     protected:

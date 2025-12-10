@@ -19,6 +19,7 @@ class _bullets
         vec3 pos;
         vec3 des;
         vec3 src;
+        vec3 dir;
 
         vec3 scale;
         float t=0; // for parametric equation

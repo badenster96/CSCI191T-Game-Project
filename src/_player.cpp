@@ -77,7 +77,7 @@ void _player::update(){
 void _player::resetPlayer() {
     stats["Health"] = 100.0f;
     stats["Speed"] = 0.5f;
-    stats["AttackSpeed"] = 10.0f;
+    stats["AttackSpeed"] = 200.0f;
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.05f;
     stats["Armor"] = 0.0f;
@@ -88,9 +88,14 @@ void _player::resetPlayer() {
 }
 
 
-void _player::init(const char* model) {
+void _player::init(std::string model) {
+    std::string pathMdl, pathTex;
+    pathMdl = "models/" + model + "/tris.md2";
+    pathTex = "models/" + model + "/texture.jpg";
     resetPlayer();
-    initModel(model);
+    playerModel->initModel((char*)pathMdl.c_str());
+    pTex->loadTexture((char*)pathTex.c_str());
+    playerModel->md2file.tex_id = pTex->textID;
     cam.camInit();
 }
 void _player::draw() {
@@ -101,16 +106,16 @@ void _player::draw() {
         glRotatef(90,1,0,0);
         glRotatef(180,0,1,0);
 
-        if(isMoving && actionTrigger != RUN){
-            actionTrigger = RUN;
-            pframe = 0;
-        } else if (!isMoving && actionTrigger != STAND) {
-            actionTrigger = STAND;
-            pframe = 0;
+        if(isMoving && playerModel->actionTrigger != RUN){
+            playerModel->actionTrigger = RUN;
+            playerModel->pframe = 0;
+        } else if (!isMoving && playerModel->actionTrigger != STAND) {
+            playerModel->actionTrigger = STAND;
+            playerModel->pframe = 0;
         }
         glScalef(0.1,0.1,0.1);
-        Actions();
-        Draw();
+        playerModel->Actions();
+        playerModel->Draw();
     glPopMatrix();
 }
 

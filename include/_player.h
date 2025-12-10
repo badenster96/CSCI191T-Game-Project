@@ -6,16 +6,18 @@
 #include <_common.h>
 
 
-class _player : public _3DModelLoader
+class _player
 {
     public:
         _player();
         virtual ~_player();
+        _3DModelLoader* playerModel = new _3DModelLoader;
+        _textureLoader* pTex = new _textureLoader;
         // Getters
         vec3& getPos() {return pos;}
         // Main Functions
         void draw();
-        void init(const char* model);
+        void init(std::string model);
         void update();
         void handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd);
         // Helper Functions
@@ -29,9 +31,9 @@ class _player : public _3DModelLoader
 
         vec3 currTarget;
         // Movement
-        bool isMovingForward, isMovingBack, isMovingLeft, isMovingRight;
-        bool isJumping;
-        bool isMoving;
+        bool isMovingForward, isMovingBack, isMovingLeft, isMovingRight = false;
+        bool isJumping = false;
+        bool isMoving = false;
         // Camera Controls
         float currentAngle;
         float camHeightOffset;
@@ -44,6 +46,8 @@ class _player : public _3DModelLoader
 
         // Objects
         _camera cam;
+        vec3 pos;
+        enum {STAND, WALKLEFT,WALKRIGHT,RUN,JUMP,ATTACK,PAIN};
 
     protected:
 

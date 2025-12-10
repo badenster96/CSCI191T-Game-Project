@@ -17,6 +17,7 @@ void _capsule::init() {
 // First, spawn the capsule in the level loop
 void _capsule::spawn(vec3 center) {
     if(state != DESPAWNED) return;
+    spawnTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     state = SPAWNED;
     radius = 1.0f;
     height = 5.0f;
@@ -24,19 +25,22 @@ void _capsule::spawn(vec3 center) {
     float angle = rand()%360 / 180.0f * PI;
 
     // Calculate the random point
-    posX = center.x + radius * cos(angle);
-    posY = 100.0f;
-    posZ = center.z + radius * sin(angle);
+    pos.x = center.x + radius * cos(angle);
+    pos.y = 100.0f;
+    pos.z = center.z + radius * sin(angle);
+    hasSpawnedEnemies = false;
     state = FALLING;
 }
 // The falling animation for the capsule, and the handler for collection
-void _capsule::update(float deltaTime) {
+void _capsule::update() {
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    float deltaTime = currentTime - spawnTime;
     if(state == FALLING) {
         float gravity = -9.8f;
         dy += gravity * deltaTime * 0.00001;
-        posY += dy * deltaTime;
-        if((posY - height / 2) <= -3.5f) {
-            posY = height / 2 - 3.5f;
+        pos.y += dy * deltaTime;
+        if((pos.y - height / 2) <= -3.5f) {
+            pos.y = height / 2 - 3.5f;
             dy = 0.0f;
             state = ONGROUND;
             //isSpawned = false;
@@ -49,7 +53,7 @@ void _capsule::update(float deltaTime) {
 void _capsule::draw() {
     if(state == DESPAWNED | state == COLLECTED) return;
     glPushMatrix();
-    glTranslatef(posX, posY, posZ);
+    glTranslatef(pos.x, pos.y, pos.z);
 
     myTex->bindTexture();
     glColor3f(0.4f, 0.1f, 0.1f);
