@@ -105,7 +105,10 @@ void _player::init(std::string model) {
     std::string pathMdl, pathTex;
     pathMdl = "models/" + model + "/tris.md2";
     pathTex = "models/" + model + "/texture.jpg";
-    resetPlayer();
+    if(!isLoaded){
+        resetPlayer();
+        isLoaded = true;
+    }
     playerModel->initModel((char*)pathMdl.c_str());
     pTex->loadTexture((char*)pathTex.c_str());
     playerModel->md2file.tex_id = pTex->textID;

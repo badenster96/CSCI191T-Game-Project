@@ -5,6 +5,7 @@
 // #include <_scenemanager.h>
 #include <string>
 #include <Windows.h>
+#include <_sounds.h>
 
 class _scenemanager;
 extern _scenemanager sceneManager;
@@ -15,6 +16,7 @@ public:
 
     _Menu();
     ~_Menu();
+    _sounds* snds = new _sounds();
 
     void initGL() override;
     void drawScene() override;

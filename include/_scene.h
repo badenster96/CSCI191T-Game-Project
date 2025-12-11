@@ -17,6 +17,9 @@ class _Scene {
         virtual int winMsg(HWND,UINT,WPARAM,LPARAM) = 0; // to get keyboard interrupts and pass it to inputs
         void showCursor();
         void lockCursor();
+        virtual void carryOver(_Scene* prev){};
+        virtual void* getPlayer(){return nullptr;}
+        virtual void* getInventory(){return nullptr;}
         void setWindow(HWND hWnd) { this->hWnd = hWnd; }
         bool active;
         bool isInit = false;

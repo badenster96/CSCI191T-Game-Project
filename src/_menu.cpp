@@ -12,6 +12,7 @@ void _Menu::initGL() {
     std::cout << "Initializing Menu" << std::endl;
     scene = MAIN;
     active = true;
+    snds->playMusic("sounds/music/Fire&Ice.wav");
 
     showCursor();
 
@@ -92,7 +93,8 @@ void _Menu::handleMouse(int x, int y, bool click) {
     float buttonHalfHeight = 0.1f;
 
     if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
-        scene = LEVEL1;
+        scene = LEVEL3;
+        snds->stopMusic();
         active = false;
         std::cout << "Start Game\n";
     }

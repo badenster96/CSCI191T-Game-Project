@@ -21,6 +21,8 @@ class _inventory
         _item pickupItem();
         _FileLoader fl;
 
+        bool isLoaded = false;
+
 
     protected:
         std::unordered_map<std::string, _item> itemsMaster;

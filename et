@@ -1,0 +1,167 @@
+[33mcommit 33f5364f22f4260085c1959e5888592567ba28c3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Thu Dec 11 04:14:26 2025 -0800
+
+    Try again
+
+[33mcommit efdbd6b93b8e733bc3c2b1f25754c53fa4ea253a[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Thu Dec 11 03:59:16 2025 -0800
+
+    Ready for presentation, added _level4 and robots
+
+[33mcommit 7be4f5c045156c8e88ac949c9b091fd548833c84[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Thu Dec 11 03:43:18 2025 -0800
+
+    Added _level4 with robots, finalized _level1 integration, still WIP but ready for presentation tomorrow
+
+[33mcommit 954143930e03609157a95f55f6f7c750163c3b46[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Thu Dec 11 00:22:55 2025 -0800
+
+    Integrated _level1 initially, with issues
+
+[33mcommit 367698e3ddc7a7b5dc3f7d1fad9fd4486b1f68a7[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Dec 10 21:41:56 2025 -0800
+
+    Added an ease of use function into level3, so all of the filepaths are stored in a map
+
+[33mcommit 454d07145c609c18d82ad2798b428780198bc525[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Dec 10 16:47:31 2025 -0800
+
+    Refactored more functions in _level3, and added skybox bounds
+
+[33mcommit b40051d28485a6811a1ffc23b54cd8404964a1db[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Dec 10 13:20:47 2025 -0800
+
+    Fixed enemy spawning, refactored level3 functions
+
+[33mcommit 15420af3e3e627128c58ac39ccc0044924517746[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Dec 8 17:37:14 2025 -0800
+
+    fixed level integration, beginning texture and model loading
+
+[33mcommit b326c1a3a4f3630873e8073e99d99ae936349554[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Dec 3 17:49:36 2025 -0800
+
+    refactored level1 to level3, level4 now junk level
+
+[33mcommit 395afd240367cefab4f557e3e2365ac067906918[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Tue Dec 2 23:18:36 2025 -0800
+
+    changed bullets from spheres to loaded model
+
+[33mcommit 9a1450a913b3346babc95105a53d7e4198e48092[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Sun Nov 30 03:37:28 2025 -0800
+
+    Minor stat modifications
+
+[33mcommit 077000cc3757e8097d50ec0ad555dff7473aa08e[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Sun Nov 30 03:30:30 2025 -0800
+
+    Added enemy collision checking and spacing, and added capsule item pickup functionality
+
+[33mcommit 6a32a433d1e62cbdbccbea1302b92a7eb97e8766[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Sat Nov 29 15:21:17 2025 -0800
+
+    Adding item pickup at capsules
+
+[33mcommit 9d707a550f0f7451d5266085163cfe630cb0d763[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Sat Nov 29 13:29:09 2025 -0800
+
+    Organized level1 code
+
+[33mcommit 4c16e14966c26cfb8f52506aa07f99df6d40b043[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Nov 26 05:25:45 2025 -0800
+
+    Added fileLoader, inventory, and item reading.
+
+[33mcommit 75d200454ef2774ef789b25f36b9773e1c298a8d[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Nov 26 04:06:36 2025 -0800
+
+    added capsule spawning in waves
+
+[33mcommit a680240fd1701cc74226326149b405395248c4f6[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 24 14:26:08 2025 -0800
+
+    Changed a lot: modified camera, added player functionality, corrected animations, fixed a now completely working sceneManager
+
+[33mcommit 1afafe31d4b3676fe38cfdf439ce1d599fb7fca9[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Thu Nov 20 13:28:02 2025 -0800
+
+    Full level integration
+
+[33mcommit 2140b6617a6a4475a284b04c142b1f48248ae0d8[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Wed Nov 19 04:09:29 2025 -0800
+
+    Added player, item, inventory, and enemy skeletons
+
+[33mcommit 1e9d7c714cb0c5cb3343a2001ba29ecbc4b6289d[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Tue Nov 18 21:06:53 2025 -0800
+
+    Edited the .gitignore so Codeblocks project files arent synced, hopefully that fixes the mismatches
+
+[33mcommit c40fe453aef05e95defe38e32d7ba0e3a772bd38[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Tue Nov 18 00:07:08 2025 -0800
+
+    Yet more work on troubleshooting the scenemanager
+
+[33mcommit 3aa09020e5eaf7bec2b797ac093e395dc95b6571[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 21:44:32 2025 -0800
+
+    More troubleshooting, more work on multi scene functionality
+
+[33mcommit b87f4580c623ee8f35a83a0d40821f1d0e19d67a[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 18:05:24 2025 -0800
+
+    Added the enemy class
+
+[33mcommit 6b7c21425271238e6cc8aa6b8920747030385c07[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 18:02:30 2025 -0800
+
+    Made the player class handle the player model
+
+[33mcommit a14d0160ef497f94d157bf55b51f634101cf56bb[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 16:22:28 2025 -0800
+
+    SceneManager correctly switches between scenes
+
+[33mcommit 639f893043236dfbe77cb3554261d8889a1bd7d6[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 13:18:02 2025 -0800
+
+    Implementation of the main menu and SceneManagers
+
+[33mcommit a7b016424f7f4ae18ab58bdd430b7898c34d1e78[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 11:48:29 2025 -0800
+
+    Initial editing of filenames
+
+[33mcommit fdb66f1c49acc89b58b9bea18f75af2c091d3256[m
+Author: Ben-Laptop <bentmanley@gmail.com>
+Date:   Mon Nov 17 11:41:50 2025 -0800
+
+    Initial Game Project commit

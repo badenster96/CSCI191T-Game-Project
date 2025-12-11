@@ -25,6 +25,7 @@ void _level3::initFiles() {
     files["player"] = "waste";
     files["Enemy"] = "badboyblake";
     files["Floor"] = "images/tex.jpg";
+    files["Boss"] = "cyberdemon";
 }
 void _level3::initTextures() {
     myHUD->addConsoleMessage("Loading Textures...");
@@ -33,13 +34,13 @@ void _level3::initTextures() {
 
     boundarySize = 300.0f;
     mySkyBox->skyBoxInit(boundarySize);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.jpg");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.jpg");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.jpg");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.jpg");
+    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
+    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
+    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
+    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
+    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
+    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
+    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
     for (int i = 0; i < 6; i++) {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
@@ -49,6 +50,7 @@ void _level3::initTextures() {
         b[i].iniBullet(files["bullet"]);
     }
     enemyHandler->initModels(files["Enemy"]);
+    boss->init(files["Boss"]);
     // capsuleHandler->init();
     myHUD->addConsoleMessage("Textures loaded.");
 }
@@ -122,6 +124,16 @@ void _level3::lose() {
         myInv->resetItems();
         scene = MAIN;
         isInit = false;
+        snds->stopMusic();
+        return;
+    }
+}
+void _level3::win() {
+    if(wave >= 1){
+        scene = LEVEL4;
+        isInit = false;
+        snds->stopMusic();
+        glBindTexture(GL_TEXTURE_2D, 0);
         return;
     }
 }
@@ -169,7 +181,6 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
                         e->lastTimeHit = currentTime;
                         snds->playRandSound(files["EnemyHit"],8, 0.3f);
                         hitsThisFrame++;
-                        b[i].pierce--;
                         //myHUD->addConsoleMessage("Enemy Shot!");
                         if(e->health <= 0) {
                             e->isAlive = e->isSpawned = false;
@@ -190,7 +201,7 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
     }
 }
 void _level3::waveSpawn() {
-    int enemiesPerWave = 120 * wave;
+    int enemiesPerWave = 100 * wave;
     int enemiesPerCapsule = 4 * wave;
     if(!waveSpawned){
         myHUD->addConsoleMessage("Wave " + std::to_string(wave) + " Spawned");
@@ -258,6 +269,7 @@ void _level3::clampLevel(){
 
 void _level3::update(){
     float deltaTime = myTime->getTickSeconds();
+    win();
     lose();
     player->update(deltaTime);
     nearestEnemy = enemyHandler->nearest(player->pos);
@@ -303,6 +315,7 @@ void _level3::drawFloor(){
 
 void _level3::drawScene()
 {
+    if(!isInit) return;
     // OpenGL draw
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
@@ -366,6 +379,7 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_KEYDOWN:
             if(wParam == VK_ESCAPE){
                 scene = MAIN;
+                snds->stopMusic();
                 isInit = false;
                 return 0;
             }

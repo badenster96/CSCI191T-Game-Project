@@ -24,7 +24,7 @@ void _level1::initFiles() {
     // sfx
 
     // Music
-    files["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    files["CombatMusic"] = "sounds/music/Thunderous.wav";
     files["bullet"] = "models/Tekk/weapon.md2";
     files["player"] = "waste";
     files["Enemy"] = "badboyblake";
@@ -32,6 +32,7 @@ void _level1::initFiles() {
 }
 void _level1::initGL()
 {
+    initFiles();
     myHUD->addConsoleMessage("Initializing Level1...");
     scene = LEVEL1;
 
@@ -66,21 +67,21 @@ void _level1::initGL()
     }
 
     // Assets
-    myTexture->loadTexture("images/floor.jpg");
+    myTexture->loadTexture(files["Floor"]);
     myPrlx->parallaxInit("images/prlx.jpg");
 
     mySkyBox->skyBoxInit(100);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
+    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
+    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
+    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
+    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.jpg");
+    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.jpg");
+    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.jpg");
+    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.jpg");
 
     mySprite->spriteInit("images/eg.png", 6, 4);
 
-    mdl3D->init("waste");
+    mdl3D->init(files["player"]);
     mdl3DW->initModel("models/GiJoe/weapon.md2");
 
     for (int i = 0; i < 10; ++i)
@@ -93,6 +94,7 @@ void _level1::initGL()
     myInv->initInv();
 
     snds->initSounds();
+    snds->playMusic(files["CombatMusic"]);
 
     initTeapots();
     waveInterval  = 3.0f;
@@ -175,7 +177,7 @@ void _level1::spawnWaveIfNeeded()
     lastWaveTime = now;
 
     int spawned = 0;
-    int amount = 10;
+    int amount = 1;
 
     for (int i = 0; i < MAX_TEAPOTS && spawned < amount; ++i)
     {
@@ -217,6 +219,7 @@ int _level1::findNearestTeapot()
     }
     return best;
 }
+
 void _level1::drawFloor()
 {
     glPushMatrix();
@@ -251,7 +254,9 @@ void _level1::drawSceneCalc()
     {
         if (!b[i].live) continue;
 
+
         b[i].bulletActions(deltaTime);
+        myHUD->addConsoleMessage("Bullets shot!");
 
         for (int t = 0; t < MAX_TEAPOTS; ++t)
         {

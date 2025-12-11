@@ -51,7 +51,7 @@ public:
     std::vector<_enemy*> enemies;
 
     // Teapots
-    static const int MAX_TEAPOTS = 30;
+    static const int MAX_TEAPOTS =30;
     _model fallingTeapots[MAX_TEAPOTS];
     bool   teapotActive[MAX_TEAPOTS];
 

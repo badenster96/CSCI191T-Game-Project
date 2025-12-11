@@ -11,7 +11,8 @@ _inventory::~_inventory()
 }
 
 void _inventory::initInv() {
-    itemsMaster = fl.loadItems("items");
+    if(!isLoaded) itemsMaster = fl.loadItems("items");
+    isLoaded = true;
 }
 void _inventory::addItem(_item item) {
     std::string itemName = item.name;

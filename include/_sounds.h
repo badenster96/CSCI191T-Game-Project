@@ -19,7 +19,10 @@ class _sounds
         void playSounds(char *, float volume);
         void playRandSound(char* filename, int range, float volume);
         void pauseSound(char *);
+        void stopMusic();
         void initSounds();
+
+        ISound* currentMusic = nullptr;
 
     protected:
 

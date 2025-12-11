@@ -48,6 +48,8 @@ class _player
         _camera cam;
         vec3 pos;
         enum {STAND, WALKLEFT,WALKRIGHT,RUN,JUMP,ATTACK,PAIN};
+        bool isLoaded = false;
+
 
     protected:
 

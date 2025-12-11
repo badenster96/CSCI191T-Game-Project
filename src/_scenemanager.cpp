@@ -16,6 +16,7 @@ _scenemanager::_scenemanager()
     level1 = new _level1();
     level2 = new _level2();
     level3 = new _level3();
+    level4 = new _level4();
     menu   = new _Menu();
     currentSceneEnum = MAIN;
     currentScene = menu;
@@ -26,16 +27,22 @@ _scenemanager::~_scenemanager()
     delete level1;
     delete level2;
     delete level3;
+    delete level4;
     delete menu;
 }
 
 // Helper function that reads the sceneManager enum and changes the level to that value
 void _scenemanager::switchScene(Scene nextScene) {
+    _Scene* prevScene = currentScene;
     if(currentSceneEnum == LEVEL1) currentScene = level1;
     else if(currentSceneEnum == LEVEL2) currentScene = level2;
     else if(currentSceneEnum == LEVEL3) currentScene = level3;
+    else if(currentSceneEnum == LEVEL4) currentScene = level4;
     else if(currentSceneEnum == MAIN)   currentScene = menu;
-    currentScene->isInit = false;
+    if(currentScene){
+        currentScene->carryOver(prevScene);
+        currentScene->isInit = false;
+    }
 }
 // The main functions main interacts with
 // Kept as simple as possible, to avoid confusion
@@ -51,9 +58,16 @@ void _scenemanager::drawScene() {
     }
     if(currentScene && !currentScene->isInit) {
         currentScene->initGL();
+        progress();
         currentScene->reSizeScene(width, height);
     }
     if(currentScene) currentScene->drawScene();
+}
+void _scenemanager::progress() {
+    if(currentSceneEnum == LEVEL4 && !level4->isInit){
+        level4->player = level3->player;
+        level4->myInv = level3->myInv;
+    }
 }
 
 // Resize scene

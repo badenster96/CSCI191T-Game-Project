@@ -4,129 +4,347 @@ _level4::_level4()
 {
     //ctor
     myTime->startTime = clock();
-    scene = LEVEL3;
+    isInit = false;
+    nearestEnemy = nullptr;
+
 }
 
 _level4::~_level4()
 {
     //dtor
 }
-void _level4::reSizeScene(int width, int height)
-{
-    float aspectRatio = (float)width/(float)height;// keep track of the ratio
-    glViewport(0,0,width,height); // adjust my viewport
-
-    glMatrixMode(GL_PROJECTION);  // To setup ptrojection
-    glLoadIdentity();             // calling identity matrix
-    gluPerspective(45, aspectRatio,0.1,1000.0); // setting perspective projection
-
-    this->width = GetSystemMetrics(SM_CXSCREEN);
-    this->height= GetSystemMetrics(SM_CYSCREEN);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();             // calling identity matrix
+void _level4::carryOver(_Scene* prev){
+    if(!prev) return;
+    player = static_cast<_player*>(prev->getPlayer());
+    myInv = static_cast<_inventory*>(prev->getInventory());
 }
-void _level4::initGL()
-{
-    isInit = true;
+
+void _level4::initFiles() {
+    // sfx
+    files["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
+    files["EnemyHit"] = "sounds/sfx/clankhit/Impact_Sword_To_PlateArmour_001.wav";
+    files["ZombieDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
+    // Music
+    files["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    files["bullet"] = "models/Tekk/weapon.md2";
+    files["player"] = "waste";
+    files["Enemy"] = "cyberdemon";
+    files["Floor"] = "images/tex.jpg";
+}
+void _level4::initTextures() {
+    myHUD->addConsoleMessage("Loading Textures...");
+    myTexture->loadTexture(files["Floor"]);
+    //myPrlx->parallaxInit("images/prlx.jpg");
+
+    boundarySize = 300.0f;
+    mySkyBox->skyBoxInit(boundarySize);
+    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
+    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
+    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
+    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.jpg");
+    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.jpg");
+    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.jpg");
+    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.jpg");
+    for (int i = 0; i < 6; i++) {
+        myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
+    }
+    //mySprite->spriteInit("images/eg.png",6,4);
+    player->init(files["player"]);
+    for(int i = 0; i < 10; i++){
+        b[i].iniBullet(files["bullet"]);
+    }
+    enemyHandler->initModels(files["Enemy"]);
+    // capsuleHandler->init();
+    myHUD->addConsoleMessage("Textures loaded.");
+}
+
+void _level4::initGL() {
+    myHUD->addConsoleMessage("Initializing Level4...");
+    scene = LEVEL4;
+    initFiles();
+    lockCursor();
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
-    glClearColor(0.0f,0.0f,0.0f,0.0f); // black background color
-    glClearDepth(2.0f);         //depth test for layers
+    glClearColor(0.01f,0.02f,0.05f,1.0f); // black background color
+    glClearDepth(1.0f);         //depth test for layers
+
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
+    //glEnable(GL_LIGHTING);
+    GLfloat ambientLight[]  = {0.02f, 0.02f, 0.05f, 1.0f}; // very dim blue
+    GLfloat diffuseLight[]  = {0.1f, 0.1f, 0.2f, 1.0f};    // soft bluish light
+    GLfloat specularLight[] = {0.1f, 0.1f, 0.2f, 1.0f};    // subtle specular highlights
+    GLfloat lightPos[]      = {50.0f, 100.0f, 50.0f, 1.0f};
+    //glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
-
-    myLight->setLight(GL_LIGHT0);
-
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // Fog
+    glEnable(GL_FOG);
+    GLfloat fogColor[] = {0.01f, 0.02f, 0.05f, 0.8f};
 
-    myTexture->loadTexture("images/tex.jpg");
-    myPrlx->parallaxInit("images/prlx.jpg");
+    glFogi(GL_FOG_MODE, GL_LINEAR);
+    glFogfv(GL_FOG_COLOR, fogColor);
+    glFogf(GL_FOG_START, 20.0f);
+    glFogf(GL_FOG_END, 200.0f);
+    GLfloat lampDiffuse[] = {0.8f, 0.5f, 0.2f, 1.0f}; // warm orange
+    GLfloat lampPos[]     = {10.0f, 2.0f, 10.0f, 1.0f};
 
-    mySkyBox->skyBoxInit();
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
+    glEnable(GL_LIGHT1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lampDiffuse);
+    glLightfv(GL_LIGHT1, GL_POSITION, lampPos);
 
-    mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->initModel("models/Tekk/tris.md2");
-    mdl3DW->initModel("models/Tekk/weapon.md2");
+    // Set matrices
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    float aspect = (float)width / (float)height;
+    gluPerspective(45.0f, aspect, 0.1f, 1000.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    myCam->camInit();
+    enemyHandler->setup(200);
+    capsuleHandler->setup(100);
+
+    myHUD->setPlayer(player);
+    myHUD->setEnemies(&enemyHandler->enemies);
+
+    initTextures();
 
     snds->initSounds();
-    snds->playMusic("sounds/HighNoon.mp3");
+    snds->playMusic(files["CombatMusic"]);
+    myHUD->init();
+    myInv->initInv();
+
+    // Level stats setup
+    player->applyPlayerStats();
+    isInit = true;
+    myHUD->addConsoleMessage("_level4 initialized");
+}
+void _level4::lose() {
+    if(player && player->currHealth <= 0.0f){
+        player->resetPlayer();
+        myInv->resetItems();
+        scene = MAIN;
+        isInit = false;
+        return;
+    }
+}
+void _level4::enemyDamagePlayer(_player* p){
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    if(currentTime - lastHitTime >= p->iFrames){
+        for(const auto& e : enemyHandler->enemies){
+            if(e && myCol->isSphereCol(p->pos,e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
+                lastHitTime = currentTime;
+                std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
+                myHUD->addConsoleMessage(message);
+                p->hit(e->damage);
+            }
+        }
+    }
+}
+
+void _level4::attackHandler(vec3 nearestE, vec3 p) {
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    if(nearestEnemy){
+        player->setTarget(nearestEnemy->pos);
+        for(int i = 0; i < 10; i++){
+            if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
+                if(nearestEnemy->isAlive
+                   && ((player->pos - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
+                    b[i].shootBullet(p, nearestE, player->stats["Range"], player->stats["Piercing"]);
+                    snds->playRandSound(files["M16"], 10, 0.4f);
+                }
+                lastAttackTime = currentTime;
+            }
+            // fires the bullets
+            if(b[i].live){
+                int hitsThisFrame = 0;
+                for(const auto& e : enemyHandler->enemies){
+                    if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
+                       && currentTime - e->lastTimeHit >= e->iFrames
+                       && e->health > 0){
+                        float critChance = rand()%100 / 100.0f;
+                        if(critChance <= player->critChance){
+                            e->health -= player->damage * player->critDamage;
+                            myHUD->addGameInfo("Crit for " + std::to_string(player->damage * player->critDamage) + " Damage!");
+                        }
+                        else e->health -= player->damage;
+                        e->pain();
+                        e->lastTimeHit = currentTime;
+                        snds->playRandSound(files["EnemyHit"],5, 0.3f);
+                        hitsThisFrame++;
+                        b[i].pierce--;
+                        //myHUD->addConsoleMessage("Enemy Shot!");
+                        if(e->health <= 0) {
+                            e->isAlive = e->isSpawned = false;
+                            snds->playRandSound(files["ZombieDie"], 5, 0.8f);
+                            enemiesKilled++;
+                        }
+                    }
+                }
+                b[i].pierce -= hitsThisFrame;
+                if(b[i].pierce <= 0){
+                    b[i].live = false;
+                }
+            }
+        }
+        // Enemy hit handler
+        // function in enemyHandler that takes in
+        enemyDamagePlayer(player);
+    }
+}
+void _level4::waveSpawn() {
+    int enemiesPerWave = 120 * wave;
+    int enemiesPerCapsule = 4 * wave;
+    if(!waveSpawned){
+        myHUD->addConsoleMessage("Wave " + std::to_string(wave) + " Spawned");
+        myHUD->addGameInfo("Wave " + std::to_string(wave) + " Spawned");
+        int capsulesPerWave = enemiesPerWave / enemiesPerCapsule;
+        enemiesKilled = 0;
+        enemyHandler->totalEnemiesSpawned = 0;
+        capsuleHandler->capsuleSpawner(capsulesPerWave, player->pos);
+        waveSpawned = true;
+        return;
+    }
+    for(const auto& c : capsuleHandler->capsules){
+        if(c->state == ONGROUND
+           && !c->hasSpawnedEnemies
+           && enemyHandler->totalEnemiesSpawned < enemiesPerWave){
+            enemyHandler->spawn(enemiesPerCapsule, c->pos);
+            c->hasSpawnedEnemies = true;
+        }
+    }
+    if(enemiesKilled >= enemyHandler->totalEnemiesSpawned
+       && enemyHandler->totalEnemiesSpawned > 0){
+        waveSpawned = false;
+        wave++;
+        myHUD->addConsoleMessage("Wave Ended");
+    }
+    //myHUD->addConsoleMessage("Enemies Killed:" + std::to_string(enemiesKilled));
+    //myHUD->addConsoleMessage("Enemies Left:" + std::to_string(enemyHandler->totalEnemiesSpawned));
+
+}
+
+void _level4::pickupMenu(){
+    if(capsuleHandler->checkPickup(player->pos, myCol)){
+        _item randomItem = myInv->pickupItem();
+        myHUD->addGameInfo("Picked up " + randomItem.name);
+    };
+
+    //std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
+    //myHUD->addConsoleMessage(message);
+}
+
+vec3 _level4::clampBounds(const vec3& pos){
+    minBound = vec3(-boundarySize, -10.0f, -boundarySize);
+    maxBound = vec3(boundarySize, 50.0f, boundarySize);
+    vec3 clampedPos = pos;
+    if(clampedPos.x < minBound.x) clampedPos.x = minBound.x;
+    if(clampedPos.y < minBound.y) clampedPos.y = minBound.y;
+    if(clampedPos.z < minBound.z) clampedPos.z = minBound.z;
+
+    if(clampedPos.x > maxBound.x) clampedPos.x = maxBound.x;
+    if(clampedPos.y > maxBound.y) clampedPos.y = maxBound.y;
+    if(clampedPos.z > maxBound.z) clampedPos.z = maxBound.z;
+
+    return clampedPos;
+}
+void _level4::clampLevel(){
+    for(auto& c : capsuleHandler->capsules){
+        c->pos = clampBounds(c->pos);
+    }
+    for(auto& e : enemyHandler->enemies){
+        e->pos = clampBounds(e->pos);
+    }
+    myCam->eye = clampBounds(myCam->eye);
+    player->pos = clampBounds(player->pos);
+}
+
+void _level4::update(){
+    float deltaTime = myTime->getTickSeconds();
+    lose();
+    player->update(deltaTime);
+    nearestEnemy = enemyHandler->nearest(player->pos);
+    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->pos);
+    waveSpawn();
+    pickupMenu();
+    enemyHandler->update(player->pos, deltaTime);
+    capsuleHandler->update();
+    myInv->setPlayerStats(player->itemStats);
+    player->applyPlayerStats();
+    for(int i = 0; i < 10; i++){
+        if(b[i].live){
+            b[i].bulletActions(deltaTime);
+            b[i].drawBullet();
+        }
+    }
+    clampLevel();
+}
+
+void _level4::drawFloor(){
+    glPushMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        myTexture->bindTexture(); // your floor texture
+
+        glColor3f(1.0f, 1.0f, 1.0f);
+
+        float floorSize = 500.0f;  // how big the floor is
+        float repeat = 100.0f;     // how many times the texture repeats
+        float floorHeight = -2.8f;
+
+        glBegin(GL_QUADS);
+            glNormal3f(0.0f, 1.0f, 0.0f); // point up
+
+            glTexCoord2f(0.0f, 0.0f); glVertex3f(-floorSize, floorHeight, -floorSize);
+            glTexCoord2f(repeat, 0.0f); glVertex3f(floorSize, floorHeight, -floorSize);
+            glTexCoord2f(repeat, repeat); glVertex3f(floorSize, floorHeight, floorSize);
+            glTexCoord2f(0.0f, repeat); glVertex3f(-floorSize, floorHeight, floorSize);
+        glEnd();
+        glEnable(GL_LIGHTING);
+    glPopMatrix();
 }
 
 void _level4::drawScene()
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear bits in each itteration
-    glLoadIdentity();             // calling identity matrix
+    if(!isInit) return;
+    // OpenGL draw
+    glViewport(0, 0, width, height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (float)width / (float)height, 0.1f, 1000.0f);
 
-    myCam->setUpCamera();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-     glPushMatrix();
-       myTexture->bindTexture();
-       // myModel->drawModel();
-     glPopMatrix();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    // Draw calculations
+    update();
 
-      glPushMatrix();
-      glScalef(4.33,4.33,1);
- //   myPrlx->drawParallax(width,height);
-  //  myPrlx->prlxScrollAuto("left", 0.0005);
-    // mySkyBox->drawSkyBox();
-    glPopMatrix();
+    // |====================================================|
+    // |----------------------DRAW SECTION------------------|
+    // |====================================================|
 
-/*      glPushMatrix();
-       mySprite->drawSprite();
-      // mySprite->actionTrigger = mySprite->WALKRIGHT;
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0); // your moonlight
+    mySkyBox->drawSkyBox();
+    drawFloor();
 
-    if(myTime->getTicks()>70)
-    {
-       mySprite->spriteActions();
-       myTime->reset();
-    }
-    glPopMatrix();
-*/
-   glPushMatrix();
-        glTranslatef(mdl3D->pos.x,mdl3D->pos.y,mdl3D->pos.z);
-
-        glRotatef(90,1,0,0);
-        glRotatef(180,0,1,0);
-
-        glScalef(0.1,0.1,0.1);
-        mdl3D->Actions();
-        mdl3DW->Actions();
-        mdl3DW->Draw();
-        mdl3D->Draw();
-    glPopMatrix();
-
-    glPushMatrix();
-
-       for(int i =0; i<10;i++)
-       {
-           if(b[i].live)
-           {
-               b[i].drawBullet();
-               b[i].bulletActions();
-
-        // do collision check between model and the bullets
-        //       myCol->isSphereCol(myModel->p,b[i].)
-
-           }
-       }
-    glPopMatrix();
+    //mySprite->drawSprite();
+    player->draw();
+    // Enemy Render
+    enemyHandler->draw();
+    capsuleHandler->draw();
+    glDisable(GL_FOG);
+    myHUD->draw(width, height);
+    glEnable(GL_FOG);
 }
 
-
 void _level4::mouseMapping(int x, int y)
+
 {
     GLint viewPort[4];
     GLdouble ModelViewM[16];
@@ -144,59 +362,58 @@ void _level4::mouseMapping(int x, int y)
     gluUnProject(winX,winY,winZ,ModelViewM,projectionM,viewPort,&msX,&msY,&msZ);
 }
 
-
-
-
 int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    if(player){
+        player->handleInput(uMsg, wParam, lParam, hWnd);
+    }
     switch(uMsg)
     {
         case WM_KEYDOWN:
+            if(wParam == VK_ESCAPE){
+                scene = MAIN;
+                isInit = false;
+                return 0;
+            }
+            if(wParam == '='){
+                scene = LEVEL2;
+                isInit = false;
+                return 0;
+            }
+            if(wParam == VK_OEM_3){
+                if(myHUD->debug == false) {
+                    myHUD->debug = true;
+                    myHUD->addConsoleMessage("Debug ON");
+                } else if(myHUD->debug == true){
+                    myHUD->debug = false;
+                    myHUD->addConsoleMessage("Debug OFF");
+                }
+            }
             myInput->wParam = wParam;
-            myInput->keyPressed(myModel);
-            myInput->keyPressed(myPrlx);
-            myInput->keyPressed(mySkyBox);
-            myInput->keyPressed(mySprite);
-            myInput->keyPressed(myCam);
-            myInput->keyPressed(mdl3D,mdl3DW);
+            // myInput->keyPressed(myPrlx);
+            // myInput->keyPressed(mySkyBox);
+            // myInput->keyPressed(myCam);
+            myInput->keyPressed(player->playerModel,mdl3DW);
+            break;
+            if(wParam == 'm' || wParam == 'M')
         break;
 
         case WM_KEYUP:
             myInput->wParam = wParam;
-            myInput->keyUp(mySprite);
-            mdl3D->actionTrigger=mdl3D->STAND;
-            mdl3DW->actionTrigger=mdl3DW->STAND;
         break;
 
         case WM_LBUTTONDOWN:
             myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
              mouseMapping(LOWORD(lParam), HIWORD(lParam));
-             clickCnt =clickCnt%10;
-
-                 b[clickCnt].src.x = mdl3D->pos.x;
-                 b[clickCnt].src.y = mdl3D->pos.y;
-                 b[clickCnt].src.z = mdl3D->pos.z;
-
-                 b[clickCnt].des.x = msX;
-                 b[clickCnt].des.y = -msY;
-                 b[clickCnt].des.z = msZ;
-
-                 b[clickCnt].t =0;
-                 b[clickCnt].actionTrigger = b[clickCnt].SHOOT;
-                 b[clickCnt].live = true;
-                   clickCnt++;
         break;
 
         case WM_RBUTTONDOWN:
             myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
         break;
 
          case WM_MBUTTONDOWN:
              myInput->wParam = wParam;
-             myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
             break;
 
@@ -207,13 +424,14 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             myInput->mouseEventUp();
             break;
 
-        case WM_MOUSEMOVE:
-              myInput->wParam = wParam;
-              myInput->mouseMove(myModel,LOWORD(lParam),HIWORD(lParam));
+        case WM_MOUSEMOVE: {
+            if(scene == LEVEL4){
+                lockCursor();
+            }
+        }
             break;
         case WM_MOUSEWHEEL:
               myInput->wParam = wParam;
-              myInput->mouseWheel(myModel,(double)GET_WHEEL_DELTA_WPARAM(wParam));
             break;
 
         default:

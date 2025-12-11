@@ -13,7 +13,11 @@ _sounds::~_sounds()
 
 void _sounds::playMusic(char* filename)
 {
-    eng->play2D(filename,true);
+    if(currentMusic){
+        currentMusic->stop();
+        currentMusic = nullptr;
+    }
+    currentMusic = eng->play2D(filename, true, false, true);
 }
 
 void _sounds::playSounds(char* filename, float volume)
@@ -38,7 +42,12 @@ void _sounds::pauseSound(char* filename)
 {
     eng->play2D(filename,true,false);
 }
-
+void _sounds::stopMusic(){
+    if(currentMusic){
+        currentMusic->stop();
+        currentMusic = nullptr;
+    }
+}
 void _sounds::initSounds()
 {
    if(!eng)
