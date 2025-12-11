@@ -40,7 +40,7 @@ class _player
         // Player Stats
         std::unordered_map<std::string,float> stats;
         std::unordered_map<std::string,float> itemStats;
-        float currHealth, maxHealth, attackSpeed, damage, critChance, armor, armorPiercing, movementSpeed = 0;
+        float currHealth, maxHealth, attackSpeed, damage, critChance, critDamage, armor, piercing, movementSpeed, range = 0;
         // Animation
         float iFrames = 0.3f;
 

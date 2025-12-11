@@ -68,7 +68,7 @@ void _Menu::drawScene() {
         glVertex2f( 1.0f,  1.0f);
         glVertex2f(-1.0f,  1.0f);
     glEnd();
-    // --- Draw your menu ---
+    // --- Draw menu ---
     glColor3f(1.0f, 1.0f, 1.0f);
 
 
@@ -92,7 +92,7 @@ void _Menu::handleMouse(int x, int y, bool click) {
     float buttonHalfHeight = 0.1f;
 
     if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
-        scene = LEVEL3;
+        scene = LEVEL1;
         active = false;
         std::cout << "Start Game\n";
     }

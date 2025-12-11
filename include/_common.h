@@ -54,6 +54,9 @@ struct vec3{
             return lenSquare;
         } else return 0;
     }
+    float lengthSquared(){
+        return x*x + y*y + z*z;
+    }
     vec3 operator+(const vec3& other) const {return vec3(x+other.x, y+other.y,z+other.z);}
     vec3 operator-(const vec3& other) const {return vec3(x-other.x, y-other.y,z-other.z);}
     vec3& operator+=(const vec3& o) {x += o.x; y += o.y; z += o.z; return *this;}

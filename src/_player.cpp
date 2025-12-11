@@ -23,8 +23,10 @@ void _player::applyPlayerStats() {
     attackSpeed = stats["AttackSpeed"];
     damage = stats["Damage"];
     critChance = stats["CriticalChance"];
+    critDamage = stats["CriticalDamage"];
     armor = stats["Armor"];
-    armorPiercing = stats["ArmorPiercing"];
+    piercing = stats["Piercing"];
+    range = stats["Range"];
 }
 void _player::applyItemStats(){
     maxHealth = stats["Health"] + itemStats["Health"];
@@ -32,8 +34,10 @@ void _player::applyItemStats(){
     attackSpeed = stats["AttackSpeed"] + itemStats["AttackSpeed"];
     damage = stats["Damage"] + itemStats["Damage"];
     critChance = stats["CriticalChance"] + itemStats["CriticalChance"];
+    critDamage = stats["CriticalDamage"] + itemStats["CriticalDamage"];
     armor = stats["Armor"] + itemStats["Armor"];
-    armorPiercing = stats["ArmorPiercing"] + itemStats["ArmorPiercing"];
+    piercing = stats["Piercing"] + itemStats["Piercing"];
+    range = stats["Range"] + itemStats["Range"];
 }
 void _player::hit(float hitDamage) {
     currHealth -= hitDamage;
@@ -87,8 +91,10 @@ void _player::resetPlayer() {
     stats["AttackSpeed"] = 2.0f;
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.05f;
+    stats["CriticalDamage"] = 2.0f;
     stats["Armor"] = 0.0f;
-    stats["ArmorPiercing"] = 10.0f;
+    stats["Piercing"] = 2.0f;
+    stats["Range"] = 100.0f;
     itemStats.clear();
     applyPlayerStats();
     currHealth = maxHealth;

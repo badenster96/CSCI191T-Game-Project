@@ -66,25 +66,28 @@ void _bullets::shootBullet(const vec3& start, const vec3& end)
     src = start;        // starting position
     des = end;          // destination
     pos = start;        // bullet starts at src
+    t = 0.0f;           // reset interpolation
+    live = true;        // activate the bullet
+    actionTrigger = SHOOT; // set state to shooting
+}
+void _bullets::shootBullet(const vec3& start, const vec3& end, int maxRange, int maxPierce)
+{
+    src = start;        // starting position
+    des = end;          // destination
+    pos = start;        // bullet starts at src
     dir = des - src;
     dir.normalize();
     t = 0.0f;           // reset interpolation
     live = true;        // activate the bullet
     actionTrigger = SHOOT; // set state to shooting
+    pierce = maxPierce;
+    range = maxRange;
 }
 void _bullets::bulletActions(float deltaTime){
-    float speed = 80.0f;
+    float speed = 400.0f;
     switch(actionTrigger)
     {
     case READY:
-        pos.x=0;
-        pos.y=0;
-        pos.z=0;
-
-        des.x =0;
-        des.y= 0;
-        des.z = 0;
-
         live =false;
         t=0;
         break;
@@ -94,11 +97,16 @@ void _bullets::bulletActions(float deltaTime){
 
         if(live)
         {
-            pos.x = src.x + t*(des.x -src.x);
-            pos.y = src.y + t*(des.y -src.y);
-            pos.z = src.z + t*(des.z -src.z);
-            if(t<1) t+=0.05;
-            else actionTrigger = READY;
+            pos += dir * speed * deltaTime;
+            //pos.x = src.x + t*(des.x -src.x);
+            //pos.y = src.y + t*(des.y -src.y);
+            //pos.z = src.z + t*(des.z -src.z);
+            if((pos - src).lengthSquared() >= range * range){
+                live = false;
+                actionTrigger = READY;
+            }
+            //if(t<1) t+=0.05;
+            //else actionTrigger = READY;
         }
         break;
 

@@ -29,8 +29,10 @@ class _bullets
         void drawBullet();
         void bulletActions(float deltaTime);
         void shootBullet(const vec3& start, const vec3& end);
+        void shootBullet(const vec3& start, const vec3& end, int maxRange, int maxPierce);
 
         int actionTrigger;
+        int pierce, range;
 
         enum{READY,SHOOT,HIT};
 

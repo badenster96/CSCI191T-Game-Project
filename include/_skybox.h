@@ -18,9 +18,10 @@ class _skyBox
         vec3 boxSize;  // scale the skybox
 
         float xMin,yMin,xMax,yMax;
-        void skyBoxInit(); // load images
+        void skyBoxInit(int skyBoxSize); // load images
         void drawSkyBox();
         void drawSkyBoxSingle();
+        int size;
 
     protected:
 

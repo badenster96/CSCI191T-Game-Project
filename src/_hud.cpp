@@ -39,11 +39,11 @@ void _hud::addGameInfo(const std::string& message){
         gameInfo.erase(gameInfo.begin());
         std::cout << message << std::endl;
 }
-void _hud::addDamageNumber(float x, float y, float z, float amount){
+void _hud::addDamageNumber(vec3 pos, float amount){
     dmgNumber damNum;
-    damNum.x = x;
-    damNum.y = y;
-    damNum.z = z;
+    damNum.x = pos.x;
+    damNum.y = pos.y;
+    damNum.z = pos.z;
     damNum.value = amount;
     damNum.time = 0.0f;
     damNum.duration = 1.0f;
@@ -93,8 +93,10 @@ void _hud::drawStats() {
         "Attack Speed: ",
         "Base Damage: ",
         "Crit Chance: ",
+        "Crit Damage: ",
         "Armor: ",
-        "Armor Piercing: "
+        "Piercing: ",
+        "Range: "
     };
     int largestStatNameLength = 0;
     for(int i = 0; i < statsNames.size(); i++){
@@ -107,8 +109,10 @@ void _hud::drawStats() {
         std::to_string((int)(player->attackSpeed / player->stats["AttackSpeed"] * 100)) + "%",
         std::to_string((int)(player->damage)),
         std::to_string((int)(player->critChance * 100.0f)) + "%",
+        std::to_string((int)(player->critDamage * 100.0f)) + "%",
         std::to_string((int)player->armor),
-        std::to_string((int)(player->armorPiercing))
+        std::to_string((int)(player->piercing)),
+        std::to_string((int)(player->range)) + "ft"
     };
     int largestStatLength = 0;
     for(int i = 0; i < statsToText.at(i).size(); i++){

@@ -71,6 +71,8 @@ class _level3 : public _Scene
         void pickupMenu();
 
         void update();
+        vec3 clampBounds(const vec3& pos);
+        void clampLevel();
         void drawFloor();
         void drawScene() override;                         // render scene
         // Input functions - Functions that handle input mapping
@@ -86,6 +88,10 @@ class _level3 : public _Scene
         float lastHitTime = 0.0f;
         float minDistance = 0.0f;
         double msX,msY,msZ;
+        // World Boundaries
+        int boundarySize;
+        vec3 minBound;
+        vec3 maxBound;
 
         // Menu
     protected:

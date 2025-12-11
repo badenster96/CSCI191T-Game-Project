@@ -54,7 +54,7 @@ void _level2::initGL()
 
     // Load textures and skybox
     myTexture->loadTexture("images/tex.jpg");
-    mySkyBox->skyBoxInit();
+    mySkyBox->skyBoxInit(200);
     mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
     mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
     mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");

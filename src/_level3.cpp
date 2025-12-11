@@ -6,6 +6,7 @@ _level3::_level3()
     myTime->startTime = clock();
     isInit = false;
     nearestEnemy = nullptr;
+
 }
 
 _level3::~_level3()
@@ -24,14 +25,14 @@ void _level3::initFiles() {
     files["player"] = "waste";
     files["Enemy"] = "badboyblake";
     files["Floor"] = "images/tex.jpg";
-
 }
 void _level3::initTextures() {
     myHUD->addConsoleMessage("Loading Textures...");
     myTexture->loadTexture(files["Floor"]);
     //myPrlx->parallaxInit("images/prlx.jpg");
 
-    mySkyBox->skyBoxInit();
+    boundarySize = 300.0f;
+    mySkyBox->skyBoxInit(boundarySize);
     mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
     mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
     mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
@@ -64,12 +65,12 @@ void _level3::initGL() {
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
-    glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHTING);
     GLfloat ambientLight[]  = {0.02f, 0.02f, 0.05f, 1.0f}; // very dim blue
     GLfloat diffuseLight[]  = {0.1f, 0.1f, 0.2f, 1.0f};    // soft bluish light
     GLfloat specularLight[] = {0.1f, 0.1f, 0.2f, 1.0f};    // subtle specular highlights
     GLfloat lightPos[]      = {50.0f, 100.0f, 50.0f, 1.0f};
-    glEnable(GL_LIGHT0);
+    //glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -144,22 +145,31 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
         player->setTarget(nearestEnemy->pos);
         for(int i = 0; i < 10; i++){
             if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
-                if(nearestEnemy->isAlive) {
-                    b[i].shootBullet(p, nearestE);
+                if(nearestEnemy->isAlive
+                   && ((player->pos - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
+                    b[i].shootBullet(p, nearestE, player->stats["Range"], player->stats["Piercing"]);
                     snds->playRandSound(files["M16"], 10, 0.4f);
                 }
                 lastAttackTime = currentTime;
             }
             // fires the bullets
             if(b[i].live){
+                int hitsThisFrame = 0;
                 for(const auto& e : enemyHandler->enemies){
                     if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
                        && currentTime - e->lastTimeHit >= e->iFrames
                        && e->health > 0){
-                        e->health -= player->damage;
+                        float critChance = rand()%100 / 100.0f;
+                        if(critChance <= player->critChance){
+                            e->health -= player->damage * player->critDamage;
+                            myHUD->addGameInfo("Crit for " + std::to_string(player->damage * player->critDamage) + " Damage!");
+                        }
+                        else e->health -= player->damage;
                         e->pain();
                         e->lastTimeHit = currentTime;
                         snds->playRandSound(files["EnemyHit"],8, 0.3f);
+                        hitsThisFrame++;
+                        b[i].pierce--;
                         //myHUD->addConsoleMessage("Enemy Shot!");
                         if(e->health <= 0) {
                             e->isAlive = e->isSpawned = false;
@@ -167,6 +177,10 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
                             enemiesKilled++;
                         }
                     }
+                }
+                b[i].pierce -= hitsThisFrame;
+                if(b[i].pierce <= 0){
+                    b[i].live = false;
                 }
             }
         }
@@ -217,6 +231,30 @@ void _level3::pickupMenu(){
     //myHUD->addConsoleMessage(message);
 }
 
+vec3 _level3::clampBounds(const vec3& pos){
+    minBound = vec3(-boundarySize, -10.0f, -boundarySize);
+    maxBound = vec3(boundarySize, 50.0f, boundarySize);
+    vec3 clampedPos = pos;
+    if(clampedPos.x < minBound.x) clampedPos.x = minBound.x;
+    if(clampedPos.y < minBound.y) clampedPos.y = minBound.y;
+    if(clampedPos.z < minBound.z) clampedPos.z = minBound.z;
+
+    if(clampedPos.x > maxBound.x) clampedPos.x = maxBound.x;
+    if(clampedPos.y > maxBound.y) clampedPos.y = maxBound.y;
+    if(clampedPos.z > maxBound.z) clampedPos.z = maxBound.z;
+
+    return clampedPos;
+}
+void _level3::clampLevel(){
+    for(auto& c : capsuleHandler->capsules){
+        c->pos = clampBounds(c->pos);
+    }
+    for(auto& e : enemyHandler->enemies){
+        e->pos = clampBounds(e->pos);
+    }
+    myCam->eye = clampBounds(myCam->eye);
+    player->pos = clampBounds(player->pos);
+}
 
 void _level3::update(){
     float deltaTime = myTime->getTickSeconds();
@@ -236,7 +274,9 @@ void _level3::update(){
             b[i].drawBullet();
         }
     }
+    clampLevel();
 }
+
 void _level3::drawFloor(){
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);

@@ -9,7 +9,7 @@ _skyBox::~_skyBox()
 {
     //dtor
 }
-void _skyBox::skyBoxInit()
+void _skyBox::skyBoxInit(int skyBoxSize)
 {
     xMin = yMin =0;
     xMax = yMax =1;
@@ -20,8 +20,7 @@ void _skyBox::skyBoxInit()
     pos.x = pos.y =0;
     pos.z = -9.0;
 
-    float skyBoxSize = 100.0;
-    boxSize.x = boxSize.z = 2 * skyBoxSize;
+    boxSize.x = boxSize.z = skyBoxSize;
     boxSize.y = skyBoxSize;
 
 }

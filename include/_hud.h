@@ -25,7 +25,7 @@ class _hud
         void renderText(int x, int y, const std::string& text);
         void addConsoleMessage(const std::string& message);
         void addGameInfo(const std::string& message);
-        void addDamageNumber(float x, float y, float z, float amount);
+        void addDamageNumber(vec3 pos, float amount);
         // Draw Functions
         void drawHealthBar();
         void drawStats();
