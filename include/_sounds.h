@@ -2,6 +2,7 @@
 #define _SOUNDS_H
 
 #include<_common.h>
+#include<string>
 #include<SNDS/irrKlang.h>
 
 using namespace irrklang;
@@ -15,7 +16,8 @@ class _sounds
         ISoundEngine *eng = createIrrKlangDevice();
 
         void playMusic(char *);
-        void playSounds(char *);
+        void playSounds(char *, float volume);
+        void playRandSound(char* filename, int range, float volume);
         void pauseSound(char *);
         void initSounds();
 

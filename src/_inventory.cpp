@@ -18,7 +18,6 @@ void _inventory::addItem(_item item) {
     int newQ = inventory[itemName].quantity;
     if(inventory.find(itemName) != inventory.end()) inventory[itemName] = itemsMaster[itemName];
     inventory[itemName].quantity = newQ + 1;
-    std::cout << "Added " << itemName << std::endl;
 }
 void _inventory::setPlayerStats(
     unordered_map<std::string, float>& player){
@@ -40,7 +39,7 @@ _item _inventory::randomItem() {
     }
 
 }
-void _inventory::pickupItem(){
+_item _inventory::pickupItem(){
     std::vector<_item> pickupChoices;
     _item pickupItem = randomItem();
     int iteminput;
@@ -49,4 +48,5 @@ void _inventory::pickupItem(){
         pickupChoices.push_back(randomItem());
     }
     addItem(pickupItem);
+    return randomItem();
 }

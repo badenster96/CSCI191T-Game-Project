@@ -31,7 +31,7 @@ void _enemy::spawn(vec3 center){
     // Enemy stats
     health = 10.0f + rand()%5;
     damage = 1.0f + rand()%10;
-    speed = 10.0f + rand()%20 * 1.0f;
+    speed = 10.0f + rand()%40 * 1.0f;
     // Spawn logic
     float radius = rand()%50/10.0f + 10;
     angle = rand()%360 / 180.0f * PI;
@@ -49,6 +49,7 @@ void _enemy::update(){
             isFlashing = false;
         }
     }
+    //speed += 0.001f;
 
 }
 void _enemy::draw(){
@@ -93,6 +94,5 @@ void _enemy::moveTowardPoint(vec3 point, float deltaTime) {
         mdl->actionTrigger = RUN;
         pos.x += path.x * speed * deltaTime;
         pos.z += path.z * speed * deltaTime;
-
     }
 }

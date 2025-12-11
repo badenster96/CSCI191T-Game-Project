@@ -81,9 +81,10 @@ void _player::update(float deltaTime){
     cam.setUpCamera();
 }
 void _player::resetPlayer() {
+    stats["currHealth"] = 100.0f;
     stats["Health"] = 100.0f;
     stats["Speed"] = 50.0f;
-    stats["AttackSpeed"] = 200.0f;
+    stats["AttackSpeed"] = 2.0f;
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.05f;
     stats["Armor"] = 0.0f;

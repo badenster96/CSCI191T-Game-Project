@@ -28,9 +28,15 @@ void _hud::renderText(int x, int y, const std::string& text) {
     glCallLists((GLsizei)text.length(), GL_UNSIGNED_BYTE, text.c_str());
 }
 void _hud::addConsoleMessage(const std::string& message){
-    if(debug) gameConsole.push_back(message);
+    gameConsole.push_back(message);
     if(gameConsole.size() > 20)
         gameConsole.erase(gameConsole.begin());
+        std::cout << message << std::endl;
+}
+void _hud::addGameInfo(const std::string& message){
+    gameInfo.push_back(message);
+    if(gameInfo.size() > 20)
+        gameInfo.erase(gameInfo.begin());
         std::cout << message << std::endl;
 }
 void _hud::addDamageNumber(float x, float y, float z, float amount){
@@ -149,7 +155,14 @@ void _hud::drawConsole() {
             y += 25;
         }
     }
-
+}
+void _hud::drawGameInfo() {
+    float y = 50;
+    for(int i = 0; i < gameInfo.size(); i++){
+        renderText(screenWidth - 300, screenHeight - y, gameInfo[i].c_str());
+        y += 25;
+    }
+    glColor4f(0.0f, 0.0f, 0.0f, 0.5f); // black with 50% transparency
 }
 void _hud::drawDamageNumbers(float dTime){
     for(int i = 0; i < damageNumbers.size(); i++){
@@ -176,6 +189,7 @@ void _hud::drawHandler() {
     drawHealthBar();
     drawStats();
     drawConsole();
+    drawGameInfo();
 }
 void _hud::draw(int screenWidth, int screenHeight)
 {

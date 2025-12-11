@@ -24,10 +24,12 @@ class _hud
         // Helper Functions
         void renderText(int x, int y, const std::string& text);
         void addConsoleMessage(const std::string& message);
+        void addGameInfo(const std::string& message);
         void addDamageNumber(float x, float y, float z, float amount);
         // Draw Functions
         void drawHealthBar();
         void drawStats();
+        void drawGameInfo();
         void drawConsole();
         void drawDamageNumbers(float dTime);
         // Main draw function
@@ -36,7 +38,7 @@ class _hud
 
         bool debug = false;
         int screenWidth, screenHeight;
-        std::vector<std::string> gameConsole;
+        std::vector<std::string> gameConsole, gameInfo;
         std::vector<dmgNumber> damageNumbers;
 
     protected:

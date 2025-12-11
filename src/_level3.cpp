@@ -13,9 +13,22 @@ _level3::~_level3()
     //dtor
 }
 
+void _level3::initFiles() {
+    // sfx
+    files["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
+    files["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
+    files["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
+    // Music
+    files["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    files["bullet"] = "models/Tekk/weapon.md2";
+    files["player"] = "waste";
+    files["Enemy"] = "badboyblake";
+    files["Floor"] = "images/tex.jpg";
+
+}
 void _level3::initTextures() {
     myHUD->addConsoleMessage("Loading Textures...");
-    myTexture->loadTexture("images/tex.jpg");
+    myTexture->loadTexture(files["Floor"]);
     //myPrlx->parallaxInit("images/prlx.jpg");
 
     mySkyBox->skyBoxInit();
@@ -30,27 +43,32 @@ void _level3::initTextures() {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
     //mySprite->spriteInit("images/eg.png",6,4);
-    player->init("waste");
-    //mdl3DW->initModel("models/Tekk/weapon.md2");
+    player->init(files["player"]);
     for(int i = 0; i < 10; i++){
-        b[i].iniBullet("models/Tekk/weapon.md2");
+        b[i].iniBullet(files["bullet"]);
     }
-    enemyHandler->initModels("badboyblake");
+    enemyHandler->initModels(files["Enemy"]);
     // capsuleHandler->init();
     myHUD->addConsoleMessage("Textures loaded.");
 }
+
 void _level3::initGL() {
     myHUD->addConsoleMessage("Initializing Level3...");
     scene = LEVEL3;
+    initFiles();
     lockCursor();
     glShadeModel(GL_SMOOTH); // to handle GPU shaders
-    glClearColor(0.0f,0.0f,0.0f,1.0f); // black background color
+    glClearColor(0.01f,0.02f,0.05f,1.0f); // black background color
     glClearDepth(1.0f);         //depth test for layers
 
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
     glEnable(GL_LIGHTING);
+    GLfloat ambientLight[]  = {0.02f, 0.02f, 0.05f, 1.0f}; // very dim blue
+    GLfloat diffuseLight[]  = {0.1f, 0.1f, 0.2f, 1.0f};    // soft bluish light
+    GLfloat specularLight[] = {0.1f, 0.1f, 0.2f, 1.0f};    // subtle specular highlights
+    GLfloat lightPos[]      = {50.0f, 100.0f, 50.0f, 1.0f};
     glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
@@ -58,12 +76,18 @@ void _level3::initGL() {
 
     // Fog
     glEnable(GL_FOG);
-    GLfloat fogColor[] = {0.01f, 0.08f, 0.01f, 0.8f};
+    GLfloat fogColor[] = {0.01f, 0.02f, 0.05f, 0.8f};
 
     glFogi(GL_FOG_MODE, GL_LINEAR);
     glFogfv(GL_FOG_COLOR, fogColor);
     glFogf(GL_FOG_START, 20.0f);
     glFogf(GL_FOG_END, 200.0f);
+    GLfloat lampDiffuse[] = {0.8f, 0.5f, 0.2f, 1.0f}; // warm orange
+    GLfloat lampPos[]     = {10.0f, 2.0f, 10.0f, 1.0f};
+
+    glEnable(GL_LIGHT1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lampDiffuse);
+    glLightfv(GL_LIGHT1, GL_POSITION, lampPos);
 
     // Set matrices
     glMatrixMode(GL_PROJECTION);
@@ -81,9 +105,8 @@ void _level3::initGL() {
 
     initTextures();
 
-
     snds->initSounds();
-    // snds->playMusic("sounds/mainTheme.wav");
+    snds->playMusic(files["CombatMusic"]);
     myHUD->init();
     myInv->initInv();
 
@@ -121,7 +144,10 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
         player->setTarget(nearestEnemy->pos);
         for(int i = 0; i < 10; i++){
             if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
-                if(nearestEnemy->isAlive) b[i].shootBullet(p, nearestE);
+                if(nearestEnemy->isAlive) {
+                    b[i].shootBullet(p, nearestE);
+                    snds->playRandSound(files["M16"], 10, 0.4f);
+                }
                 lastAttackTime = currentTime;
             }
             // fires the bullets
@@ -133,9 +159,11 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
                         e->health -= player->damage;
                         e->pain();
                         e->lastTimeHit = currentTime;
+                        snds->playRandSound(files["EnemyHit"],8, 0.3f);
                         //myHUD->addConsoleMessage("Enemy Shot!");
                         if(e->health <= 0) {
                             e->isAlive = e->isSpawned = false;
+                            snds->playRandSound(files["ZombieDie"], 5, 0.8f);
                             enemiesKilled++;
                         }
                     }
@@ -148,10 +176,11 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
     }
 }
 void _level3::waveSpawn() {
-    int enemiesPerWave = 12 * wave;
+    int enemiesPerWave = 120 * wave;
     int enemiesPerCapsule = 4 * wave;
     if(!waveSpawned){
         myHUD->addConsoleMessage("Wave " + std::to_string(wave) + " Spawned");
+        myHUD->addGameInfo("Wave " + std::to_string(wave) + " Spawned");
         int capsulesPerWave = enemiesPerWave / enemiesPerCapsule;
         enemiesKilled = 0;
         enemyHandler->totalEnemiesSpawned = 0;
@@ -179,7 +208,10 @@ void _level3::waveSpawn() {
 }
 
 void _level3::pickupMenu(){
-    if(capsuleHandler->checkPickup(player->pos, myCol))myInv->pickupItem();
+    if(capsuleHandler->checkPickup(player->pos, myCol)){
+        _item randomItem = myInv->pickupItem();
+        myHUD->addGameInfo("Picked up " + randomItem.name);
+    };
 
     //std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
     //myHUD->addConsoleMessage(message);
@@ -250,7 +282,8 @@ void _level3::drawScene()
     // |----------------------DRAW SECTION------------------|
     // |====================================================|
 
-
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0); // your moonlight
     mySkyBox->drawSkyBox();
     drawFloor();
 

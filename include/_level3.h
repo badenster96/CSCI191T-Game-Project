@@ -53,12 +53,14 @@ class _level3 : public _Scene
         _bullets b[10];
         std::vector<_capsule*> capsules;
         std::vector<_sprite*> items;
+        std::unordered_map<std::string, char*> files;
         _enemy* nearestEnemy;
 
         // Init functions - functions that run once at init
         // void reSizeScene(int width, int height) override;  // resize window
         void initTextures();
         void init();
+        void initFiles();
         void initGL() override;                            // initialize GL graphics
         // Draw Functions - Functions that run every frame
         void lose();
