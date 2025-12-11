@@ -23,7 +23,7 @@ void _level4::initFiles() {
     // sfx
     files["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
     files["EnemyHit"] = "sounds/sfx/clankhit/Impact_Sword_To_PlateArmour_001.wav";
-    files["ZombieDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
+    files["EnemyDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
     // Music
     files["CombatMusic"] = "sounds/music/DroneAttack.wav";
     files["bullet"] = "models/Tekk/weapon.md2";
@@ -178,7 +178,7 @@ void _level4::attackHandler(vec3 nearestE, vec3 p) {
                         //myHUD->addConsoleMessage("Enemy Shot!");
                         if(e->health <= 0) {
                             e->isAlive = e->isSpawned = false;
-                            snds->playRandSound(files["ZombieDie"], 5, 0.8f);
+                            snds->playRandSound(files["EnemyDie"], 5, 0.8f);
                             enemiesKilled++;
                         }
                     }
