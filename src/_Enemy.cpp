@@ -31,7 +31,7 @@ void _enemy::spawn(vec3 center){
     // Enemy stats
     health = 10.0f + rand()%5;
     damage = 1.0f + rand()%10;
-    speed = 0.05f + rand()%20 * 0.001f;
+    speed = 10.0f + rand()%20 * 1.0f;
     // Spawn logic
     float radius = rand()%50/10.0f + 10;
     angle = rand()%360 / 180.0f * PI;
@@ -79,7 +79,7 @@ void _enemy::draw(){
     glPopMatrix();
 }
 
-void _enemy::moveTowardPoint(vec3 point) {
+void _enemy::moveTowardPoint(vec3 point, float deltaTime) {
     vec3 path;
     path.x = point.x - pos.x;
     path.y = 0;
@@ -91,8 +91,8 @@ void _enemy::moveTowardPoint(vec3 point) {
         path.x /= length;
         path.z /= length;
         mdl->actionTrigger = RUN;
-        pos.x += path.x * speed;
-        pos.z += path.z * speed;
+        pos.x += path.x * speed * deltaTime;
+        pos.z += path.z * speed * deltaTime;
 
     }
 }

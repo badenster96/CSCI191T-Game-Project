@@ -18,22 +18,22 @@ class _player
         // Main Functions
         void draw();
         void init(std::string model);
-        void update();
+        void update(float deltaTime);
         void handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd);
         // Helper Functions
         void applyPlayerStats();
         void applyItemStats();
         vec3 calcMoveVector();
-        void rotatePlayer(const vec3& normVec);
+        void rotatePlayer(const vec3& normVec, float deltaTime);
         void resetPlayer();
         void hit(float hitDamage);
         void setTarget(vec3 point);
 
         vec3 currTarget;
         // Movement
-        bool isMovingForward, isMovingBack, isMovingLeft, isMovingRight = false;
-        bool isJumping = false;
-        bool isMoving = false;
+        bool isMovingForward, isMovingBack, isMovingLeft, isMovingRight;
+        bool isJumping;
+        bool isMoving;
         // Camera Controls
         float currentAngle;
         float camHeightOffset;

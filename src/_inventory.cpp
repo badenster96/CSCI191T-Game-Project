@@ -38,4 +38,15 @@ _item _inventory::randomItem() {
         if(itemNumber == randomItem) return i.second;
         else itemNumber++;
     }
+
+}
+void _inventory::pickupItem(){
+    std::vector<_item> pickupChoices;
+    _item pickupItem = randomItem();
+    int iteminput;
+    pickupChoices.clear();
+    for(int i = 0; i < 3; i++){
+        pickupChoices.push_back(randomItem());
+    }
+    addItem(pickupItem);
 }

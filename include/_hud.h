@@ -16,19 +16,26 @@ class _hud
         };
         _hud();
         virtual ~_hud();
+        // Setters
         void setPlayer(_player* p) {player = p;}
         void setEnemies(std::vector<_enemy*>* e) {enemies = e;}
+        // Init
         void init();
+        // Helper Functions
         void renderText(int x, int y, const std::string& text);
-        void drawHealthBar(int screenWidth, int screenHeight);
-        void drawStats(int screenWidth, int screenHeight);
-        void addDamageNumber(float x, float y, float z, float amount);
-        void drawDamageNumbers(float dTime);
         void addConsoleMessage(const std::string& message);
-        void drawConsole(int screenWidth, int screenHeight);
+        void addDamageNumber(float x, float y, float z, float amount);
+        // Draw Functions
+        void drawHealthBar();
+        void drawStats();
+        void drawConsole();
+        void drawDamageNumbers(float dTime);
+        // Main draw function
+        void drawHandler();
         void draw(int width, int height);
 
         bool debug = false;
+        int screenWidth, screenHeight;
         std::vector<std::string> gameConsole;
         std::vector<dmgNumber> damageNumbers;
 

@@ -18,6 +18,7 @@ class _inventory
         void resetItems();
         void setPlayerStats(unordered_map<std::string,float>& player);
         _item randomItem();
+        void pickupItem();
         _FileLoader fl;
 
 

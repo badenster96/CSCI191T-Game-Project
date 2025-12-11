@@ -19,7 +19,7 @@ class _enemy
         void spawn(vec3 center);
         void pain();
 
-        void moveTowardPoint(vec3 point);
+        void moveTowardPoint(vec3 point, float deltaTime);
 
         bool isAlive = false;
         bool isSpawned = false;

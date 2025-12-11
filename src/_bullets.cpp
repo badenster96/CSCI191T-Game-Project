@@ -72,7 +72,8 @@ void _bullets::shootBullet(const vec3& start, const vec3& end)
     live = true;        // activate the bullet
     actionTrigger = SHOOT; // set state to shooting
 }
-void _bullets::bulletActions(){
+void _bullets::bulletActions(float deltaTime){
+    float speed = 80.0f;
     switch(actionTrigger)
     {
     case READY:
@@ -96,7 +97,6 @@ void _bullets::bulletActions(){
             pos.x = src.x + t*(des.x -src.x);
             pos.y = src.y + t*(des.y -src.y);
             pos.z = src.z + t*(des.z -src.z);
-
             if(t<1) t+=0.05;
             else actionTrigger = READY;
         }

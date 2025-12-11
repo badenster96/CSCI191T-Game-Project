@@ -56,6 +56,8 @@ void _capsule::draw() {
     glTranslatef(pos.x, pos.y, pos.z);
 
     myTex->bindTexture();
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
     glColor3f(0.4f, 0.1f, 0.1f);
     if(myTex){
         myTex->bindTexture();
@@ -87,6 +89,6 @@ void _capsule::draw() {
 
     gluDeleteQuadric(quad);
 
-    glDisable(GL_TEXTURE_2D);
+    //glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 }

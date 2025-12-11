@@ -37,3 +37,14 @@ void _capsuleHandler::capsuleSpawner(int numCaps, vec3 point) {
         }
     }
 }
+
+bool _capsuleHandler::checkPickup(vec3 p,_collisionCheck* myCol) {
+    // Check if the player is colliding with a capsule, and give the player an item if they are
+    for(const auto& c : capsules){
+        if(myCol->isSphereCol(p, c->pos, 2.0f, 2.0f, 1.0f) && c->state == ONGROUND){
+            c->state = COLLECTED;
+            return true;
+        }
+    }
+    return false;
+}

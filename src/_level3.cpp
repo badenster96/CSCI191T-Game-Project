@@ -6,7 +6,6 @@ _level3::_level3()
     myTime->startTime = clock();
     isInit = false;
     nearestEnemy = nullptr;
-    isPickupMenuOpen = false;
 }
 
 _level3::~_level3()
@@ -17,7 +16,7 @@ _level3::~_level3()
 void _level3::initTextures() {
     myHUD->addConsoleMessage("Loading Textures...");
     myTexture->loadTexture("images/tex.jpg");
-    myPrlx->parallaxInit("images/prlx.jpg");
+    //myPrlx->parallaxInit("images/prlx.jpg");
 
     mySkyBox->skyBoxInit();
     mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
@@ -30,8 +29,8 @@ void _level3::initTextures() {
     for (int i = 0; i < 6; i++) {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
-    mySprite->spriteInit("images/eg.png",6,4);
-    mdl3D->init("waste");
+    //mySprite->spriteInit("images/eg.png",6,4);
+    player->init("waste");
     //mdl3DW->initModel("models/Tekk/weapon.md2");
     for(int i = 0; i < 10; i++){
         b[i].iniBullet("models/Tekk/weapon.md2");
@@ -77,7 +76,7 @@ void _level3::initGL() {
     enemyHandler->setup(200);
     capsuleHandler->setup(100);
 
-    myHUD->setPlayer(mdl3D);
+    myHUD->setPlayer(player);
     myHUD->setEnemies(&enemyHandler->enemies);
 
     initTextures();
@@ -89,42 +88,40 @@ void _level3::initGL() {
     myInv->initInv();
 
     // Level stats setup
-    mdl3D->applyPlayerStats();
+    player->applyPlayerStats();
     isInit = true;
     myHUD->addConsoleMessage("_level3 initialized");
 }
 void _level3::lose() {
-    if(mdl3D && mdl3D->currHealth <= 0.0f){
-        mdl3D->resetPlayer();
+    if(player && player->currHealth <= 0.0f){
+        player->resetPlayer();
         myInv->resetItems();
         scene = MAIN;
         isInit = false;
         return;
     }
 }
-void _level3::enemyDamagePlayer(_player* player){
+void _level3::enemyDamagePlayer(_player* p){
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-    if(currentTime - lastHitTime >= player->iFrames){
+    if(currentTime - lastHitTime >= p->iFrames){
         for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(player->pos,e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
+            if(e && myCol->isSphereCol(p->pos,e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
                 lastHitTime = currentTime;
                 std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
                 myHUD->addConsoleMessage(message);
-                player->hit(e->damage);
+                p->hit(e->damage);
             }
         }
     }
 }
-void _level3::fireBullet() {
 
-}
-void _level3::attackHandler(vec3 nearestE, vec3 player) {
+void _level3::attackHandler(vec3 nearestE, vec3 p) {
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     if(nearestEnemy){
-        mdl3D->setTarget(nearestEnemy->pos);
+        player->setTarget(nearestEnemy->pos);
         for(int i = 0; i < 10; i++){
-            if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/mdl3D->attackSpeed){
-                if(nearestEnemy->isAlive) b[i].shootBullet(player, nearestE);
+            if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
+                if(nearestEnemy->isAlive) b[i].shootBullet(p, nearestE);
                 lastAttackTime = currentTime;
             }
             // fires the bullets
@@ -133,7 +130,7 @@ void _level3::attackHandler(vec3 nearestE, vec3 player) {
                     if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
                        && currentTime - e->lastTimeHit >= e->iFrames
                        && e->health > 0){
-                        e->health -= mdl3D->damage;
+                        e->health -= player->damage;
                         e->pain();
                         e->lastTimeHit = currentTime;
                         //myHUD->addConsoleMessage("Enemy Shot!");
@@ -147,7 +144,7 @@ void _level3::attackHandler(vec3 nearestE, vec3 player) {
         }
         // Enemy hit handler
         // function in enemyHandler that takes in
-        enemyDamagePlayer(mdl3D);
+        enemyDamagePlayer(player);
     }
 }
 void _level3::waveSpawn() {
@@ -158,7 +155,7 @@ void _level3::waveSpawn() {
         int capsulesPerWave = enemiesPerWave / enemiesPerCapsule;
         enemiesKilled = 0;
         enemyHandler->totalEnemiesSpawned = 0;
-        capsuleHandler->capsuleSpawner(capsulesPerWave, mdl3D->pos);
+        capsuleHandler->capsuleSpawner(capsulesPerWave, player->pos);
         waveSpawned = true;
         return;
     }
@@ -181,48 +178,32 @@ void _level3::waveSpawn() {
 
 }
 
-void _level3::pickupMenu(_capsule* c){
-    _item pickupItem = myInv->randomItem();
-    int iteminput;
-    isPickupMenuOpen = true;
-    pickupChoices.clear();
-    for(int i = 0; i < 3; i++){
-        pickupChoices.push_back(myInv->randomItem());
-    }
-    myInv->addItem(pickupItem);
-    std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
-    for(const auto& stat : pickupItem.stats){
-        std::string statText = stat.first + ": ";
-        statText += stat.second;
-        message += statText;
-    }
-    myHUD->addConsoleMessage(message);
-    isPickupMenuOpen = false;
-    c->state = COLLECTED;
-}
-void _level3::itemFromCapsule() {
-    // Check if the player is colliding with a capsule, and give the player an item if they are
-    for(const auto& c : capsuleHandler->capsules){
-        if(myCol->isSphereCol(mdl3D->pos, c->pos, 2.0f, 2.0f, 1.0f) && c->state == ONGROUND){
-            pickupMenu(c);
-        }
-    }
+void _level3::pickupMenu(){
+    if(capsuleHandler->checkPickup(player->pos, myCol))myInv->pickupItem();
+
+    //std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
+    //myHUD->addConsoleMessage(message);
 }
 
-void _level3::drawSceneCalc(){
+
+void _level3::update(){
+    float deltaTime = myTime->getTickSeconds();
     lose();
-    mdl3D->update();
-    mySprite->face(mdl3D->getPos());
-    // Collision Check to Sprites, to pick up items
-    // std::cout << myCol->isSphereCol(mdl3D->pos,mySprite->pos,1.0f,1.0f,0.1f) << std::endl;
-    nearestEnemy = enemyHandler->nearest(mdl3D->pos);
-    if(nearestEnemy) attackHandler(nearestEnemy->pos, mdl3D->pos);
+    player->update(deltaTime);
+    nearestEnemy = enemyHandler->nearest(player->pos);
+    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->pos);
     waveSpawn();
-    itemFromCapsule();
-    enemyHandler->update(mdl3D->pos);
+    pickupMenu();
+    enemyHandler->update(player->pos, deltaTime);
     capsuleHandler->update();
-    myInv->setPlayerStats(mdl3D->itemStats);
-    mdl3D->applyPlayerStats();
+    myInv->setPlayerStats(player->itemStats);
+    player->applyPlayerStats();
+    for(int i = 0; i < 10; i++){
+        if(b[i].live){
+            b[i].bulletActions(deltaTime);
+            b[i].drawBullet();
+        }
+    }
 }
 void _level3::drawFloor(){
     glPushMatrix();
@@ -263,79 +244,18 @@ void _level3::drawScene()
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     // Draw calculations
-    drawSceneCalc();
+    update();
 
     // |====================================================|
     // |----------------------DRAW SECTION------------------|
     // |====================================================|
 
-    glPushMatrix();
 
-        // Calculate horizontal offset based on camera rotation
-        float lookOffset = fmod(mdl3D->cam.rotAngle.x, 360.0f);  // 0-360
-        if(lookOffset < 0) lookOffset += 360.0f;             // make positive
-        lookOffset /= 360.0f;                                // 0-1 range
-        lookOffset = lookOffset * 2.0f - 1.0f;              // -1 to 1
-
-        float parallaxFactor = 0.5f; // adjust intensity of movement
-        myPrlx->xMin = -lookOffset * parallaxFactor;
-        myPrlx->xMax = myPrlx->xMin + 1.0f;
-
-        // Draw parallax
-        //myPrlx->drawParallax(width, height);
-
-        // Draw skybox on top (optional)
-    glPushMatrix();
-        int sbSize = 10.0f;
-        glScalef(sbSize, sbSize, sbSize);
-
-        glDisable(GL_LIGHTING);
-        //glDisable(GL_FOG);
-        glDepthMask(GL_FALSE);
-        glEnable(GL_TEXTURE_2D);
-
-        mySkyBox->drawSkyBox();
-
-        glDepthMask(GL_TRUE);
-        glEnable(GL_LIGHTING);
-        //glEnable(GL_FOG);
-
-    glPopMatrix();
-    glPopMatrix();
+    mySkyBox->drawSkyBox();
     drawFloor();
-    glPushMatrix();
-        for(int i = 0; i < 10; i++){
-            if(b[i].live){
-                b[i].bulletActions();
-                b[i].drawBullet();
-            }
-        }
-    glPopMatrix();
-    mySprite->drawSprite();
-    mdl3D->draw();
 
-    glPushMatrix();
-
-        // Move to player
-        glTranslatef(mdl3D->pos.x, mdl3D->pos.y, mdl3D->pos.z);
-
-        // Apply player orientation
-        glRotatef(mdl3D->currentAngle-90, 0, 1, 0);  // yaw
-        glScalef(0.1f, 0.1f, 0.1f);   // <<< adjust until correct size
-
-
-        // Hand offset (adjust these)
-        glTranslatef(0.0f, 0.0f, 0.0f);
-
-        // Orient spear
-        glRotatef(90, 1, 0, 0);
-        glRotatef(180, 0, 1, 0);
-
-        //mdl3DW->actionTrigger = mdl3D->playerModel->actionTrigger;
-        //mdl3DW->Actions();
-        //mdl3DW->Draw();
-
-    glPopMatrix();
+    //mySprite->drawSprite();
+    player->draw();
     // Enemy Render
     enemyHandler->draw();
     capsuleHandler->draw();
@@ -365,8 +285,8 @@ void _level3::mouseMapping(int x, int y)
 
 int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    if(mdl3D){
-        mdl3D->handleInput(uMsg, wParam, lParam, hWnd);
+    if(player){
+        player->handleInput(uMsg, wParam, lParam, hWnd);
     }
     switch(uMsg)
     {
@@ -391,36 +311,30 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 }
             }
             myInput->wParam = wParam;
-            myInput->keyPressed(myModel);
-            myInput->keyPressed(myPrlx);
+            // myInput->keyPressed(myPrlx);
             // myInput->keyPressed(mySkyBox);
-            myInput->keyPressed(mySprite);
             // myInput->keyPressed(myCam);
-            myInput->keyPressed(mdl3D->playerModel,mdl3DW);
+            myInput->keyPressed(player->playerModel,mdl3DW);
             break;
             if(wParam == 'm' || wParam == 'M')
         break;
 
         case WM_KEYUP:
             myInput->wParam = wParam;
-            myInput->keyUp(mySprite);
         break;
 
         case WM_LBUTTONDOWN:
             myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
              mouseMapping(LOWORD(lParam), HIWORD(lParam));
         break;
 
         case WM_RBUTTONDOWN:
             myInput->wParam = wParam;
-            myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
         break;
 
          case WM_MBUTTONDOWN:
              myInput->wParam = wParam;
-             myInput->mouseEventDown(myModel,LOWORD(lParam),HIWORD(lParam));
 
             break;
 
@@ -439,7 +353,6 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
         case WM_MOUSEWHEEL:
               myInput->wParam = wParam;
-              myInput->mouseWheel(myModel,(double)GET_WHEEL_DELTA_WPARAM(wParam));
             break;
 
         default:

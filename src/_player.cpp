@@ -4,6 +4,12 @@ _player::_player()
 {
     //ctor
     camHeightOffset = 3.0f;
+    bool isMovingForward = false;
+    bool isMovingBack = false;
+    bool isMovingLeft = false;
+    bool isMovingRight = false;
+    bool isJumping = false;
+    bool isMoving = false;
 }
 
 _player::~_player()
@@ -48,11 +54,11 @@ vec3 _player::calcMoveVector(){
     if(isMovingRight)     { moveVec += vec3(-lookDir.z, 0, lookDir.x); }
     return moveVec;
 }
-void _player::rotatePlayer(const vec3& normVec){
+void _player::rotatePlayer(const vec3& normVec, float deltaTime){
     vec3 moveVec = normVec;
     if(moveVec.normalize() < 0.0001f) return;
     float targetAngle = -atan2f(moveVec.x, -moveVec.z) * 180.0f / PI;
-    float rotationSpeed = 4.0f;
+    float rotationSpeed = 600.0f * deltaTime;
     float angleDiff = targetAngle - currentAngle;
 
     while(angleDiff > 180.0f) angleDiff -= 360.0f;
@@ -60,12 +66,12 @@ void _player::rotatePlayer(const vec3& normVec){
 
     currentAngle += (angleDiff > 0 ? rotationSpeed : -rotationSpeed);
 }
-void _player::update(){
+void _player::update(float deltaTime){
     vec3 moveVec = calcMoveVector();
     if(moveVec.normalize() > 0.0001f){
-        pos += moveVec * movementSpeed;
+        pos += moveVec * movementSpeed * deltaTime;
         isMoving = true;
-        rotatePlayer(moveVec);
+        rotatePlayer(moveVec, deltaTime);
     }
     else isMoving = false;
 
@@ -76,7 +82,7 @@ void _player::update(){
 }
 void _player::resetPlayer() {
     stats["Health"] = 100.0f;
-    stats["Speed"] = 0.5f;
+    stats["Speed"] = 50.0f;
     stats["AttackSpeed"] = 200.0f;
     stats["Damage"] = 2;
     stats["CriticalChance"] = 0.05f;

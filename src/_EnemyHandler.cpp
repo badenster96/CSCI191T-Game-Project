@@ -22,9 +22,9 @@ void _EnemyHandler::initModels(const char* model){
     std::cout << "EnemyHandler InitModels" << std::endl;
     for(int i = 0; i < enemies.size(); i++) enemies.at(i)->init(model);
 }
-void _EnemyHandler::update(vec3& player){
+void _EnemyHandler::update(vec3& player, float deltaTime){
     for(auto& e : enemies) {
-        e->moveTowardPoint(player);
+        e->moveTowardPoint(player, deltaTime);
     }
     resolveCollisions();
 }

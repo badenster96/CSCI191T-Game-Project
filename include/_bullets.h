@@ -27,7 +27,7 @@ class _bullets
 
         void iniBullet(char *);
         void drawBullet();
-        void bulletActions();
+        void bulletActions(float deltaTime);
         void shootBullet(const vec3& start, const vec3& end);
 
         int actionTrigger;

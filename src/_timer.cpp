@@ -5,6 +5,7 @@ _timer::_timer()
     //ctor
 
     startTime = clock();
+    lastTime = startTime;
 }
 
 _timer::~_timer()
@@ -13,7 +14,17 @@ _timer::~_timer()
 }
 clock_t _timer::getTicks()
 {
-    return clock()-startTime;
+    auto currentTime = clock() - startTime;
+    if(currentTime < 0.1f) currentTime = 0.1f;
+    return currentTime;
+}
+float _timer::getTickSeconds(){
+    if(paused) return 0.0f;
+    clock_t now = clock();
+    deltaTime = static_cast<float>(now - lastTime) / CLOCKS_PER_SEC;
+    lastTime = now;
+    if(deltaTime > 0.1f) deltaTime = 0.1f;
+    return deltaTime;
 }
 
 void _timer::reset()

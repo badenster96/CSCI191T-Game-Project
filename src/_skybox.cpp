@@ -30,6 +30,7 @@ void _skyBox::drawSkyBox()
 {
    glDisable(GL_LIGHTING); // if you are using room comment this line
    glPushMatrix();
+    glEnable(GL_TEXTURE_2D);
 
    glColor3f(1.0,1.0,1.0);// set environment to white
    glTranslatef(0,0,0);

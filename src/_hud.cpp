@@ -27,8 +27,24 @@ void _hud::renderText(int x, int y, const std::string& text) {
     glListBase(1000);
     glCallLists((GLsizei)text.length(), GL_UNSIGNED_BYTE, text.c_str());
 }
-
-void _hud::drawHealthBar(int screenWidth, int screenHeight) {
+void _hud::addConsoleMessage(const std::string& message){
+    if(debug) gameConsole.push_back(message);
+    if(gameConsole.size() > 20)
+        gameConsole.erase(gameConsole.begin());
+        std::cout << message << std::endl;
+}
+void _hud::addDamageNumber(float x, float y, float z, float amount){
+    dmgNumber damNum;
+    damNum.x = x;
+    damNum.y = y;
+    damNum.z = z;
+    damNum.value = amount;
+    damNum.time = 0.0f;
+    damNum.duration = 1.0f;
+    damageNumbers.push_back(damNum);
+}
+// Draw functions
+void _hud::drawHealthBar() {
     if (!player) return;
 
     float padding = 10.0f;
@@ -57,7 +73,7 @@ void _hud::drawHealthBar(int screenWidth, int screenHeight) {
         glVertex2f(xStart, yStart + barHeight);
     glEnd();
 }
-void _hud::drawStats(int screenWidth, int screenHeight) {
+void _hud::drawStats() {
     if (!player) return; // safety check
 
     float padding = 10.0f;
@@ -125,23 +141,7 @@ void _hud::drawStats(int screenWidth, int screenHeight) {
         yStart += (barHeight + spacing);
     }
 }
-void _hud::addConsoleMessage(const std::string& message){
-    if(debug) gameConsole.push_back(message);
-    if(gameConsole.size() > 20)
-        gameConsole.erase(gameConsole.begin());
-        std::cout << message << std::endl;
-}
-void _hud::addDamageNumber(float x, float y, float z, float amount){
-    dmgNumber damNum;
-    damNum.x = x;
-    damNum.y = y;
-    damNum.z = z;
-    damNum.value = amount;
-    damNum.time = 0.0f;
-    damNum.duration = 1.0f;
-    damageNumbers.push_back(damNum);
-}
-void _hud::drawConsole(int screenWidth, int screenHeight) {
+void _hud::drawConsole() {
     float y = 100;
     if(debug){
         for(int i = 0; i < gameConsole.size(); i++){
@@ -172,8 +172,15 @@ void _hud::drawDamageNumbers(float dTime){
         } else i++;
     }
 }
+void _hud::drawHandler() {
+    drawHealthBar();
+    drawStats();
+    drawConsole();
+}
 void _hud::draw(int screenWidth, int screenHeight)
 {
+    this->screenWidth = screenWidth;
+    this->screenHeight= screenHeight;
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);   // SAVE VIEWPORT
 
@@ -192,9 +199,7 @@ void _hud::draw(int screenWidth, int screenHeight)
     glDisable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
 
-    drawHealthBar(screenWidth, screenHeight);
-    drawStats(screenWidth, screenHeight);
-    drawConsole(screenWidth, screenHeight);
+    drawHandler();
 
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();

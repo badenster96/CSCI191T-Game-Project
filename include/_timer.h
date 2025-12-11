@@ -12,10 +12,16 @@ class _timer
         clock_t startTime;     // to get current time
 
         clock_t getTicks();    // timer count
+        float getTickSeconds();
         void reset();          // reset start time
 
         void pauseTime();      // For you to implement
         void resumeTime();
+
+        float currentTime = 0.0f;
+        clock_t lastTime = 0.0f;
+        float deltaTime = 0.0f;
+        bool paused = false;
 
     protected:
 
