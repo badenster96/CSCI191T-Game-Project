@@ -119,7 +119,7 @@ void _level3::initGL() {
     myHUD->addConsoleMessage("_level3 initialized");
 }
 void _level3::lose() {
-    if(player && player->currHealth <= 0.0f){
+    if(player && player->getHealth() <= 0.0f){
         player->resetPlayer();
         myInv->resetItems();
         scene = MAIN;
@@ -141,7 +141,7 @@ void _level3::enemyDamagePlayer(_player* p){
     float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
     if(currentTime - lastHitTime >= p->iFrames){
         for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(p->pos,e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
+            if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
                 lastHitTime = currentTime;
                 std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
                 myHUD->addConsoleMessage(message);
@@ -158,7 +158,7 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
         for(int i = 0; i < 10; i++){
             if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
                 if(nearestEnemy->isAlive
-                   && ((player->pos - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
+                   && ((player->getPos() - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
                     b[i].shootBullet(p, nearestE, player->stats["Range"], player->stats["Piercing"]);
                     snds->playRandSound(files["M16"], 10, 0.4f);
                 }
@@ -216,13 +216,18 @@ void _level3::waveSpawn() {
         return;
     }
     if(myWave->waveSpawning){
-        capsuleHandler->capsuleSpawner(myWave->capsulesPerWave, player->pos);
+        capsuleHandler->capsuleSpawner(myWave->capsulesPerWave, player->getPos());
         for(const auto& c : capsuleHandler->capsules){
             if(c->state == ONGROUND
                && !c->hasSpawnedEnemies
                && enemyHandler->totalEnemiesSpawned < myWave->enemiesPerWave){
                 enemyHandler->spawn(myWave->enemiesPerCapsule, c->pos);
                 c->hasSpawnedEnemies = true;
+            }
+            if(capsuleHandler->numCapsulesSpawned < myWave->capsulesPerWave) {
+                for(const auto& e : enemyHandler->enemies){
+                    e->speed += 0.00001;
+                }
             }
         }
         if(enemyHandler->enemiesKilled >= myWave->enemiesPerWave && enemyHandler->totalEnemiesSpawned > 0){
@@ -240,11 +245,10 @@ void _level3::waveSpawn() {
 
     //myHUD->addConsoleMessage("Enemies Killed:" + std::to_string(enemiesKilled));
     //myHUD->addConsoleMessage("Enemies Left:" + std::to_string(enemyHandler->totalEnemiesSpawned));
-
 }
 
 void _level3::pickupMenu(){
-    if(capsuleHandler->checkPickup(player->pos, myCol)){
+    if(capsuleHandler->checkPickup(player->getPos(), myCol)){
         _item randomItem = myInv->pickupItem();
         myHUD->addGameInfo("Picked up " + randomItem.name);
     };
@@ -253,29 +257,25 @@ void _level3::pickupMenu(){
     //myHUD->addConsoleMessage(message);
 }
 
-vec3 _level3::clampBounds(const vec3& pos){
+void _level3::clampBounds(vec3& pos){
     minBound = vec3(-boundarySize, -10.0f, -boundarySize);
     maxBound = vec3(boundarySize, 50.0f, boundarySize);
-    vec3 clampedPos = pos;
-    if(clampedPos.x < minBound.x) clampedPos.x = minBound.x;
-    if(clampedPos.y < minBound.y) clampedPos.y = minBound.y;
-    if(clampedPos.z < minBound.z) clampedPos.z = minBound.z;
+    if(pos.x < minBound.x) pos.x = minBound.x;
+    if(pos.y < minBound.y) pos.y = minBound.y;
+    if(pos.z < minBound.z) pos.z = minBound.z;
 
-    if(clampedPos.x > maxBound.x) clampedPos.x = maxBound.x;
-    if(clampedPos.y > maxBound.y) clampedPos.y = maxBound.y;
-    if(clampedPos.z > maxBound.z) clampedPos.z = maxBound.z;
-
-    return clampedPos;
+    if(pos.x > maxBound.x) pos.x = maxBound.x;
+    if(pos.y > maxBound.y) pos.y = maxBound.y;
+    if(pos.z > maxBound.z) pos.z = maxBound.z;
 }
 void _level3::clampLevel(){
     for(auto& c : capsuleHandler->capsules){
-        c->pos = clampBounds(c->pos);
+        clampBounds(c->pos);
     }
     for(auto& e : enemyHandler->enemies){
-        e->pos = clampBounds(e->pos);
+        clampBounds(e->pos);
     }
-    myCam->eye = clampBounds(myCam->eye);
-    player->pos = clampBounds(player->pos);
+    clampBounds(player->getPos());
 }
 
 void _level3::update(){
@@ -283,14 +283,13 @@ void _level3::update(){
     win();
     lose();
     player->update(deltaTime);
-    nearestEnemy = enemyHandler->nearest(player->pos);
-    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->pos);
+    nearestEnemy = enemyHandler->nearest(player->getPos());
+    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->getPos());
     waveSpawn();
     pickupMenu();
-    enemyHandler->update(player->pos, deltaTime);
+    enemyHandler->update(player->getPos(), deltaTime);
     capsuleHandler->update();
     myInv->setPlayerStats(player->itemStats);
-    player->applyPlayerStats();
     for(int i = 0; i < 10; i++){
         if(b[i].live){
             b[i].bulletActions(deltaTime);

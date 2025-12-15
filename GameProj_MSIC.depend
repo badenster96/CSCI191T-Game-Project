@@ -1004,13 +1004,13 @@
 	<_common.h>
 	<_textureloader.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_textureloader.h
+1765779898 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_textureloader.h
 	<_common.h>
 	<SOIL.h>
 
 1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\soil.h
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_player.h
+1765775395 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_player.h
 	<_3dmodelloader.h>
 	<_camera.h>
 	<_common.h>
@@ -1046,7 +1046,7 @@
 	<_common.h>
 	<_textureloader.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_sprite.h
+1765779891 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_sprite.h
 	<_common.h>
 	<_textureloader.h>
 
@@ -1169,7 +1169,7 @@
 	<_player.h>
 	<_enemy.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_inventory.h
+1765778966 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_inventory.h
 	<_item.h>
 	<_common.h>
 	<_FileLoader.h>
@@ -1206,7 +1206,7 @@
 	<_scene.h>
 	<_enemy.h>
 
-1765769162 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level3.h
+1765776191 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level3.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -1218,7 +1218,6 @@
 	<_sprite.h>
 	<_timer.h>
 	<_3dmodelloader.h>
-	<_camera.h>
 	<_bullets.h>
 	<_collisioncheck.h>
 	<_sounds.h>
@@ -1279,7 +1278,7 @@
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_3dmodelloader.cpp
 	"_3dmodelloader.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_bullets.cpp
+1765776247 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_bullets.cpp
 	"_bullets.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_camera.cpp
@@ -1301,13 +1300,13 @@
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_fileloader.cpp
 	"_FileLoader.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_hud.cpp
+1765775033 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_hud.cpp
 	"_hud.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_inputs.cpp
 	"_inputs.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_inventory.cpp
+1765779784 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_inventory.cpp
 	"_inventory.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_item.cpp
@@ -1321,7 +1320,7 @@
 	<random>
 	<cmath>
 
-1765769947 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level3.cpp
+1765776476 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level3.cpp
 	"_level3.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_light.cpp
@@ -1338,7 +1337,7 @@
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_parallax.cpp
 	"_parallax.h"
 
-1765764124 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_player.cpp
+1765775192 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_player.cpp
 	"_player.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_scene.cpp
@@ -1347,16 +1346,16 @@
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_scenemanager.cpp
 	"_scenemanager.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_skybox.cpp
+1765776424 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_skybox.cpp
 	"_skybox.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_sounds.cpp
 	"_sounds.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_sprite.cpp
+1765779878 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_sprite.cpp
 	"_sprite.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_textureloader.cpp
+1765779883 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_textureloader.cpp
 	"_textureloader.h"
 
 1765764821 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_timer.cpp
@@ -1370,6 +1369,6 @@
 
 1765769434 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_wavehandler.h
 
-1765769954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_wavehandler.cpp
+1765773162 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_wavehandler.cpp
 	"_waveHandler.h"
 

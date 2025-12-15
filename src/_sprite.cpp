@@ -24,7 +24,7 @@ _sprite::~_sprite()
     //dtor
 }
 
-void _sprite::spriteInit(char* fileName, int xFrames, int yFrames)
+void _sprite::spriteInit(const char* fileName, int xFrames, int yFrames)
 {
    myTex->loadTexture(fileName);
    frames.x = xFrames;

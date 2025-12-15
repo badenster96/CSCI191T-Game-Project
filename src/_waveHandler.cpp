@@ -10,7 +10,7 @@ _waveHandler::~_waveHandler()
     //dtor
 }
 void _waveHandler::update() {
-     enemiesPerWave = 8 * wave;
+     enemiesPerWave = 100 * wave;
      enemiesPerCapsule = 4 *  wave;
      capsulesPerWave =  enemiesPerWave /  enemiesPerCapsule;
 }

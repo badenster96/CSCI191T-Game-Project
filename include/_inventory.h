@@ -11,6 +11,7 @@ class _inventory
     public:
         _inventory();
         virtual ~_inventory();
+        void loadItemSprites();
         void initInv();
         _item getItem(std::string itemName){return itemsMaster[itemName];}
         void convertItemStatsToStats();

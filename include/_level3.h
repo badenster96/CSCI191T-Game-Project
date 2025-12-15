@@ -12,7 +12,6 @@
 #include<_sprite.h>
 #include<_timer.h>
 #include<_3dmodelloader.h>
-#include<_camera.h>
 #include<_bullets.h>
 #include<_collisioncheck.h>
 #include<_sounds.h>
@@ -41,7 +40,6 @@ class _level3 : public _Scene
         //_parallax *myPrlx           = new _parallax();
         _skyBox *mySkyBox           = new _skyBox();
         _timer *myTime              = new _timer();
-        _camera *myCam              = new _camera();
         _collisionCheck *myCol      = new _collisionCheck();
         _player *player              = new _player();
         _3DModelLoader *mdl3DW      = new _3DModelLoader();
@@ -77,7 +75,7 @@ class _level3 : public _Scene
         void pickupMenu();
 
         void update();
-        vec3 clampBounds(const vec3& pos);
+        void clampBounds(vec3& pos);
         void clampLevel();
         void drawFloor();
         void drawScene() override;                         // render scene

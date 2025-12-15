@@ -22,7 +22,7 @@ class _sprite
 
         float xMin,yMin,xMax,yMax;
 
-        void spriteInit(char *, int, int);// filename, # of frames x & y
+        void spriteInit(const char *, int, int);// filename, # of frames x & y
         void drawSprite();
         void spriteActions();
 

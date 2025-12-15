@@ -10,7 +10,7 @@ _textureLoader::~_textureLoader()
     //dtor
 }
 
-GLuint _textureLoader::loadTexture(char* fileName)
+GLuint _textureLoader::loadTexture(const char* fileName)
 {
     glGenTextures(1,&textID);
     glBindTexture(GL_TEXTURE_2D,textID);

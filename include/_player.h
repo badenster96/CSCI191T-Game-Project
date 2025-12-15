@@ -15,6 +15,7 @@ class _player
         _textureLoader* pTex = new _textureLoader;
         // Getters
         vec3& getPos() {return pos;}
+        float getHealth() {return currHealth;}
         // Main Functions
         void draw();
         void init(std::string model);
@@ -38,9 +39,11 @@ class _player
         float currentAngle;
         float camHeightOffset;
         // Player Stats
+        std::unordered_map<std::string,float> baseStats;
         std::unordered_map<std::string,float> stats;
         std::unordered_map<std::string,float> itemStats;
         float currHealth, maxHealth, attackSpeed, damage, critChance, critDamage, armor, piercing, movementSpeed, range = 0;
+        bool addItem = false;
         // Animation
         float iFrames = 0.3f;
 

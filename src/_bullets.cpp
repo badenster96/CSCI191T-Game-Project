@@ -42,8 +42,8 @@ void _bullets::drawBullet()
 
      glPopMatrix();
      glEnable(GL_TEXTURE_2D);// only if you are using glut sphere
-     glEnable(GL_BLEND);
-     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+     //glEnable(GL_BLEND);
+     //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
      glPushMatrix();
         glTranslatef(pos.x, pos.y, pos.z);
@@ -57,7 +57,7 @@ void _bullets::drawBullet()
             glVertex3f(-0.03f, 0,  0.0f);
         glEnd();
     glPopMatrix();
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
 }
 
 // In _bullets.cpp, define it:

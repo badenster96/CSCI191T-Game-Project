@@ -1,15 +1,39 @@
-Gizmo Spinach Health 25 Speed 0.05
-Gizmo Adderall Speed 0.05
-Gizmo Bump_Stock AttackSpeed 0.1
-Gizmo Hollow_Point Damage 2
-Gizmo Sniper_Scope Range 50
-Gizmo Bulletproof_Vest Armor 2
-Gizmo Piercing_Rounds Piercing 2
-Gizmo RedDotSight Range 20 CriticalChance 0.05
-Gizmo LeadRounds CriticalDamage 0.2
-Weapon Throwing_Dagger Damage 5 ArmorPiercing 3
-Weapon SMG Damage 2 AttackSpeed 0.3
-Weapon M16 Damage 3 AttackSpeed 0.1
-Weapon Berrett Damage 6 AttackSpeed -0.2 Range 100
-Weapon Pistol Damage 2 AttackSpeed 0.05 Armor 3
-Weapon AK47 Damage 6 AttackSpeed 0.15 Range 25
+Weapon Silencer_Pistol AttackSpeed 0.1 Speed 0.05
+Weapon Kevlar_Wrist_Guard Armor 2 Range -20.0
+Weapon Golden_Revolver Damage 3 CriticalDamage 0.2
+Weapon Micro_Pistol Speed 0.1 Damage -1
+Weapon Armor_Piercing_Silencer Armor 3 Piercing 2 Damage 2
+Weapon Laser_Pistol Damage 2 Piercing -1
+Weapon Grapple_Gun Speed 0.1 Range 20
+Gizmo Nano-Healer_Drones Health 50
+Gizmo Med_Injector_Pen Health 10 
+Gizmo Energy_Cloak Armor 4
+Gizmo Nano-Plating_Suit Armor 3
+Gizmo Holo-Decoy_Device AttackSpeed 0.1
+Gizmo Armor-Piercing_Drone Piercing 1
+Gizmo Thruster_Booster Speed 0.05
+Gizmo Grappling_Hook_Drone Speed 0.05
+Gadget Regeneration_Spray Health 5
+Gadget Nano-Healing_Beacon Health 5
+Gadget Reflective_Shield_Emitter Armor 1
+Gadget Temporary_Invisibility_Field Armor 1
+Gadget Explosive_Wristwatch Damage 1
+Gadget Flame_Thrower_Pen Damage 1
+Gadget Auto-Shot_Drone AttackSpeed 0.05
+Gadget Time_Dilation_Watch AttackSpeed 0.05
+Gadget Armor_Shredder_Grenade Piercing 1
+Gadget Railgun_Briefcase Piercing 1
+Gadget Jetpack_Briefcase Speed 0.05
+Gadget Spring-Loaded_Shoes Speed 0.05
+Training Endurance_Conditioning Health 10
+Training Meditation_Training Health 10
+Training Defensive_Combat_Drills Armor 1
+Training Bodyguard_Lessons Armor 1
+Training Weapons_Mastery Damage 1
+Training Sharpshooter_Training Damage 1
+Training Agility_Drills AttackSpeed 0.05
+Training Reflex_Drills AttackSpeed 0.05
+Training Weak_Point_Studies Piercing 1
+Training Tactical_Analysis Piercing 1
+Training Parkour_Training Speed 0.05
+Training Sprint_Drills Speed 0.05

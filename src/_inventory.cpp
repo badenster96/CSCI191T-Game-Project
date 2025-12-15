@@ -9,11 +9,18 @@ _inventory::~_inventory()
 {
     //dtor
 }
-
+void _inventory::loadItemSprites() {
+    for(auto& i : itemsMaster){
+        std::string spriteFile = "items/" + i.first + ".png";
+        i.second.spriteInit(spriteFile.data(), 1, 1);
+    }
+}
 void _inventory::initInv() {
     if(!isLoaded) itemsMaster = fl.loadItems("items");
+
     isLoaded = true;
 }
+
 void _inventory::addItem(_item item) {
     std::string itemName = item.name;
     int newQ = inventory[itemName].quantity;

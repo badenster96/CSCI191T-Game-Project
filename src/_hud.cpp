@@ -105,8 +105,8 @@ void _hud::drawStats() {
         }
     }
     std::vector<std::string> statsToText = {
-        std::to_string((int)(player->movementSpeed / player->stats["Speed"] * 100)) + "%",
-        std::to_string((int)(player->attackSpeed / player->stats["AttackSpeed"] * 100)) + "%",
+        std::to_string((int)(player->movementSpeed / player->baseStats["Speed"] * 100)) + "%",
+        std::to_string((int)(player->attackSpeed / player->baseStats["AttackSpeed"] * 100)) + "%",
         std::to_string((int)(player->damage)),
         std::to_string((int)(player->critChance * 100.0f)) + "%",
         std::to_string((int)(player->critDamage * 100.0f)) + "%",

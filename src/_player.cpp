@@ -29,6 +29,7 @@ void _player::applyPlayerStats() {
     range = stats["Range"];
 }
 void _player::applyItemStats(){
+    applyPlayerStats();
     maxHealth = stats["Health"] + itemStats["Health"];
     movementSpeed = stats["Speed"] + itemStats["Speed"];
     attackSpeed = stats["AttackSpeed"] + itemStats["AttackSpeed"];
@@ -85,16 +86,17 @@ void _player::update(float deltaTime){
     cam.setUpCamera();
 }
 void _player::resetPlayer() {
-    stats["currHealth"] = 100.0f;
-    stats["Health"] = 100.0f;
-    stats["Speed"] = 50.0f;
-    stats["AttackSpeed"] = 2.0f;
-    stats["Damage"] = 2;
-    stats["CriticalChance"] = 0.05f;
-    stats["CriticalDamage"] = 2.0f;
-    stats["Armor"] = 0.0f;
-    stats["Piercing"] = 2.0f;
-    stats["Range"] = 100.0f;
+    baseStats["currHealth"] = 100.0f;
+    baseStats["Health"] = 100.0f;
+    baseStats["Speed"] = 50.0f;
+    baseStats["AttackSpeed"] = 2.0f;
+    baseStats["Damage"] = 2;
+    baseStats["CriticalChance"] = 0.05f;
+    baseStats["CriticalDamage"] = 2.0f;
+    baseStats["Armor"] = 0.0f;
+    baseStats["Piercing"] = 2.0f;
+    baseStats["Range"] = 100.0f;
+    stats = baseStats;
     itemStats.clear();
     applyPlayerStats();
     currHealth = maxHealth;
@@ -161,9 +163,14 @@ void _player::handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd) {
                     break;
                 case 'P':
                 case 'p':
-                    stats["Speed"] += 0.025f;
-                    stats["Damage"] += 2.0f;
+                    stats["Speed"] += 5.0f;
+                    stats["AttackSpeed"] += 0.2f;
+                    stats["Damage"] += 1.0f;
+                    stats["Piercing"] += 1.0f;
                     break;
+                case 'i':
+                case 'I':
+                    addItem = true;
             }
             break;
         case WM_KEYUP:
