@@ -196,7 +196,7 @@ void _player::handleInput(UINT uMsg, WPARAM wParam, LPARAM lParam, HWND hWnd) {
             int dx = x - centerX;
             int dy = y - centerY;
 
-            cam.rotAngle.x += dx * 0.2f;
+            cam.rotAngle.x -= dx * 0.2f;
             cam.rotAngle.y -= dy * 0.2f;
 
             if(cam.rotAngle.y > 85) cam.rotAngle.y = 85;

@@ -13,6 +13,7 @@ class _timer
 
         clock_t getTicks();    // timer count
         float getTickSeconds();
+        float getTotalSeconds();
         void reset();          // reset start time
 
         void pauseTime();      // For you to implement

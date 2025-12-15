@@ -1,0 +1,188 @@
+[
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_3dmodelloader.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_3dmodelloader.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_3dmodelloader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_3dmodelloader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_Enemy.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_Enemy.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_Enemy.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_Enemy.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_EnemyHandler.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_EnemyHandler.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_EnemyHandler.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_EnemyHandler.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_FileLoader.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_FileLoader.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_FileLoader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_FileLoader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_bullets.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_bullets.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_bullets.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_bullets.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_camera.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_camera.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_camera.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_camera.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_capsule.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_capsule.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_capsule.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_capsule.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_capsuleHandler.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_capsuleHandler.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_capsuleHandler.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_capsuleHandler.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_collisioncheck.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_collisioncheck.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_collisioncheck.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_collisioncheck.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_hud.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_hud.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_hud.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_hud.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_inputs.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_inputs.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_inputs.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_inputs.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_inventory.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_inventory.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_inventory.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_inventory.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_item.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_item.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_item.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_item.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_level1.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_level1.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_level1.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_level1.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_level2.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_level2.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_level2.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_level2.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_level3.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_level3.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_level3.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_level3.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_level4.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_level4.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_level4.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_level4.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_light.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_light.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_light.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_light.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_menu.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_menu.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_menu.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_menu.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_model.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_model.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_model.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_model.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_parallax.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_parallax.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_parallax.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_parallax.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_player.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_player.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_player.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_player.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_scene.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_scene.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_scene.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_scene.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_scenemanager.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_scenemanager.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_scenemanager.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_scenemanager.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_skybox.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_skybox.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_skybox.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_skybox.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_sounds.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_sounds.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_sounds.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_sounds.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_sprite.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_sprite.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_sprite.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_sprite.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_textureloader.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_textureloader.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_textureloader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_textureloader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\_timer.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\_timer.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/_timer.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_timer.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\src\\inventory.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\src\\inventory.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/src/inventory.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/inventory.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/build",
+  "command": "C:\\PROGRA~2\\CODEBL~1\\MinGW\\bin\\G__~1.EXE -DPROJECT_SOURCE_DIR_STRING=\"\\\"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project\\\"\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Midterm.dir\\main.cpp.obj -c \"C:\\main\\MyCode\\Projects\\Final CSCI191\\CSCI191T-Game-Project\\main.cpp\"",
+  "file": "C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/main.cpp",
+  "output": "CMakeFiles/Midterm.dir/main.cpp.obj"
+}
+]

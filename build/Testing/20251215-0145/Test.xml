@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Win32-mingw32-make"
+	BuildStamp="20251215-0145-Experimental"
+	Name="BensDesktop"
+	Generator="ctest-3.31.5"
+	CompilerName="C:/Program Files (x86)/CodeBlocks/MinGW/bin/g++.exe"
+	CompilerVersion="14.2.0"
+	OSName="Windows"
+	Hostname="BensDesktop"
+	OSRelease=" Professional"
+	OSVersion=" (Build 9200)"
+	OSPlatform="x86"
+	Is64Bits="1"
+	VendorString=""
+	VendorID="Unknown Manufacturer"
+	FamilyID="0"
+	ModelID="0"
+	ModelName=""
+	ProcessorCacheSize="0"
+	NumberOfLogicalCPU="12"
+	NumberOfPhysicalCPU="6"
+	TotalVirtualMemory="42144"
+	TotalPhysicalMemory="31904"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="4700"
+	>
+	<Testing>
+		<StartDateTime>Dec 14 17:58 Pacific Standard Time</StartDateTime>
+		<StartTestTime>1765763916</StartTestTime>
+		<TestList/>
+		<EndDateTime>Dec 14 17:58 Pacific Standard Time</EndDateTime>
+		<EndTestTime>1765763916</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>

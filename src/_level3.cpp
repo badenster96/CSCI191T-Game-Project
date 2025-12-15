@@ -129,7 +129,7 @@ void _level3::lose() {
     }
 }
 void _level3::win() {
-    if(wave >= 1){
+    if( myWave->wave >= 3){
         scene = LEVEL4;
         isInit = false;
         snds->stopMusic();
@@ -181,11 +181,10 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
                         e->lastTimeHit = currentTime;
                         snds->playRandSound(files["EnemyHit"],8, 0.3f);
                         hitsThisFrame++;
-                        //myHUD->addConsoleMessage("Enemy Shot!");
-                        if(e->health <= 0) {
+                        if(e->health <= 0 && e->isAlive) {
                             e->isAlive = e->isSpawned = false;
                             snds->playRandSound(files["ZombieDie"], 5, 0.8f);
-                            enemiesKilled++;
+                            enemyHandler->enemiesKilled++;
                         }
                     }
                 }
@@ -200,33 +199,45 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
         enemyDamagePlayer(player);
     }
 }
+
 void _level3::waveSpawn() {
-    int enemiesPerWave = 100 * wave;
-    int enemiesPerCapsule = 4 * wave;
-    if(!waveSpawned){
-        myHUD->addConsoleMessage("Wave " + std::to_string(wave) + " Spawned");
-        myHUD->addGameInfo("Wave " + std::to_string(wave) + " Spawned");
-        int capsulesPerWave = enemiesPerWave / enemiesPerCapsule;
-        enemiesKilled = 0;
+    myWave->update();
+    if(myTime->getTotalSeconds() - myWave->timeSinceLastWave > myWave->timeBetweenWaves && !myWave->waveSpawning){
+        myWave->waveReady = true;
+    }
+    if(myWave->waveReady){
+        enemyHandler->enemiesKilled = 0;
         enemyHandler->totalEnemiesSpawned = 0;
-        capsuleHandler->capsuleSpawner(capsulesPerWave, player->pos);
-        waveSpawned = true;
+        capsuleHandler->reset();
+        myWave->waveReady = false;
+        myWave->waveSpawning = true;
+        myHUD->addConsoleMessage("Wave " + std::to_string( myWave->wave) + " Spawned");
+        myHUD->addGameInfo("Wave " + std::to_string(myWave->wave) + " Spawned");
         return;
     }
-    for(const auto& c : capsuleHandler->capsules){
-        if(c->state == ONGROUND
-           && !c->hasSpawnedEnemies
-           && enemyHandler->totalEnemiesSpawned < enemiesPerWave){
-            enemyHandler->spawn(enemiesPerCapsule, c->pos);
-            c->hasSpawnedEnemies = true;
+    if(myWave->waveSpawning){
+        capsuleHandler->capsuleSpawner(myWave->capsulesPerWave, player->pos);
+        for(const auto& c : capsuleHandler->capsules){
+            if(c->state == ONGROUND
+               && !c->hasSpawnedEnemies
+               && enemyHandler->totalEnemiesSpawned < myWave->enemiesPerWave){
+                enemyHandler->spawn(myWave->enemiesPerCapsule, c->pos);
+                c->hasSpawnedEnemies = true;
+            }
+        }
+        if(enemyHandler->enemiesKilled >= myWave->enemiesPerWave && enemyHandler->totalEnemiesSpawned > 0){
+            myHUD->addConsoleMessage("All enemies killed");
+            myWave->waveSpawning = false;
+            myWave->waveEnd = true;
         }
     }
-    if(enemiesKilled >= enemyHandler->totalEnemiesSpawned
-       && enemyHandler->totalEnemiesSpawned > 0){
-        waveSpawned = false;
-        wave++;
+    if(myWave->waveEnd){
+        myWave->timeSinceLastWave = myTime->getTotalSeconds();
+        myWave->wave++;
         myHUD->addConsoleMessage("Wave Ended");
+        myWave->waveEnd = false;
     }
+
     //myHUD->addConsoleMessage("Enemies Killed:" + std::to_string(enemiesKilled));
     //myHUD->addConsoleMessage("Enemies Left:" + std::to_string(enemyHandler->totalEnemiesSpawned));
 

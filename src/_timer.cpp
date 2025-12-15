@@ -26,7 +26,9 @@ float _timer::getTickSeconds(){
     if(deltaTime > 0.1f) deltaTime = 0.1f;
     return deltaTime;
 }
-
+float _timer::getTotalSeconds() {
+    return static_cast<float>(clock() - startTime) / CLOCKS_PER_SEC;
+}
 void _timer::reset()
 {
     startTime = clock();

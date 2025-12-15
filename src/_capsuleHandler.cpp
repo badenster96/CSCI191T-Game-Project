@@ -27,13 +27,19 @@ void _capsuleHandler::update(){
         c->update();
     }
 }
+void _capsuleHandler::reset() {
+    numCapsulesSpawned = 0;
+    spawnTime = 0.0f;
+}
 void _capsuleHandler::capsuleSpawner(int numCaps, vec3 point) {
-    int spawned = 0;
+    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    if(currentTime - spawnTime < spawnInterval) return;
     for(auto& c : capsules) {
-        if(c->state == DESPAWNED && spawned < numCaps){
-            cout << c->state << std::endl;
+        if(c->state == DESPAWNED && numCapsulesSpawned < numCaps){
             c->spawn(point);
-            spawned++;
+            spawnTime = currentTime;
+            numCapsulesSpawned++;
+            break;
         }
     }
 }

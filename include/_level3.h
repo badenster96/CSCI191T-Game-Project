@@ -23,6 +23,7 @@
 #include <_hud.h>
 #include <_capsule.h>
 #include <_capsuleHandler.h>
+#include <_waveHandler.h>
 
 
 class _level3 : public _Scene
@@ -50,6 +51,7 @@ class _level3 : public _Scene
         //_sprite *mySprite           = new _sprite();
         _hud *myHUD                 = new _hud();
         _inventory *myInv           = new _inventory();
+        _waveHandler* myWave        = new _waveHandler();
         _bullets b[10];
         std::vector<_capsule*> capsules;
         std::vector<_sprite*> items;
@@ -84,9 +86,13 @@ class _level3 : public _Scene
         int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
 
         // Wave spawning
-        float waveSpawned = false;
+        bool waveReady = false;
+        bool waveSpawning = false;
+        bool waveEnd = false;
         int wave = 1;
         int enemiesKilled = 0;
+        float timeBetweenWaves = 5.0f;
+        float timeSinceLastWave = 0.0f;
         // Attack Logic
         float lastAttackTime = 0.0f;
         float lastHitTime = 0.0f;

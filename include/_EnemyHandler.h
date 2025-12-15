@@ -23,6 +23,7 @@ class _EnemyHandler
         bool canSpawn();
         float lastWaveTime = 0;
         int totalEnemiesSpawned = 0;
+        int enemiesKilled = 0;
         std::vector<_enemy*> enemies;
 
     protected:

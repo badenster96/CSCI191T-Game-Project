@@ -35,7 +35,7 @@ void _EnemyHandler::draw() {
 }
 
 _enemy* _EnemyHandler::nearest(vec3& point) {
-    float minDistance = INT_MAX;
+    float minDistance = 100000.0f;
     _enemy* nearestEnemy = nullptr;
     for(auto& e : enemies) {
         if(e->isSpawned && e->isAlive){

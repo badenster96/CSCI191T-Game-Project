@@ -1,0 +1,1 @@
+  -L"C:/main/MyCode/Projects/Final CSCI191/CSCI191T-Game-Project/lib"  -LC:/main/MyCode/Projects/FINALC~1/CSCI19~1/../common/lib  -lmingw32 -lSOIL -lfreeglut -lopengl32 -lglu32 -lirrKlang -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
