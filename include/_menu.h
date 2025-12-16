@@ -2,7 +2,6 @@
 #define _MENU_H
 
 #include "_scene.h"
-// #include <_scenemanager.h>
 #include <string>
 #include <Windows.h>
 #include <_sounds.h>

@@ -42,7 +42,6 @@ class _level3 : public _Scene
         _timer *myTime              = new _timer();
         _collisionCheck *myCol      = new _collisionCheck();
         _player *player              = new _player();
-        _3DModelLoader *mdl3DW      = new _3DModelLoader();
         _sounds *snds               = new _sounds();
         _EnemyHandler *enemyHandler = new _EnemyHandler();
         _capsuleHandler *capsuleHandler = new _capsuleHandler();
@@ -51,23 +50,20 @@ class _level3 : public _Scene
         _inventory *myInv           = new _inventory();
         _waveHandler* myWave        = new _waveHandler();
         _bullets b[10];
-        std::vector<_capsule*> capsules;
         std::vector<_sprite*> items;
         _enemy* boss = new _enemy();
-        std::unordered_map<std::string, char*> files;
+        std::unordered_map<std::string, char*> myFiles;
         _enemy* nearestEnemy;
 
         // Init functions - functions that run once at init
-        // void reSizeScene(int width, int height) override;  // resize window
         void* getPlayer() override{return player;}
         void* getInventory() override{return myInv;}
-        void initTextures();
+        void init(std::unordered_map<std::string, char*> files);
         void init();
         void initFiles();
         void initGL() override;                            // initialize GL graphics
         // Draw Functions - Functions that run every frame
-        void lose();
-        void win();
+        void winLossCheck();
         void enemyDamagePlayer(_player* player);
         void attackHandler(vec3 nearestE, vec3 player);
         void waveSpawn();
@@ -75,25 +71,15 @@ class _level3 : public _Scene
         void pickupMenu();
 
         void update();
-        void clampBounds(vec3& pos);
         void clampLevel();
         void drawFloor();
         void drawScene() override;                         // render scene
         // Input functions - Functions that handle input mapping
-        void mouseMapping(int,int);
+        //void mouseMapping(int,int);
         int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
 
-        // Wave spawning
-        bool waveReady = false;
-        bool waveSpawning = false;
-        bool waveEnd = false;
-        int wave = 1;
-        int enemiesKilled = 0;
-        float timeBetweenWaves = 5.0f;
-        float timeSinceLastWave = 0.0f;
         // Attack Logic
         float lastAttackTime = 0.0f;
-        float lastHitTime = 0.0f;
         float minDistance = 0.0f;
         double msX,msY,msZ;
         // World Boundaries

@@ -70,14 +70,7 @@ void _level1::initGL()
     myTexture->loadTexture(files["Floor"]);
     myPrlx->parallaxInit("images/prlx.jpg");
 
-    mySkyBox->skyBoxInit(100);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.jpg");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.jpg");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.jpg");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.jpg");
+    mySkyBox->skyBoxInit(100, "regSkybox", "jpg");
 
     mySprite->spriteInit("images/eg.png", 6, 4);
 

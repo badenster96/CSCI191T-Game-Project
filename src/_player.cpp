@@ -40,8 +40,13 @@ void _player::applyItemStats(){
     piercing = stats["Piercing"] + itemStats["Piercing"];
     range = stats["Range"] + itemStats["Range"];
 }
-void _player::hit(float hitDamage) {
-    currHealth -= hitDamage;
+bool _player::hit(float hitDamage, float currentTime) {
+    if(currentTime - lastHitTime >= iFrames){
+        currHealth -= hitDamage;
+        lastHitTime = currentTime;
+        return true;
+    }
+    return false;
 }
 void _player::setTarget(vec3 point) {
     currTarget = point;

@@ -6,7 +6,6 @@ _level3::_level3()
     myTime->startTime = clock();
     isInit = false;
     nearestEnemy = nullptr;
-
 }
 
 _level3::~_level3()
@@ -16,31 +15,27 @@ _level3::~_level3()
 
 void _level3::initFiles() {
     // sfx
-    files["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
-    files["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
-    files["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
+    myFiles["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
+    myFiles["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
+    myFiles["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
     // Music
-    files["CombatMusic"] = "sounds/music/DroneAttack.wav";
-    files["bullet"] = "models/Tekk/weapon.md2";
-    files["player"] = "waste";
-    files["Enemy"] = "badboyblake";
-    files["Floor"] = "images/tex.jpg";
-    files["Boss"] = "cyberdemon";
+    myFiles["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    myFiles["bullet"] = "models/Tekk/weapon.md2";
+    myFiles["player"] = "waste";
+    myFiles["Enemy"] = "badboyblake";
+    myFiles["Floor"] = "images/tex.jpg";
+    myFiles["Boss"] = "cyberdemon";
+    myFiles["Skybox"] = "regSkybox";
+    myFiles["SkyboxExt"] = "jpg";
 }
-void _level3::initTextures() {
+void _level3::init(std::unordered_map<std::string, char*> files) {
     myHUD->addConsoleMessage("Loading Textures...");
     myTexture->loadTexture(files["Floor"]);
     //myPrlx->parallaxInit("images/prlx.jpg");
 
     boundarySize = 300.0f;
-    mySkyBox->skyBoxInit(boundarySize);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
+    mySkyBox->skyBoxInit(boundarySize, files["Skybox"], files["SkyboxExt"]);
+
     for (int i = 0; i < 6; i++) {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
@@ -51,8 +46,9 @@ void _level3::initTextures() {
     }
     enemyHandler->initModels(files["Enemy"]);
     boss->init(files["Boss"]);
-    // capsuleHandler->init();
     myHUD->addConsoleMessage("Textures loaded.");
+    snds->initSounds();
+    snds->playMusic(files["CombatMusic"]);
 }
 
 void _level3::initGL() {
@@ -67,12 +63,10 @@ void _level3::initGL() {
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
-    //glEnable(GL_LIGHTING);
     GLfloat ambientLight[]  = {0.02f, 0.02f, 0.05f, 1.0f}; // very dim blue
     GLfloat diffuseLight[]  = {0.1f, 0.1f, 0.2f, 1.0f};    // soft bluish light
     GLfloat specularLight[] = {0.1f, 0.1f, 0.2f, 1.0f};    // subtle specular highlights
     GLfloat lightPos[]      = {50.0f, 100.0f, 50.0f, 1.0f};
-    //glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -106,10 +100,9 @@ void _level3::initGL() {
     myHUD->setPlayer(player);
     myHUD->setEnemies(&enemyHandler->enemies);
 
-    initTextures();
+    init(myFiles);
 
-    snds->initSounds();
-    snds->playMusic(files["CombatMusic"]);
+
     myHUD->init();
     myInv->initInv();
 
@@ -118,7 +111,14 @@ void _level3::initGL() {
     isInit = true;
     myHUD->addConsoleMessage("_level3 initialized");
 }
-void _level3::lose() {
+void _level3::winLossCheck() {
+    if( myWave->wave >= 3){
+        scene = LEVEL4;
+        isInit = false;
+        snds->stopMusic();
+        glBindTexture(GL_TEXTURE_2D, 0);
+        return;
+    }
     if(player && player->getHealth() <= 0.0f){
         player->resetPlayer();
         myInv->resetItems();
@@ -128,39 +128,24 @@ void _level3::lose() {
         return;
     }
 }
-void _level3::win() {
-    if( myWave->wave >= 3){
-        scene = LEVEL4;
-        isInit = false;
-        snds->stopMusic();
-        glBindTexture(GL_TEXTURE_2D, 0);
-        return;
-    }
-}
+
 void _level3::enemyDamagePlayer(_player* p){
-    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-    if(currentTime - lastHitTime >= p->iFrames){
-        for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
-                lastHitTime = currentTime;
-                std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
-                myHUD->addConsoleMessage(message);
-                p->hit(e->damage);
-            }
+    for(const auto& e : enemyHandler->enemies){
+        if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive && p->hit(e->damage, myTime->getTotalSeconds())){
+            myHUD->addConsoleMessage("At:" + to_string(std::round(myTime->getTotalSeconds() * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!");
         }
     }
 }
 
 void _level3::attackHandler(vec3 nearestE, vec3 p) {
-    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    float currentTime = myTime->getTotalSeconds();
     if(nearestEnemy){
         player->setTarget(nearestEnemy->pos);
         for(int i = 0; i < 10; i++){
             if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
-                if(nearestEnemy->isAlive
-                   && ((player->getPos() - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
+                if(nearestEnemy->isAlive && ((player->getPos() - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
                     b[i].shootBullet(p, nearestE, player->stats["Range"], player->stats["Piercing"]);
-                    snds->playRandSound(files["M16"], 10, 0.4f);
+                    snds->playRandSound(myFiles["M16"], 10, 0.4f);
                 }
                 lastAttackTime = currentTime;
             }
@@ -168,9 +153,7 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
             if(b[i].live){
                 int hitsThisFrame = 0;
                 for(const auto& e : enemyHandler->enemies){
-                    if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
-                       && currentTime - e->lastTimeHit >= e->iFrames
-                       && e->health > 0){
+                    if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f) && currentTime - e->lastTimeHit >= e->iFrames && e->health > 0){
                         float critChance = rand()%100 / 100.0f;
                         if(critChance <= player->critChance){
                             e->health -= player->damage * player->critDamage;
@@ -179,11 +162,12 @@ void _level3::attackHandler(vec3 nearestE, vec3 p) {
                         else e->health -= player->damage;
                         e->pain();
                         e->lastTimeHit = currentTime;
-                        snds->playRandSound(files["EnemyHit"],8, 0.3f);
+                        snds->playRandSound(myFiles["EnemyHit"],8, 0.3f);
                         hitsThisFrame++;
                         if(e->health <= 0 && e->isAlive) {
                             e->isAlive = e->isSpawned = false;
-                            snds->playRandSound(files["ZombieDie"], 5, 0.8f);
+                            snds->playRandSound(myFiles["ZombieDie"], 5, 0.8f);
+                            if(player->currHealth < player->maxHealth) player->currHealth += 1;
                             enemyHandler->enemiesKilled++;
                         }
                     }
@@ -211,16 +195,14 @@ void _level3::waveSpawn() {
         capsuleHandler->reset();
         myWave->waveReady = false;
         myWave->waveSpawning = true;
-        myHUD->addConsoleMessage("Wave " + std::to_string( myWave->wave) + " Spawned");
-        myHUD->addGameInfo("Wave " + std::to_string(myWave->wave) + " Spawned");
+        //myHUD->addConsoleMessage("Wave " + std::to_string( myWave->wave) + " Spawned");
+        //myHUD->addGameInfo("Wave " + std::to_string(myWave->wave) + " Spawned");
         return;
     }
     if(myWave->waveSpawning){
         capsuleHandler->capsuleSpawner(myWave->capsulesPerWave, player->getPos());
         for(const auto& c : capsuleHandler->capsules){
-            if(c->state == ONGROUND
-               && !c->hasSpawnedEnemies
-               && enemyHandler->totalEnemiesSpawned < myWave->enemiesPerWave){
+            if(c->state == ONGROUND && !c->hasSpawnedEnemies && enemyHandler->totalEnemiesSpawned < myWave->enemiesPerWave){
                 enemyHandler->spawn(myWave->enemiesPerCapsule, c->pos);
                 c->hasSpawnedEnemies = true;
             }
@@ -239,7 +221,7 @@ void _level3::waveSpawn() {
     if(myWave->waveEnd){
         myWave->timeSinceLastWave = myTime->getTotalSeconds();
         myWave->wave++;
-        myHUD->addConsoleMessage("Wave Ended");
+        //myHUD->addConsoleMessage("Wave Ended");
         myWave->waveEnd = false;
     }
 
@@ -252,36 +234,21 @@ void _level3::pickupMenu(){
         _item randomItem = myInv->pickupItem();
         myHUD->addGameInfo("Picked up " + randomItem.name);
     };
-
-    //std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
-    //myHUD->addConsoleMessage(message);
 }
 
-void _level3::clampBounds(vec3& pos){
-    minBound = vec3(-boundarySize, -10.0f, -boundarySize);
-    maxBound = vec3(boundarySize, 50.0f, boundarySize);
-    if(pos.x < minBound.x) pos.x = minBound.x;
-    if(pos.y < minBound.y) pos.y = minBound.y;
-    if(pos.z < minBound.z) pos.z = minBound.z;
-
-    if(pos.x > maxBound.x) pos.x = maxBound.x;
-    if(pos.y > maxBound.y) pos.y = maxBound.y;
-    if(pos.z > maxBound.z) pos.z = maxBound.z;
-}
 void _level3::clampLevel(){
     for(auto& c : capsuleHandler->capsules){
-        clampBounds(c->pos);
+        myCol->clampBounds(c->pos, boundarySize);
     }
     for(auto& e : enemyHandler->enemies){
-        clampBounds(e->pos);
+        myCol->clampBounds(e->pos, boundarySize);
     }
-    clampBounds(player->getPos());
+    myCol->clampBounds(player->getPos(), boundarySize);
 }
 
 void _level3::update(){
     float deltaTime = myTime->getTickSeconds();
-    win();
-    lose();
+    winLossCheck();
     player->update(deltaTime);
     nearestEnemy = enemyHandler->nearest(player->getPos());
     if(nearestEnemy) attackHandler(nearestEnemy->pos, player->getPos());
@@ -303,7 +270,7 @@ void _level3::drawFloor(){
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_LIGHTING);
-        myTexture->bindTexture(); // your floor texture
+        myTexture->bindTexture(); // floor texture
 
         glColor3f(1.0f, 1.0f, 1.0f);
 
@@ -360,25 +327,6 @@ void _level3::drawScene()
     glEnable(GL_FOG);
 }
 
-void _level3::mouseMapping(int x, int y)
-
-{
-    GLint viewPort[4];
-    GLdouble ModelViewM[16];
-    GLdouble projectionM[16];
-    GLfloat winX,winY,winZ;
-
-    glGetDoublev(GL_MODELVIEW_MATRIX, ModelViewM);
-    glGetDoublev(GL_PROJECTION_MATRIX,projectionM);
-    glGetIntegerv(GL_VIEWPORT,viewPort);
-
-    winX =(GLfloat)x;
-    winY = (GLfloat)y;
-
-    glReadPixels(x,(int)winY,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
-    gluUnProject(winX,winY,winZ,ModelViewM,projectionM,viewPort,&msX,&msY,&msZ);
-}
-
 int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if(player){
@@ -411,7 +359,7 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             // myInput->keyPressed(myPrlx);
             // myInput->keyPressed(mySkyBox);
             // myInput->keyPressed(myCam);
-            myInput->keyPressed(player->playerModel,mdl3DW);
+            // myInput->keyPressed(player->playerModel,mdl3DW);
             break;
             if(wParam == 'm' || wParam == 'M')
         break;
@@ -423,7 +371,6 @@ int _level3::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_LBUTTONDOWN:
             myInput->wParam = wParam;
 
-             mouseMapping(LOWORD(lParam), HIWORD(lParam));
         break;
 
         case WM_RBUTTONDOWN:

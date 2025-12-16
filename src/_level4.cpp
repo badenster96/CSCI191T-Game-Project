@@ -37,14 +37,7 @@ void _level4::initTextures() {
     //myPrlx->parallaxInit("images/prlx.jpg");
 
     boundarySize = 300.0f;
-    mySkyBox->skyBoxInit(boundarySize);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.jpg");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.jpg");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.jpg");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.jpg");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.jpg");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.jpg");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.jpg");
+    mySkyBox->skyBoxInit(boundarySize, "regSkybox", "jpg");
     for (int i = 0; i < 6; i++) {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
@@ -138,7 +131,7 @@ void _level4::enemyDamagePlayer(_player* p){
                 lastHitTime = currentTime;
                 std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
                 myHUD->addConsoleMessage(message);
-                p->hit(e->damage);
+                p->hit(e->damage, currentTime);
             }
         }
     }

@@ -14,6 +14,7 @@ class _collisionCheck
         bool isSphereCol(vec3,vec3,float,float,float);//positions x,y , radius A,B, threshold
         bool isPlanoCol(vec2,vec2);
         bool isCubicCol(vec3,vec3);
+        void clampBounds(vec3& pos, float boundarySize);
 
 
     protected:

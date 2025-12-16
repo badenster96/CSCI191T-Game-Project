@@ -27,7 +27,7 @@ class _player
         vec3 calcMoveVector();
         void rotatePlayer(const vec3& normVec, float deltaTime);
         void resetPlayer();
-        void hit(float hitDamage);
+        bool hit(float hitDamage, float currentTime);
         void setTarget(vec3 point);
 
         vec3 currTarget;
@@ -44,6 +44,7 @@ class _player
         std::unordered_map<std::string,float> itemStats;
         float currHealth, maxHealth, attackSpeed, damage, critChance, critDamage, armor, piercing, movementSpeed, range = 0;
         bool addItem = false;
+        float lastHitTime = 0.0f;
         // Animation
         float iFrames = 0.3f;
 

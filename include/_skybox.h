@@ -18,9 +18,9 @@ class _skyBox
         vec3 boxSize;  // scale the skybox
 
         float xMin,yMin,xMax,yMax;
-        void skyBoxInit(int skyBoxSize); // load images
+        void skyBoxInit(int skyBoxSize, std::string skyboxName, std::string ext); // load images
         void drawSkyBox();
-        void drawSkyBoxSingle();
+        void texLoad(std::string skyboxName, std::string ext);
         int size;
 
     protected:

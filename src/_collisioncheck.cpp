@@ -35,3 +35,15 @@ bool _collisionCheck::isCubicCol(vec3, vec3)
 {
 
 }
+
+void _collisionCheck::clampBounds(vec3& pos, float boundarySize){
+    vec3 minBound = vec3(-boundarySize, -10.0f, -boundarySize);
+    vec3 maxBound = vec3(boundarySize, 50.0f, boundarySize);
+    if(pos.x < minBound.x) pos.x = minBound.x;
+    if(pos.y < minBound.y) pos.y = minBound.y;
+    if(pos.z < minBound.z) pos.z = minBound.z;
+
+    if(pos.x > maxBound.x) pos.x = maxBound.x;
+    if(pos.y > maxBound.y) pos.y = maxBound.y;
+    if(pos.z > maxBound.z) pos.z = maxBound.z;
+}

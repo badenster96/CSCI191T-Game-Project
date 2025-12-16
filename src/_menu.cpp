@@ -38,38 +38,31 @@ void _Menu::drawText(float x, float y, const std::string& text) {
 void _Menu::drawScene() {
     if(!active) initGL();
     glViewport(0, 0, width, height);
-    // --- Save all relevant GL state ---
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);
     showCursor();
-    // --- Save matrices ---
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 
-    // --- Clear depth so menu draws on top ---
     glDisable(GL_DEPTH_TEST);
 
-    // --- Set up 2D orthographic projection ---
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-1, 1, -1, 1, -1, 1);  // Coordinates from -1 to 1 in X and Y
+    glOrtho(-1, 1, -1, 1, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // --- Disable lighting, textures, etc. for clean text rendering ---
     glDisable(GL_LIGHTING);
     glDisable(GL_TEXTURE_2D);
 
-        // Draw background
     glBegin(GL_QUADS);
-        glColor3f(0.1f, 0.1f, 0.3f); // background color
+        glColor3f(0.1f, 0.1f, 0.3f);
         glVertex2f(-1.0f, -1.0f);
         glVertex2f( 1.0f, -1.0f);
         glVertex2f( 1.0f,  1.0f);
         glVertex2f(-1.0f,  1.0f);
     glEnd();
-    // --- Draw menu ---
     glColor3f(1.0f, 1.0f, 1.0f);
 
 
@@ -77,13 +70,11 @@ void _Menu::drawScene() {
     drawText(-0.2f, 0.0f, "HELP");
     drawText(-0.2f, -0.4f, "QUIT");
 
-    // --- Restore matrices ---
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
 
-    // --- Restore all GL state ---
     glPopAttrib();
 }
 void _Menu::handleMouse(int x, int y, bool click) {

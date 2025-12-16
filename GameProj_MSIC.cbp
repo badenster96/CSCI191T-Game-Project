@@ -64,6 +64,7 @@
 		<Unit filename="include/_bullets.h" />
 		<Unit filename="include/_camera.h" />
 		<Unit filename="include/_capsule.h" />
+		<Unit filename="include/_capsuleHandler.h" />
 		<Unit filename="include/_collisioncheck.h" />
 		<Unit filename="include/_common.h" />
 		<Unit filename="include/_hud.h" />
@@ -73,6 +74,7 @@
 		<Unit filename="include/_level1.h" />
 		<Unit filename="include/_level2.h" />
 		<Unit filename="include/_level3.h" />
+		<Unit filename="include/_level4.h" />
 		<Unit filename="include/_light.h" />
 		<Unit filename="include/_menu.h" />
 		<Unit filename="include/_model.h" />
@@ -85,6 +87,7 @@
 		<Unit filename="include/_sprite.h" />
 		<Unit filename="include/_textureloader.h" />
 		<Unit filename="include/_timer.h" />
+		<Unit filename="include/_waveHandler.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/_3dmodelloader.cpp" />
 		<Unit filename="src/_Enemy.cpp" />
@@ -93,6 +96,7 @@
 		<Unit filename="src/_bullets.cpp" />
 		<Unit filename="src/_camera.cpp" />
 		<Unit filename="src/_capsule.cpp" />
+		<Unit filename="src/_capsuleHandler.cpp" />
 		<Unit filename="src/_collisioncheck.cpp" />
 		<Unit filename="src/_hud.cpp" />
 		<Unit filename="src/_inputs.cpp" />
@@ -101,6 +105,7 @@
 		<Unit filename="src/_level1.cpp" />
 		<Unit filename="src/_level2.cpp" />
 		<Unit filename="src/_level3.cpp" />
+		<Unit filename="src/_level4.cpp" />
 		<Unit filename="src/_light.cpp" />
 		<Unit filename="src/_menu.cpp" />
 		<Unit filename="src/_model.cpp" />
@@ -113,6 +118,7 @@
 		<Unit filename="src/_sprite.cpp" />
 		<Unit filename="src/_textureloader.cpp" />
 		<Unit filename="src/_timer.cpp" />
+		<Unit filename="src/_waveHandler.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

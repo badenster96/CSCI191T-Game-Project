@@ -9,7 +9,17 @@ _skyBox::~_skyBox()
 {
     //dtor
 }
-void _skyBox::skyBoxInit(int skyBoxSize)
+void _skyBox::texLoad(std::string skyboxName, std::string ext) {
+    std::string fileDir = "images/" + skyboxName + "/";
+    tex[0] = textures->loadTexture((fileDir + "front." + ext).c_str());
+    tex[1] = textures->loadTexture((fileDir + "back." + ext).c_str());
+    tex[2] = textures->loadTexture((fileDir + "top." + ext).c_str());
+    tex[3] = textures->loadTexture((fileDir + "bottom." + ext).c_str());
+    tex[4] = textures->loadTexture((fileDir + "right." + ext).c_str());
+    tex[5] = textures->loadTexture((fileDir + "left." + ext).c_str());
+    tex[6] = textures->loadTexture((fileDir + "Stairs." + ext).c_str());
+}
+void _skyBox::skyBoxInit(int skyBoxSize, std::string skyboxName, std::string ext)
 {
     xMin = yMin =0;
     xMax = yMax =1;
@@ -22,6 +32,7 @@ void _skyBox::skyBoxInit(int skyBoxSize)
 
     boxSize.x = boxSize.z = skyBoxSize + 10.0f;
     boxSize.y = skyBoxSize;
+    texLoad(skyboxName, ext);
 
 }
 
@@ -111,7 +122,3 @@ void _skyBox::drawSkyBox()
 
 }
 
-void _skyBox::drawSkyBoxSingle()
-{
-
-}

@@ -54,14 +54,7 @@ void _level2::initGL()
 
     // Load textures and skybox
     myTexture->loadTexture("images/tex.jpg");
-    mySkyBox->skyBoxInit(200);
-    mySkyBox->tex[0] = mySkyBox->textures->loadTexture("images/front.png");
-    mySkyBox->tex[1] = mySkyBox->textures->loadTexture("images/back.png");
-    mySkyBox->tex[2] = mySkyBox->textures->loadTexture("images/top.png");
-    mySkyBox->tex[3] = mySkyBox->textures->loadTexture("images/bottom.png");
-    mySkyBox->tex[4] = mySkyBox->textures->loadTexture("images/right.png");
-    mySkyBox->tex[5] = mySkyBox->textures->loadTexture("images/left.png");
-    mySkyBox->tex[6] = mySkyBox->textures->loadTexture("images/Stairs.png");
+    mySkyBox->skyBoxInit(200, "regSkybox", "jpg");
 
     myCam->camInit();
     snds->initSounds();
