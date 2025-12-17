@@ -77,13 +77,13 @@ typedef struct{
 } col4;
 enum Scene {
     MAIN,
+    HELPSCENE,
     LEVEL1,
     LEVEL2,
     LEVEL3,
     LEVEL4,
     CREDITS,
-    HELP,
-    QUIT
+    QUITSCENE
 };
 enum ItemType {
     GADGET,

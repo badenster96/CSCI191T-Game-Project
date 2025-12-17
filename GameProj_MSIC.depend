@@ -935,12 +935,12 @@
 	<_scene.h>
 	<_scenemanager.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_scene.h
+1765938118 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_scene.h
 	<windows.h>
 	<vector>
 	"_common.h"
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_common.h
+1765939402 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_common.h
 	<iostream>
 	<windows.h>
 	<string>
@@ -967,12 +967,13 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_scenemanager.h
+1765882175 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_scenemanager.h
 	<_scene.h>
 	<_level1.h>
 	<_level2.h>
 	<_level3.h>
 	<_level4.h>
+	<_help.h>
 	<_menu.h>
 
 1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level1.h
@@ -1206,7 +1207,7 @@
 	<_scene.h>
 	<_enemy.h>
 
-1765855768 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level3.h
+1765858209 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level3.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -1245,7 +1246,7 @@
 	<_common.h>
 	<_collisioncheck.h>
 
-1765760953 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level4.h
+1765858254 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_level4.h
 	<_common.h>
 	<_light.h>
 	<_model.h>
@@ -1257,7 +1258,6 @@
 	<_sprite.h>
 	<_timer.h>
 	<_3dmodelloader.h>
-	<_camera.h>
 	<_bullets.h>
 	<_collisioncheck.h>
 	<_sounds.h>
@@ -1268,8 +1268,9 @@
 	<_hud.h>
 	<_capsule.h>
 	<_capsuleHandler.h>
+	<_waveHandler.h>
 
-1765854643 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_menu.h
+1765939344 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_menu.h
 	"_scene.h"
 	<string>
 	<Windows.h>
@@ -1320,13 +1321,13 @@
 	<random>
 	<cmath>
 
-1765855784 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level3.cpp
+1765881728 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level3.cpp
 	"_level3.h"
 
 1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_light.cpp
 	"_light.h"
 
-1765845227 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_menu.cpp
+1765939566 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_menu.cpp
 	"_menu.h"
 	<GL/gl.h>
 	<iostream>
@@ -1343,7 +1344,7 @@
 1765845196 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_scene.cpp
 	"_scene.h"
 
-1765760954 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_scenemanager.cpp
+1765939412 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_scenemanager.cpp
 	"_scenemanager.h"
 
 1765842797 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_skybox.cpp
@@ -1364,11 +1365,21 @@
 1765765789 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_capsulehandler.cpp
 	"_capsuleHandler.h"
 
-1765855562 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level4.cpp
+1765858528 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_level4.cpp
 	"_level4.h"
 
 1765843826 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_wavehandler.h
 
 1765843824 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_wavehandler.cpp
 	"_waveHandler.h"
+
+1765939426 source:c:\main\mycode\projects\final csci191\csci191t-game-project\src\_help.cpp
+	"_help.h"
+	<GL/gl.h>
+	<iostream>
+
+1765937724 c:\main\mycode\projects\final csci191\csci191t-game-project\include\_help.h
+	<string>
+	<_scene.h>
+	<windows.h>
 

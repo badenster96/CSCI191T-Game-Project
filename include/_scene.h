@@ -26,6 +26,7 @@ class _Scene {
         bool debug = false;
 
         int width, height;
+        GLuint fontBase;
 
         Scene scene;
     protected:

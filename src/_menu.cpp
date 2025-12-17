@@ -16,6 +16,7 @@ void _Menu::initGL() {
 
     showCursor();
 
+    fontBase = glGenLists(256);
     HDC hDC = wglGetCurrentDC();
     HFONT font = CreateFontA(
         -24, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
@@ -25,18 +26,17 @@ void _Menu::initGL() {
     );
 
     SelectObject(hDC, font);
-    wglUseFontBitmapsA(hDC, 0, 256, 1000);
+    wglUseFontBitmapsA(hDC, 0, 256, fontBase);
     isInit = true;
 }
 
 void _Menu::drawText(float x, float y, const std::string& text) {
     glRasterPos2f(x, y);
-    glListBase(1000);
+    glListBase(fontBase);
     glCallLists((GLsizei)text.length(), GL_UNSIGNED_BYTE, text.c_str());
 }
 
 void _Menu::drawScene() {
-    if(!active) initGL();
     glViewport(0, 0, width, height);
     glPushAttrib(GL_ENABLE_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_TEXTURE_BIT | GL_LIGHTING_BIT);
     showCursor();
@@ -63,11 +63,20 @@ void _Menu::drawScene() {
         glVertex2f( 1.0f,  1.0f);
         glVertex2f(-1.0f,  1.0f);
     glEnd();
-    glColor3f(1.0f, 1.0f, 1.0f);
 
-
+    if(hoveredButton == NEWGAME){
+        glColor3f(1.0f,1.0f,0.0f);
+    } else glColor3f(1.0f,1.0f,1.0f);
     drawText(-0.2f, 0.4f, "NEW GAME");
+
+    if(hoveredButton == HELP) {
+        glColor3f(1.0f,1.0f,0.0f);
+    } else glColor3f(1.0f,1.0f,1.0f);
     drawText(-0.2f, 0.0f, "HELP");
+
+    if(hoveredButton == QUIT) {
+        glColor3f(1.0f,1.0f,0.0f);
+    } else glColor3f(1.0f,1.0f,1.0f);
     drawText(-0.2f, -0.4f, "QUIT");
 
     glMatrixMode(GL_MODELVIEW);
@@ -90,16 +99,36 @@ void _Menu::handleMouse(int x, int y, bool click) {
         std::cout << "Start Game\n";
     }
     else if (ndcY < 0.0f + buttonHalfHeight && ndcY > 0.0f - buttonHalfHeight) {
-        scene = CREDITS;
+        scene = HELPSCENE;
         active = false;
+        isInit = false;
         std::cout << "Show Help\n";
-        // Optionally, switch to a credits scene if you have one
     }
     else if (ndcY < -0.4f + buttonHalfHeight && ndcY > -0.4f - buttonHalfHeight) {
-        scene = QUIT;
         std::cout << "Quit Game\n";
-        PostQuitMessage(0);
+        close();
     }
+
+
+
+}
+void _Menu::hoverMouse(int mouseX, int mouseY){
+    float ndcY = 1.0f - (2.0f * mouseY / (float)height);
+    float buttonHalfHeight = 0.1f;
+
+    if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
+        hoveredButton = NEWGAME;
+    } else if (ndcY < 0.0f + buttonHalfHeight && ndcY > 0.0f - buttonHalfHeight) {
+        hoveredButton = HELP;
+    } else if (ndcY < -0.4f + buttonHalfHeight && ndcY > -0.4f - buttonHalfHeight) {
+        hoveredButton = QUIT;
+    } else hoveredButton = NONE;
+
+}
+void _Menu::close(){
+    scene = QUITSCENE;
+    snds->stopMusic();
+    glDeleteLists(fontBase, 256);
 }
 
 int _Menu::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -114,11 +143,16 @@ int _Menu::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         case WM_KEYDOWN: {
             if (wParam == VK_ESCAPE) {
                 if (scene == MAIN){
-                    PostQuitMessage(0);
+                    close();
                 }
                 else scene = MAIN;
             }
             break;
+        }
+        case WM_MOUSEMOVE: {
+            int x = LOWORD(lParam);
+            int y = HIWORD(lParam);
+            hoverMouse(x,y);
         }
     }
     return 0;

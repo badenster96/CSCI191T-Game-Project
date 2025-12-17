@@ -14,15 +14,19 @@ _level3::~_level3()
 }
 
 void _level3::initFiles() {
+    // Level
+    myFiles["Level"] = "Level3";
     // sfx
     myFiles["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
     myFiles["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
     myFiles["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
     // Music
     myFiles["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    // Models
     myFiles["bullet"] = "models/Tekk/weapon.md2";
     myFiles["player"] = "waste";
     myFiles["Enemy"] = "badboyblake";
+    // Textures
     myFiles["Floor"] = "images/tex.jpg";
     myFiles["Boss"] = "cyberdemon";
     myFiles["Skybox"] = "regSkybox";

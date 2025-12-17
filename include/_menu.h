@@ -19,12 +19,16 @@ public:
 
     void initGL() override;
     void drawScene() override;
+    void close();
     int winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) override;
     void reSizeScene(int w, int h) override;
 
 private:
     void drawText(float x, float y, const std::string& text);
+    void hoverMouse(int mouseX, int mouseY);
     void handleMouse(int x, int y, bool click);
+    enum menuButton {NONE,NEWGAME,HELP,QUIT};
+    menuButton hoveredButton = NONE;
 
     int width, height;
 };

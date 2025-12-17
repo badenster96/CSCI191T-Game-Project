@@ -18,6 +18,7 @@ _scenemanager::_scenemanager()
     level3 = new _level3();
     level4 = new _level4();
     menu   = new _Menu();
+    help   = new _Help();
     currentSceneEnum = MAIN;
     currentScene = menu;
 }
@@ -28,6 +29,7 @@ _scenemanager::~_scenemanager()
     delete level2;
     delete level3;
     delete level4;
+    delete help;
     delete menu;
 }
 
@@ -38,7 +40,10 @@ void _scenemanager::switchScene(Scene nextScene) {
     else if(currentSceneEnum == LEVEL2) currentScene = level2;
     else if(currentSceneEnum == LEVEL3) currentScene = level3;
     else if(currentSceneEnum == LEVEL4) currentScene = level4;
+    else if(currentSceneEnum == HELPSCENE)   currentScene = help;
     else if(currentSceneEnum == MAIN)   currentScene = menu;
+    else if(currentSceneEnum == QUITSCENE)   PostQuitMessage(0);
+    else return;
     if(currentScene){
         currentScene->carryOver(prevScene);
         currentScene->isInit = false;
@@ -50,6 +55,7 @@ void _scenemanager::switchScene(Scene nextScene) {
 void _scenemanager::initScene() {
     currentScene->initGL();
 }
+
 void _scenemanager::drawScene() {
     Scene requested = currentScene->getScene();
     if(requested != currentSceneEnum) {
@@ -57,12 +63,14 @@ void _scenemanager::drawScene() {
             switchScene(currentSceneEnum);
     }
     if(currentScene && !currentScene->isInit) {
+        std::cout << currentSceneEnum << std::endl;
         currentScene->initGL();
         progress();
         currentScene->reSizeScene(width, height);
     }
     if(currentScene) currentScene->drawScene();
 }
+
 void _scenemanager::progress() {
     if(currentSceneEnum == LEVEL4 && !level4->isInit){
         level4->player = level3->player;

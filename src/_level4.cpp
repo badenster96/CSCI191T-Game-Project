@@ -21,23 +21,27 @@ void _level4::carryOver(_Scene* prev){
 
 void _level4::initFiles() {
     // sfx
-    files["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
-    files["EnemyHit"] = "sounds/sfx/clankhit/Impact_Sword_To_PlateArmour_001.wav";
-    files["EnemyDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
+    myFiles["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
+    myFiles["EnemyHit"] = "sounds/sfx/clankhit/Impact_Sword_To_PlateArmour_001.wav";
+    myFiles["EnemyDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
     // Music
-    files["CombatMusic"] = "sounds/music/DroneAttack.wav";
-    files["bullet"] = "models/Tekk/weapon.md2";
-    files["player"] = "waste";
-    files["Enemy"] = "cyberdemon";
-    files["Floor"] = "images/tex.jpg";
+    myFiles["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    myFiles["bullet"] = "models/Tekk/weapon.md2";
+    myFiles["player"] = "waste";
+    myFiles["Enemy"] = "cyberdemon";
+    myFiles["Floor"] = "images/tex.jpg";
+    myFiles["Boss"] = "cyberdemon";
+    myFiles["Skybox"] = "regSkybox";
+    myFiles["SkyboxExt"] = "jpg";
 }
-void _level4::initTextures() {
+void _level4::init(std::unordered_map<std::string, char*> files) {
     myHUD->addConsoleMessage("Loading Textures...");
     myTexture->loadTexture(files["Floor"]);
     //myPrlx->parallaxInit("images/prlx.jpg");
 
     boundarySize = 300.0f;
-    mySkyBox->skyBoxInit(boundarySize, "regSkybox", "jpg");
+    mySkyBox->skyBoxInit(boundarySize, files["Skybox"], files["SkyboxExt"]);
+
     for (int i = 0; i < 6; i++) {
         myHUD->addConsoleMessage("Skybox tex[" + std::to_string(i) + "] = " + std::to_string(mySkyBox->tex[i]));
     }
@@ -47,8 +51,10 @@ void _level4::initTextures() {
         b[i].iniBullet(files["bullet"]);
     }
     enemyHandler->initModels(files["Enemy"]);
-    // capsuleHandler->init();
+    boss->init(files["Boss"]);
     myHUD->addConsoleMessage("Textures loaded.");
+    snds->initSounds();
+    snds->playMusic(files["CombatMusic"]);
 }
 
 void _level4::initGL() {
@@ -63,12 +69,10 @@ void _level4::initGL() {
     glEnable(GL_DEPTH_TEST);    //activate depth test
     glDepthFunc(GL_LEQUAL);     // depth function type
 
-    //glEnable(GL_LIGHTING);
     GLfloat ambientLight[]  = {0.02f, 0.02f, 0.05f, 1.0f}; // very dim blue
     GLfloat diffuseLight[]  = {0.1f, 0.1f, 0.2f, 1.0f};    // soft bluish light
     GLfloat specularLight[] = {0.1f, 0.1f, 0.2f, 1.0f};    // subtle specular highlights
     GLfloat lightPos[]      = {50.0f, 100.0f, 50.0f, 1.0f};
-    //glEnable(GL_LIGHT0);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -102,51 +106,52 @@ void _level4::initGL() {
     myHUD->setPlayer(player);
     myHUD->setEnemies(&enemyHandler->enemies);
 
-    initTextures();
+    init(myFiles);
 
-    snds->initSounds();
-    snds->playMusic(files["CombatMusic"]);
+
     myHUD->init();
     myInv->initInv();
 
     // Level stats setup
     player->applyPlayerStats();
     isInit = true;
-    myHUD->addConsoleMessage("_level4 initialized");
+    myHUD->addConsoleMessage("_level3 initialized");
 }
-void _level4::lose() {
-    if(player && player->currHealth <= 0.0f){
+void _level4::winLossCheck() {
+    if( myWave->wave >= 3){
+        scene = MAIN;
+        isInit = false;
+        snds->stopMusic();
+        glBindTexture(GL_TEXTURE_2D, 0);
+        return;
+    }
+    if(player && player->getHealth() <= 0.0f){
         player->resetPlayer();
         myInv->resetItems();
         scene = MAIN;
         isInit = false;
+        snds->stopMusic();
         return;
     }
 }
+
 void _level4::enemyDamagePlayer(_player* p){
-    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
-    if(currentTime - lastHitTime >= p->iFrames){
-        for(const auto& e : enemyHandler->enemies){
-            if(e && myCol->isSphereCol(p->pos,e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive){
-                lastHitTime = currentTime;
-                std::string message = "At:" + to_string(std::round(lastHitTime * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!";
-                myHUD->addConsoleMessage(message);
-                p->hit(e->damage, currentTime);
-            }
+    for(const auto& e : enemyHandler->enemies){
+        if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive && p->hit(e->damage, myTime->getTotalSeconds())){
+            myHUD->addConsoleMessage("At:" + to_string(std::round(myTime->getTotalSeconds() * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!");
         }
     }
 }
 
 void _level4::attackHandler(vec3 nearestE, vec3 p) {
-    float currentTime = static_cast<float>(clock()) / CLOCKS_PER_SEC;
+    float currentTime = myTime->getTotalSeconds();
     if(nearestEnemy){
         player->setTarget(nearestEnemy->pos);
         for(int i = 0; i < 10; i++){
             if(nearestEnemy && !b[i].live && currentTime - lastAttackTime >= 1/player->attackSpeed){
-                if(nearestEnemy->isAlive
-                   && ((player->pos - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
+                if(nearestEnemy->isAlive && ((player->getPos() - nearestEnemy->pos).lengthSquared() <= player->stats["Range"] * player->stats["Range"])) {
                     b[i].shootBullet(p, nearestE, player->stats["Range"], player->stats["Piercing"]);
-                    snds->playRandSound(files["M16"], 10, 0.4f);
+                    snds->playRandSound(myFiles["M16"], 10, 0.4f);
                 }
                 lastAttackTime = currentTime;
             }
@@ -154,9 +159,7 @@ void _level4::attackHandler(vec3 nearestE, vec3 p) {
             if(b[i].live){
                 int hitsThisFrame = 0;
                 for(const auto& e : enemyHandler->enemies){
-                    if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f)
-                       && currentTime - e->lastTimeHit >= e->iFrames
-                       && e->health > 0){
+                    if(myCol->isSphereCol(b[i].pos,e->pos,1.0f,1.0f,0.1f) && currentTime - e->lastTimeHit >= e->iFrames && e->health > 0){
                         float critChance = rand()%100 / 100.0f;
                         if(critChance <= player->critChance){
                             e->health -= player->damage * player->critDamage;
@@ -165,14 +168,13 @@ void _level4::attackHandler(vec3 nearestE, vec3 p) {
                         else e->health -= player->damage;
                         e->pain();
                         e->lastTimeHit = currentTime;
-                        snds->playRandSound(files["EnemyHit"],5, 0.3f);
+                        snds->playRandSound(myFiles["EnemyHit"],8, 0.3f);
                         hitsThisFrame++;
-                        b[i].pierce--;
-                        //myHUD->addConsoleMessage("Enemy Shot!");
-                        if(e->health <= 0) {
+                        if(e->health <= 0 && e->isAlive) {
                             e->isAlive = e->isSpawned = false;
-                            snds->playRandSound(files["EnemyDie"], 5, 0.8f);
-                            enemiesKilled++;
+                            snds->playRandSound(myFiles["ZombieDie"], 5, 0.8f);
+                            if(player->currHealth < player->maxHealth) player->currHealth += 1;
+                            enemyHandler->enemiesKilled++;
                         }
                     }
                 }
@@ -187,85 +189,80 @@ void _level4::attackHandler(vec3 nearestE, vec3 p) {
         enemyDamagePlayer(player);
     }
 }
+
 void _level4::waveSpawn() {
-    int enemiesPerWave = 120 * wave;
-    int enemiesPerCapsule = 4 * wave;
-    if(!waveSpawned){
-        myHUD->addConsoleMessage("Wave " + std::to_string(wave) + " Spawned");
-        myHUD->addGameInfo("Wave " + std::to_string(wave) + " Spawned");
-        int capsulesPerWave = enemiesPerWave / enemiesPerCapsule;
-        enemiesKilled = 0;
+    myWave->update();
+    if(myTime->getTotalSeconds() - myWave->timeSinceLastWave > myWave->timeBetweenWaves && !myWave->waveSpawning){
+        myWave->waveReady = true;
+    }
+    if(myWave->waveReady){
+        enemyHandler->enemiesKilled = 0;
         enemyHandler->totalEnemiesSpawned = 0;
-        capsuleHandler->capsuleSpawner(capsulesPerWave, player->pos);
-        waveSpawned = true;
+        capsuleHandler->reset();
+        myWave->waveReady = false;
+        myWave->waveSpawning = true;
+        //myHUD->addConsoleMessage("Wave " + std::to_string( myWave->wave) + " Spawned");
+        //myHUD->addGameInfo("Wave " + std::to_string(myWave->wave) + " Spawned");
         return;
     }
-    for(const auto& c : capsuleHandler->capsules){
-        if(c->state == ONGROUND
-           && !c->hasSpawnedEnemies
-           && enemyHandler->totalEnemiesSpawned < enemiesPerWave){
-            enemyHandler->spawn(enemiesPerCapsule, c->pos);
-            c->hasSpawnedEnemies = true;
+    if(myWave->waveSpawning){
+        capsuleHandler->capsuleSpawner(myWave->capsulesPerWave, player->getPos());
+        for(const auto& c : capsuleHandler->capsules){
+            if(c->state == ONGROUND && !c->hasSpawnedEnemies && enemyHandler->totalEnemiesSpawned < myWave->enemiesPerWave){
+                enemyHandler->spawn(myWave->enemiesPerCapsule, c->pos);
+                c->hasSpawnedEnemies = true;
+            }
+            if(capsuleHandler->numCapsulesSpawned < myWave->capsulesPerWave) {
+                for(const auto& e : enemyHandler->enemies){
+                    e->speed += 0.00001;
+                }
+            }
+        }
+        if(enemyHandler->enemiesKilled >= myWave->enemiesPerWave && enemyHandler->totalEnemiesSpawned > 0){
+            myHUD->addConsoleMessage("All enemies killed");
+            myWave->waveSpawning = false;
+            myWave->waveEnd = true;
         }
     }
-    if(enemiesKilled >= enemyHandler->totalEnemiesSpawned
-       && enemyHandler->totalEnemiesSpawned > 0){
-        waveSpawned = false;
-        wave++;
-        myHUD->addConsoleMessage("Wave Ended");
+    if(myWave->waveEnd){
+        myWave->timeSinceLastWave = myTime->getTotalSeconds();
+        myWave->wave++;
+        //myHUD->addConsoleMessage("Wave Ended");
+        myWave->waveEnd = false;
     }
+
     //myHUD->addConsoleMessage("Enemies Killed:" + std::to_string(enemiesKilled));
     //myHUD->addConsoleMessage("Enemies Left:" + std::to_string(enemyHandler->totalEnemiesSpawned));
-
 }
 
 void _level4::pickupMenu(){
-    if(capsuleHandler->checkPickup(player->pos, myCol)){
+    if(capsuleHandler->checkPickup(player->getPos(), myCol)){
         _item randomItem = myInv->pickupItem();
         myHUD->addGameInfo("Picked up " + randomItem.name);
     };
-
-    //std::string message = "Item \'" + pickupItem.name + "\' added to inventory. Stats: ";
-    //myHUD->addConsoleMessage(message);
 }
 
-vec3 _level4::clampBounds(const vec3& pos){
-    minBound = vec3(-boundarySize, -10.0f, -boundarySize);
-    maxBound = vec3(boundarySize, 50.0f, boundarySize);
-    vec3 clampedPos = pos;
-    if(clampedPos.x < minBound.x) clampedPos.x = minBound.x;
-    if(clampedPos.y < minBound.y) clampedPos.y = minBound.y;
-    if(clampedPos.z < minBound.z) clampedPos.z = minBound.z;
-
-    if(clampedPos.x > maxBound.x) clampedPos.x = maxBound.x;
-    if(clampedPos.y > maxBound.y) clampedPos.y = maxBound.y;
-    if(clampedPos.z > maxBound.z) clampedPos.z = maxBound.z;
-
-    return clampedPos;
-}
 void _level4::clampLevel(){
     for(auto& c : capsuleHandler->capsules){
-        c->pos = clampBounds(c->pos);
+        myCol->clampBounds(c->pos, boundarySize);
     }
     for(auto& e : enemyHandler->enemies){
-        e->pos = clampBounds(e->pos);
+        myCol->clampBounds(e->pos, boundarySize);
     }
-    myCam->eye = clampBounds(myCam->eye);
-    player->pos = clampBounds(player->pos);
+    myCol->clampBounds(player->getPos(), boundarySize);
 }
 
 void _level4::update(){
     float deltaTime = myTime->getTickSeconds();
-    lose();
+    winLossCheck();
     player->update(deltaTime);
-    nearestEnemy = enemyHandler->nearest(player->pos);
-    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->pos);
+    nearestEnemy = enemyHandler->nearest(player->getPos());
+    if(nearestEnemy) attackHandler(nearestEnemy->pos, player->getPos());
     waveSpawn();
     pickupMenu();
-    enemyHandler->update(player->pos, deltaTime);
+    enemyHandler->update(player->getPos(), deltaTime);
     capsuleHandler->update();
     myInv->setPlayerStats(player->itemStats);
-    player->applyPlayerStats();
     for(int i = 0; i < 10; i++){
         if(b[i].live){
             b[i].bulletActions(deltaTime);
@@ -279,7 +276,7 @@ void _level4::drawFloor(){
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_LIGHTING);
-        myTexture->bindTexture(); // your floor texture
+        myTexture->bindTexture(); // floor texture
 
         glColor3f(1.0f, 1.0f, 1.0f);
 
@@ -336,25 +333,6 @@ void _level4::drawScene()
     glEnable(GL_FOG);
 }
 
-void _level4::mouseMapping(int x, int y)
-
-{
-    GLint viewPort[4];
-    GLdouble ModelViewM[16];
-    GLdouble projectionM[16];
-    GLfloat winX,winY,winZ;
-
-    glGetDoublev(GL_MODELVIEW_MATRIX, ModelViewM);
-    glGetDoublev(GL_PROJECTION_MATRIX,projectionM);
-    glGetIntegerv(GL_VIEWPORT,viewPort);
-
-    winX =(GLfloat)x;
-    winY = (GLfloat)y;
-
-    glReadPixels(x,(int)winY,1,1,GL_DEPTH_COMPONENT,GL_FLOAT,&winZ);
-    gluUnProject(winX,winY,winZ,ModelViewM,projectionM,viewPort,&msX,&msY,&msZ);
-}
-
 int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if(player){
@@ -365,6 +343,7 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_KEYDOWN:
             if(wParam == VK_ESCAPE){
                 scene = MAIN;
+                snds->stopMusic();
                 isInit = false;
                 return 0;
             }
@@ -386,7 +365,7 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             // myInput->keyPressed(myPrlx);
             // myInput->keyPressed(mySkyBox);
             // myInput->keyPressed(myCam);
-            myInput->keyPressed(player->playerModel,mdl3DW);
+            // myInput->keyPressed(player->playerModel,mdl3DW);
             break;
             if(wParam == 'm' || wParam == 'M')
         break;
@@ -398,7 +377,6 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         case WM_LBUTTONDOWN:
             myInput->wParam = wParam;
 
-             mouseMapping(LOWORD(lParam), HIWORD(lParam));
         break;
 
         case WM_RBUTTONDOWN:
@@ -418,7 +396,7 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             break;
 
         case WM_MOUSEMOVE: {
-            if(scene == LEVEL4){
+            if(scene == LEVEL3){
                 lockCursor();
             }
         }
@@ -433,3 +411,4 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     return 0;
 }
+

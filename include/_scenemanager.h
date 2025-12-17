@@ -6,6 +6,7 @@
 #include <_level2.h>
 #include <_level3.h>
 #include <_level4.h>
+#include <_help.h>
 #include <_menu.h>
 
 
@@ -30,6 +31,7 @@ class _scenemanager
     _level2* level2;
     _level3* level3;
     _level4* level4;
+    _Help*   help;
     _Menu*   menu;
     _Scene* currentScene = nullptr;
 };
