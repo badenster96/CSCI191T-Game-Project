@@ -29,6 +29,7 @@ private:
     void handleMouse(int x, int y, bool click);
     enum menuButton {NONE,NEWGAME,HELP,QUIT};
     menuButton hoveredButton = NONE;
+    bool canPlayMenuSounds = true;
 
     int width, height;
 };

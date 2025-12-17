@@ -10,6 +10,7 @@ _Help::~_Help() {}
 void _Help::initGL() {
     std::cout << "Initializing Help Screen\n";
     active = true;
+    scene = HELPSCENE;
 
     fontBase = glGenLists(256);
     HDC hDC = wglGetCurrentDC();

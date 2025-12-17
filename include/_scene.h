@@ -31,6 +31,7 @@ class _Scene {
         Scene scene;
     protected:
         HWND hWnd = nullptr;
+        std::unordered_map<std::string, char*> myFiles;
     private: };
 
 

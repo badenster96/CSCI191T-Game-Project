@@ -20,6 +20,7 @@ void _level3::initFiles() {
     myFiles["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
     myFiles["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
     myFiles["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
+    myFiles["PlayerHit"] = "sounds/sfx/playerhit/Zombie_Attack_Bite_001.mp3";
     // Music
     myFiles["CombatMusic"] = "sounds/music/DroneAttack.wav";
     // Models
@@ -136,6 +137,7 @@ void _level3::winLossCheck() {
 void _level3::enemyDamagePlayer(_player* p){
     for(const auto& e : enemyHandler->enemies){
         if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive && p->hit(e->damage, myTime->getTotalSeconds())){
+            snds->playRandSound(myFiles["PlayerHit"], 10, 0.8f);
             myHUD->addConsoleMessage("At:" + to_string(std::round(myTime->getTotalSeconds() * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!");
         }
     }

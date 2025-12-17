@@ -54,7 +54,7 @@ _enemy* _EnemyHandler::nearest(vec3& point) {
     return nearestEnemy;
 }
  void _EnemyHandler::resolveCollisions() {
-     float minimumDistance = 4.0f;
+     float minimumDistance = 3.0f;
     for(int i = 0; i < enemies.size(); i++){
         _enemy* e1 = enemies[i];
         if(!e1 || !e1->isSpawned || !e1->isAlive) continue;

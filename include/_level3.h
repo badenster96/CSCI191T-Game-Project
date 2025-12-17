@@ -52,7 +52,6 @@ class _level3 : public _Scene
         _bullets b[10];
         std::vector<_sprite*> items;
         _enemy* boss = new _enemy();
-        std::unordered_map<std::string, char*> myFiles;
         _enemy* nearestEnemy;
 
         // Init functions - functions that run once at init

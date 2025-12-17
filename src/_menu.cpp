@@ -28,6 +28,8 @@ void _Menu::initGL() {
     SelectObject(hDC, font);
     wglUseFontBitmapsA(hDC, 0, 256, fontBase);
     isInit = true;
+    myFiles["MouseClick"] = "sounds/menu/click/Clicks B 001.wav";
+    myFiles["MouseHover"] = "sounds/menu/hover/Hovers B 001.wav";
 }
 
 void _Menu::drawText(float x, float y, const std::string& text) {
@@ -78,6 +80,22 @@ void _Menu::drawScene() {
         glColor3f(1.0f,1.0f,0.0f);
     } else glColor3f(1.0f,1.0f,1.0f);
     drawText(-0.2f, -0.4f, "QUIT");
+    if(hoveredButton != NONE){
+        float arrowX = -0.23f;
+        float arrowY;
+        switch(hoveredButton){
+            case NEWGAME: arrowY = 0.41f; break;
+            case HELP: arrowY = 0.01f; break;
+            case QUIT: arrowY = -0.39f; break;
+        }
+        glColor3f(1.0f,1.0f,0.0f);
+        glBegin(GL_TRIANGLES);
+            glVertex2f(arrowX, arrowY + 0.01f);
+            glVertex2f(arrowX, arrowY - 0.01f);
+            glVertex2f(arrowX + 0.02f, arrowY);
+        glEnd();
+    }
+
 
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
@@ -108,22 +126,25 @@ void _Menu::handleMouse(int x, int y, bool click) {
         std::cout << "Quit Game\n";
         close();
     }
-
-
-
+    if(click) snds->playRandSound(myFiles["MouseClick"], 5, 0.8f);
 }
 void _Menu::hoverMouse(int mouseX, int mouseY){
     float ndcY = 1.0f - (2.0f * mouseY / (float)height);
     float buttonHalfHeight = 0.1f;
-
     if (ndcY < 0.4f + buttonHalfHeight && ndcY > 0.4f - buttonHalfHeight) {
         hoveredButton = NEWGAME;
     } else if (ndcY < 0.0f + buttonHalfHeight && ndcY > 0.0f - buttonHalfHeight) {
         hoveredButton = HELP;
     } else if (ndcY < -0.4f + buttonHalfHeight && ndcY > -0.4f - buttonHalfHeight) {
         hoveredButton = QUIT;
-    } else hoveredButton = NONE;
-
+    } else {
+        hoveredButton = NONE;
+        canPlayMenuSounds = true;
+    }
+    if(hoveredButton != NONE && canPlayMenuSounds == true){
+        snds->playRandSound(myFiles["MouseHover"], 5, 0.8f);
+        canPlayMenuSounds = false;
+    }
 }
 void _Menu::close(){
     scene = QUITSCENE;
