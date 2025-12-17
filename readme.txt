@@ -30,7 +30,9 @@ Ben Manley -
 	Sounds:
 		Created modified sounds functions that plays from a list of random sounds, to make each 
 		action, like player hit, enemy hit, enemy death, menu sounds, ect. feel more dynamic
-	
+Danial Remmington
+	Subsystems: 
+		Helped integrate the scenemanager, and helped integrate the Menu code
 	
 All of the assets used are either my own, or have been purchased with free use copyright
 GitHub Source Code Dir: https://github.com/badenster96/CSCI191T-Game-Project.git
