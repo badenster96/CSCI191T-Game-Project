@@ -20,19 +20,27 @@ void _level4::carryOver(_Scene* prev){
 }
 
 void _level4::initFiles() {
+    // Level
+    myFiles["Level"] = "Level4";
     // sfx
     myFiles["M16"] = "sounds/sfx/bullets/M16/M16_Shoot_Auto_001.wav";
-    myFiles["EnemyHit"] = "sounds/sfx/clankhit/Impact_Sword_To_PlateArmour_001.wav";
+    myFiles["EnemyHit"] = "sounds/sfx/blood/Blood_Splash_A_001.mp3";
+    myFiles["ZombieDie"] = "sounds/sfx/zombiedie/Zombie001_Die_A_001.mp3";
     myFiles["EnemyDie"] = "sounds/sfx/robotdie/Arc Welder Sparks 001.wav";
+    myFiles["PlayerHit"] = "sounds/sfx/playerhit/Zombie_Attack_Bite_001.mp3";
     // Music
     myFiles["CombatMusic"] = "sounds/music/DroneAttack.wav";
+    // Models
     myFiles["bullet"] = "models/Tekk/weapon.md2";
     myFiles["player"] = "waste";
     myFiles["Enemy"] = "cyberdemon";
+
+    // Textures
     myFiles["Floor"] = "images/tex.jpg";
     myFiles["Boss"] = "cyberdemon";
     myFiles["Skybox"] = "regSkybox";
     myFiles["SkyboxExt"] = "jpg";
+    // sfx
 }
 void _level4::init(std::unordered_map<std::string, char*> files) {
     myHUD->addConsoleMessage("Loading Textures...");
@@ -115,7 +123,7 @@ void _level4::initGL() {
     // Level stats setup
     player->applyPlayerStats();
     isInit = true;
-    myHUD->addConsoleMessage("_level3 initialized");
+    myHUD->addConsoleMessage("_level4 initialized");
 }
 void _level4::winLossCheck() {
     if( myWave->wave >= 3){
@@ -138,6 +146,7 @@ void _level4::winLossCheck() {
 void _level4::enemyDamagePlayer(_player* p){
     for(const auto& e : enemyHandler->enemies){
         if(e && myCol->isSphereCol(p->getPos(),e->pos, 1.0f, 1.0f, 1.0f) && e->isAlive && p->hit(e->damage, myTime->getTotalSeconds())){
+            snds->playRandSound(myFiles["PlayerHit"], 10, 0.8f);
             myHUD->addConsoleMessage("At:" + to_string(std::round(myTime->getTotalSeconds() * 100.0f) / 100.0f) + " | Player hit for " + to_string((int)nearestEnemy->damage) + " damage!");
         }
     }
@@ -172,7 +181,7 @@ void _level4::attackHandler(vec3 nearestE, vec3 p) {
                         hitsThisFrame++;
                         if(e->health <= 0 && e->isAlive) {
                             e->isAlive = e->isSpawned = false;
-                            snds->playRandSound(myFiles["ZombieDie"], 5, 0.8f);
+                            snds->playRandSound(myFiles["EnemyDie"], 5, 0.8f);
                             if(player->currHealth < player->maxHealth) player->currHealth += 1;
                             enemyHandler->enemiesKilled++;
                         }
@@ -411,4 +420,3 @@ int _level4::winMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     }
     return 0;
 }
-
