@@ -386,7 +386,7 @@ int WINAPI WinMain(
 
 				// Recreate Our OpenGL Window
 
-				if (!CreateGLWindow("Game Engine Lesson 01",fullscreenWidth,fullscreenHeight,256,fullscreen))
+				if (!CreateGLWindow("Mission: Possible",fullscreenWidth,fullscreenHeight,256,fullscreen))
 				{
 					return 0;	        // Quit If Window Was Not Created
 				}

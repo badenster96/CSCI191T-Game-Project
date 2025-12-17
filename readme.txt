@@ -33,3 +33,4 @@ Ben Manley -
 	
 	
 All of the assets used are either my own, or have been purchased with free use copyright
+GitHub Source Code Dir: https://github.com/badenster96/CSCI191T-Game-Project.git
