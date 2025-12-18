@@ -6,18 +6,21 @@
 #  include <windows.h>
 #endif
 
-#pragma comment(lib, "opengl32.lib")
-#pragma comment(lib, "glu32.lib")
+//#pragma comment(lib, "opengl32.lib")
+//#pragma comment(lib, "glu32.lib")
+
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
+#include <iostream>
 
 #include <stdlib.h>
-#include <iostream>
+
 #include <windows.h>	// Header File For Windows
 #include <gl/gl.h>
 
-#include <_scene.h>
+#include <Scenes/_scene.h>
 #include <_scenemanager.h>
 
-// _Scene *myScene = new _Scene(); //Create scene class instance
 _scenemanager *mySceneManager = new _scenemanager();
 
 using namespace std;
@@ -31,6 +34,88 @@ bool	keys[256];		// Array Used For The Keyboard Routine
 bool	active=TRUE;	// Window Active Flag Set To TRUE By Default
 bool	fullscreen=TRUE;// Fullscreen Flag Set To Fullscreen Mode By Default
 
+int main(int argc, char** argv){
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) != 0) {
+		std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+		return -1;
+	}
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	int width = 1280;
+	int height = 720;
+
+	SDL_Window* window = SDL_CreateWindow(
+		"Mission: Possible",
+		SDL_WINDOWPOS_CENTERED_MASK,
+		SDL_WINDOWPOS_CENTERED_MASK,
+		SDL_WINDOW_RESIZABLE
+	);
+	SDL_SetWindowSize(window, width, height);
+	if (!window) {
+		std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+		SDL_Quit();
+		return -1;
+	}
+
+	SDL_GLContext glContext = SDL_GL_CreateContext(window);
+	if(!glContext){
+		std::cerr << "SDL_GenerateContext Error: " << SDL_GetError() << std::endl;
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return -1;
+	}
+	//VSync
+	SDL_GL_SetSwapInterval(1);
+
+	mySceneManager->initScene();
+	mySceneManager->reSizeScene(width, height);
+
+	bool running = true;
+	SDL_Event event;
+
+	// Main loop
+	while(running) {
+		while(SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_EVENT_QUIT:
+					running = false;
+					break;
+				case SDL_EVENT_WINDOW_RESIZED: {
+					int w = event.window.data1;
+					int h = event.window.data2;
+					mySceneManager->reSizeScene(w,h);
+					break;
+				}
+				case SDL_EVENT_KEY_DOWN:
+				case SDL_EVENT_KEY_UP:
+					mySceneManager->winMsg(nullptr, event.type, event.key.key, 0);
+					break;
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				case SDL_EVENT_MOUSE_BUTTON_UP:
+					mySceneManager->winMsg(nullptr, event.type,event.button.button, 0);
+					break;
+				case SDL_EVENT_MOUSE_WHEEL:
+					mySceneManager->winMsg(nullptr, event.type,event.wheel.x, event.wheel.y);
+					break;
+				case SDL_EVENT_MOUSE_MOTION:
+					mySceneManager->winMsg(nullptr, event.type, event.motion.x, event.motion.y);
+					break;
+			}
+		}
+		mySceneManager->drawScene();
+		SDL_GL_SwapWindow(window);
+	}
+	SDL_GL_DestroyContext(glContext);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+	return 0;
+
+}
+/*
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
 
@@ -88,7 +173,7 @@ void KillGLWindow()					    // Properly Kill The Window
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //	THE CREATE GL WINDOW
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscreenflag)
 {
 	GLuint		PixelFormat;	    // Holds The Results After Searching For A Match
@@ -235,12 +320,12 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 
 	return TRUE;							                // Success
 }
-
+*/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //				THE WINDOW PROCEDURE
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 LRESULT CALLBACK WndProc(
               HWND	hWnd,			// Handle For This Window
 			  UINT	uMsg,			// Message For This Window
@@ -323,7 +408,7 @@ LRESULT CALLBACK WndProc(
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //				THE WINMAIN
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 int WINAPI WinMain(
 
             HINSTANCE	hInstance,	    // Instance
@@ -337,12 +422,6 @@ int WINAPI WinMain(
 	int	fullscreenWidth  = GetSystemMetrics(SM_CXSCREEN);
     int	fullscreenHeight = GetSystemMetrics(SM_CYSCREEN);
 
-	// Ask The User Which Screen Mode They Prefer
-/*	if (MessageBox(NULL," Would You Like To Run In Fullscreen Mode?", "Start FullScreen?",MB_YESNO|MB_ICONQUESTION)==IDNO)
-	{
-		fullscreen=FALSE;			    // Windowed Mode
-	}
-*/
 	// Create Our OpenGL Window
 
 	if (!CreateGLWindow("Mission: Possible",fullscreenWidth,fullscreenHeight,256,fullscreen))
@@ -399,3 +478,6 @@ int WINAPI WinMain(
 	KillGLWindow();					    // Kill The Window
 	return (msg.wParam);				// Exit The Program
 }
+
+
+*/

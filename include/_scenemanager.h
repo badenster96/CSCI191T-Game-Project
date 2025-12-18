@@ -1,13 +1,13 @@
 #ifndef _SCENEMANAGER_H
 #define _SCENEMANAGER_H
 
-#include <_scene.h>
-#include <_level1.h>
-#include <_level2.h>
-#include <_level3.h>
-#include <_level4.h>
-#include <_help.h>
-#include <_menu.h>
+#include <Scenes/_scene.h>
+#include <Scenes/_level1.h>
+#include <Scenes/_level2.h>
+#include <Scenes/_level3.h>
+#include <Scenes/_level4.h>
+#include <Scenes/_help.h>
+#include <Scenes/_menu.h>
 
 
 class _scenemanager

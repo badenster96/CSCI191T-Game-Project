@@ -1,0 +1,95 @@
+#ifndef _LEVEL_3_H
+#define _LEVEL_3_H
+
+#include<_common.h>
+#include<Graphics/_light.h>
+#include<Graphics/_model.h>
+#include <Player/_player.h>
+#include<UI/_inputs.h>
+#include<Graphics/_textureloader.h>
+#include<Graphics/_parallax.h>
+#include<Graphics/_skybox.h>
+#include<Graphics/_sprite.h>
+#include<_timer.h>
+#include<Graphics/_3dmodelloader.h>
+#include<Combat/_bullets.h>
+#include<_collisioncheck.h>
+#include<_sounds.h>
+#include <Scenes/_scene.h>
+#include <Combat/_enemy.h>
+#include <Combat/_EnemyHandler.h>
+#include <Player/_inventory.h>
+#include <UI/_hud.h>
+#include <Combat/_capsule.h>
+#include <Combat/_capsuleHandler.h>
+#include <Combat/_waveHandler.h>
+
+
+class _level3 : public _Scene
+{
+    public:
+        _level3();           //constructor
+        virtual ~_level3();  //Destructor
+
+        // Level objects
+        //_light *myLight             = new _light();   //light settings
+        //_model *myModel             = new _model();   //create a model
+        _inputs *myInput            = new _inputs(); // input handle
+        _textureLoader *myTexture   = new _textureLoader();// for loading images
+        //_textureLoader *myFloor     = new _textureLoader();
+        //_parallax *myPrlx           = new _parallax();
+        _skyBox *mySkyBox           = new _skyBox();
+        _timer *myTime              = new _timer();
+        _collisionCheck *myCol      = new _collisionCheck();
+        _player *player              = new _player();
+        _sounds *snds               = new _sounds();
+        _EnemyHandler *enemyHandler = new _EnemyHandler();
+        _capsuleHandler *capsuleHandler = new _capsuleHandler();
+        //_sprite *mySprite           = new _sprite();
+        _hud *myHUD                 = new _hud();
+        _inventory *myInv           = new _inventory();
+        _waveHandler* myWave        = new _waveHandler();
+        _bullets b[10];
+        std::vector<_sprite*> items;
+        _enemy* boss = new _enemy();
+        _enemy* nearestEnemy;
+
+        // Init functions - functions that run once at init
+        void* getPlayer() override{return player;}
+        void* getInventory() override{return myInv;}
+        void init(std::unordered_map<std::string, char*> files);
+        void init();
+        void initFiles();
+        void initGL() override;                            // initialize GL graphics
+        // Draw Functions - Functions that run every frame
+        void winLossCheck();
+        void enemyDamagePlayer(_player* player);
+        void attackHandler(vec3 nearestE, vec3 player);
+        void waveSpawn();
+        void capsuleSpawner(int range, int add);
+        void pickupMenu();
+
+        void update();
+        void clampLevel();
+        void drawFloor();
+        void drawScene() override;                         // render scene
+        // Input functions - Functions that handle input mapping
+        //void mouseMapping(int,int);
+        int winMsg(HWND,UINT,WPARAM,LPARAM) override;      // to get keyboard interrupts and pass it to inputs
+
+        // Attack Logic
+        float lastAttackTime = 0.0f;
+        float minDistance = 0.0f;
+        double msX,msY,msZ;
+        // World Boundaries
+        int boundarySize;
+        vec3 minBound;
+        vec3 maxBound;
+
+        // Menu
+    protected:
+
+    private:
+};
+
+#endif // _LEVEL_3_H

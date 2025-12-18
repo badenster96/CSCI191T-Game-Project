@@ -1,0 +1,200 @@
+[
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_Enemy.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_Enemy.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_Enemy.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_Enemy.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_EnemyHandler.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_EnemyHandler.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_EnemyHandler.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_EnemyHandler.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_bullets.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_bullets.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_bullets.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_bullets.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_capsule.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_capsule.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_capsule.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_capsule.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_capsuleHandler.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_capsuleHandler.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_capsuleHandler.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_capsuleHandler.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Combat\\_waveHandler.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Combat\\_waveHandler.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Combat/_waveHandler.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Combat/_waveHandler.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_3dmodelloader.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_3dmodelloader.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_3dmodelloader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_3dmodelloader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_light.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_light.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_light.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_light.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_model.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_model.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_model.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_model.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_parallax.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_parallax.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_parallax.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_parallax.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_skybox.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_skybox.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_skybox.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_skybox.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_sprite.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_sprite.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_sprite.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_sprite.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Graphics\\_textureloader.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Graphics\\_textureloader.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Graphics/_textureloader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Graphics/_textureloader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Player\\_inventory.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Player\\_inventory.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Player/_inventory.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Player/_inventory.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Player\\_item.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Player\\_item.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Player/_item.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Player/_item.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Player\\_player.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Player\\_player.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Player/_player.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Player/_player.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_help.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_help.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_help.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_help.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_level1.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_level1.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_level1.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_level1.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_level2.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_level2.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_level2.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_level2.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_level3.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_level3.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_level3.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_level3.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_level4.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_level4.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_level4.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_level4.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_menu.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_menu.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_menu.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_menu.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\Scenes\\_scene.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\Scenes\\_scene.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/Scenes/_scene.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/Scenes/_scene.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\UI\\_camera.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\UI\\_camera.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/UI/_camera.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/UI/_camera.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\UI\\_hud.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\UI\\_hud.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/UI/_hud.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/UI/_hud.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\UI\\_inputs.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\UI\\_inputs.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/UI/_inputs.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/UI/_inputs.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\_FileLoader.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\_FileLoader.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/_FileLoader.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_FileLoader.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\_collisioncheck.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\_collisioncheck.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/_collisioncheck.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_collisioncheck.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\_scenemanager.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\_scenemanager.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/_scenemanager.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_scenemanager.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\_sounds.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\_sounds.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/_sounds.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_sounds.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\_timer.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\_timer.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/_timer.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/_timer.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\src\\inventory.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\src\\inventory.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/src/inventory.cpp",
+  "output": "CMakeFiles/Midterm.dir/src/inventory.cpp.obj"
+},
+{
+  "directory": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/build",
+  "command": "C:\\MinGW\\bin\\g++.exe -DPROJECT_SOURCE_DIR_STRING=\\\"C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project\\\" @CMakeFiles/Midterm.dir/includes_CXX.rsp -g -std=gnu++1z -o CMakeFiles\\Midterm.dir\\main.cpp.obj -c C:\\main\\MyCode\\Projects\\AgentSmithAndHisQuestToSaveThePostMagicalWorld\\CSCI191T-Game-Project\\main.cpp",
+  "file": "C:/main/MyCode/Projects/AgentSmithAndHisQuestToSaveThePostMagicalWorld/CSCI191T-Game-Project/main.cpp",
+  "output": "CMakeFiles/Midterm.dir/main.cpp.obj"
+}
+]

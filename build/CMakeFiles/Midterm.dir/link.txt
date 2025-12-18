@@ -1,0 +1,3 @@
+"C:\Program Files (x86)\CodeBlocks\MinGW\bin\cmake.exe" -E rm -f CMakeFiles\Midterm.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\Midterm.dir/objects.a @CMakeFiles\Midterm.dir\objects1.rsp
+C:\MinGW\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Midterm.dir/objects.a -Wl,--no-whole-archive -o Midterm.exe -Wl,--out-implib,libMidterm.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Midterm.dir\linkLibs.rsp
